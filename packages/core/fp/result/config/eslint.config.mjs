@@ -2,6 +2,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
+import jsdocPlugin from 'eslint-plugin-jsdoc';
 import prettierPlugin from 'eslint-plugin-prettier';
 import { defineConfig } from 'eslint/config';
 import { readFileSync } from 'node:fs';
@@ -17,6 +18,12 @@ const simpleImportSortPlugin = (
 ).default;
 
 const repoRoot = resolve(__dirname, '../../../../../');
+
+// Dynamic import of @resultsafe/eslint-plugin using absolute path
+const resultsafePluginPath = resolve(repoRoot, 'tools/eslint-plugin/index.js');
+const resultsafePlugin = (
+  await import(`file:///${resultsafePluginPath.replace(/\\/g, '/')}`)
+).default;
 const tsconfigAliasesPath = resolve(repoRoot, 'tsconfig.aliases.json');
 const tsconfigAliases = JSON.parse(
   readFileSync(tsconfigAliasesPath, 'utf8'),
@@ -39,6 +46,8 @@ export default defineConfig([
       '**/vitest.config.ts',
       '**/eslint.config.*',
       '**/*.js',
+      '.tmp-smoke/**',
+      '__tests__/**',
     ],
   },
   {
@@ -50,8 +59,10 @@ export default defineConfig([
     plugins: {
       '@typescript-eslint': tsPlugin,
       import: importPlugin,
+      jsdoc: jsdocPlugin,
       'simple-import-sort': simpleImportSortPlugin,
       prettier: prettierPlugin,
+      '@resultsafe': resultsafePlugin,
     },
     languageOptions: {
       parser: tsParser,
@@ -104,6 +115,59 @@ export default defineConfig([
       '@typescript-eslint/require-await': 'error',
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
+      // JSDoc rules (SPEC-003) — all errors, strict mode
+      'jsdoc/require-description': 'error',
+      'jsdoc/require-example': 'error',
+      'jsdoc/check-tag-names': 'off', // @typeParam is TSDoc standard; we allow all standard tags
+      'jsdoc/require-param-description': 'error',
+      'jsdoc/require-returns-description': 'error',
+      'jsdoc/require-returns': 'error',
+      'jsdoc/check-types': 'error',
+      // Custom @resultsafe rules
+      '@resultsafe/require-since-version': 'error',
+    },
+  },
+  // Internal files: relaxed JSDoc rules (no @example required)
+  {
+    files: ['src/internal/**/*.ts'],
+    rules: {
+      'jsdoc/require-example': 'off',
+      'jsdoc/require-returns': 'off',
+    },
+  },
+  // Refiners: relaxed JSDoc rules (no @example required for internal utilities)
+  {
+    files: ['src/refiners/**/*.ts'],
+    rules: {
+      'jsdoc/require-example': 'off',
+      'jsdoc/require-returns': 'off',
+    },
+  },
+  // Config files: relaxed JSDoc rules (no @example required for build utilities)
+  {
+    files: ['config/**/*.ts'],
+    rules: {
+      'jsdoc/require-example': 'off',
+      'jsdoc/require-returns': 'off',
+      '@resultsafe/require-since-version': 'off', // Config files don't need @since
+    },
+  },
+  // Internal files: relaxed JSDoc rules
+  {
+    files: ['src/internal/**/*.ts'],
+    rules: {
+      'jsdoc/require-example': 'off',
+      'jsdoc/require-returns': 'off',
+      '@resultsafe/require-since-version': 'off', // Internal utilities don't need @since
+    },
+  },
+  // Refiner types: relaxed JSDoc rules
+  {
+    files: ['src/refiners/types/**/*.ts'],
+    rules: {
+      'jsdoc/require-example': 'off',
+      'jsdoc/require-returns': 'off',
+      '@resultsafe/require-since-version': 'off', // Type-only files don't need @since
     },
   },
 ]);

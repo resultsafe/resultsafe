@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isErr } from '../guards/isErr.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Преобразует значение ошибки, сохраняя ветку успеха.
@@ -29,5 +28,3 @@ export const mapErr = <T, E, F>(
   isErr(result)
     ? { ok: false, error: fn(result.error) }
     : (result as Result<T, F>);
-
-

@@ -1,8 +1,7 @@
-import { type Option } from '../shared-types.js';
-import { type Result } from '../shared-types.js';
-
 import { isErr } from '../guards/isErr.js';
 import { None, Some } from '../internal/option.js';
+import { type Option } from '../shared-types.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Извлекает ветку ошибки в виде `Option`.
@@ -24,5 +23,3 @@ import { None, Some } from '../internal/option.js';
  */
 export const err = <T, E>(result: Result<T, E>): Option<E> =>
   isErr(result) ? Some(result.error) : None;
-
-

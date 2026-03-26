@@ -1,5 +1,4 @@
 import { type Result } from '../shared-types.js';
-
 import { isErr } from './isErr.js';
 
 /**
@@ -25,5 +24,3 @@ export const isErrAnd = <T, E>(
   result: Result<T, E>,
   predicate: (error: E) => boolean,
 ): boolean => isErr(result) && predicate(result.error);
-
-

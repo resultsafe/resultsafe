@@ -22,5 +22,3 @@ describe('types/Result', () => {
     }
   });
 });
-
-

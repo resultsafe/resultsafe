@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isErr } from '../guards/isErr.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Восстанавливается из ошибки, преобразуя `Err` в другой `Result`.
@@ -27,5 +26,3 @@ export const orElse = <T, E, F>(
   fn: (error: E) => Result<T, F>,
 ): Result<T, F> =>
   isErr(result) ? fn(result.error) : (result as Result<T, F>);
-
-

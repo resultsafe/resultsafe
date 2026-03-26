@@ -20,5 +20,3 @@ import { type Result } from '../shared-types.js';
  */
 export const flatten = <T, E>(result: Result<Result<T, E>, E>): Result<T, E> =>
   result.ok ? result.value : { ok: false, error: result.error };
-
-

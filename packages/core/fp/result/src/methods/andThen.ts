@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isOk } from '../guards/isOk.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Цепляет вычисление, которое возвращает другой `Result`.
@@ -29,5 +28,3 @@ export const andThen = <T, U, E>(
   result: Result<T, E>,
   fn: (value: T) => Result<U, E>,
 ): Result<U, E> => (isOk(result) ? fn(result.value) : (result as Result<U, E>));
-
-

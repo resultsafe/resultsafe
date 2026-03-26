@@ -3,7 +3,6 @@ import type {
   ValidatorFn,
   VariantConfig,
 } from '../shared-types.js';
-
 import { refineResult } from './refineResult.js';
 import type { SyncRefinedResult } from './types/index.js';
 
@@ -44,5 +43,3 @@ export const refineResultU = <
   validators: TValidators,
 ): SyncRefinedResult<K, TMap, TValidators> | null =>
   refineResult(variantMap)(variant)(validators)(value);
-
-

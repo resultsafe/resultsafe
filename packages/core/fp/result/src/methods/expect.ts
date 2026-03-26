@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isOk } from '../guards/isOk.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Возвращает успешное значение или выбрасывает исключение с пользовательским сообщением.
@@ -28,5 +27,3 @@ export const expect = <T, E>(result: Result<T, E>, msg: string): T => {
   }
   throw new Error(msg);
 };
-
-

@@ -20,5 +20,3 @@ import type { Result } from '../shared-types.js';
  */
 export const Ok = <T, E = never>(value: T): Result<T, E> =>
   ({ ok: true, value }) as const;
-
-

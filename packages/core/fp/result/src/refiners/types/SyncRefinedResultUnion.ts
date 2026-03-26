@@ -1,5 +1,4 @@
 import type { VariantConfig } from '../../shared-types.js';
-
 import type { SyncRefinedResult } from './SyncRefinedResult.js';
 import type { SyncValidatorMap } from './SyncValidatorMap.js';
 
@@ -14,5 +13,3 @@ export type SyncRefinedResultUnion<
     NonNullable<TValidators[K]>
   >;
 }[keyof TMap & string];
-
-

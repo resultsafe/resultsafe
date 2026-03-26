@@ -2,47 +2,41 @@
 
 <a id="top"></a>
 
+![ResultSafe Logo](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/docs/assets/logo.svg)
+
 [![npm version](https://img.shields.io/npm/v/@resultsafe/core-fp-result.svg)](https://www.npmjs.com/package/@resultsafe/core-fp-result)
 [![npm downloads](https://img.shields.io/npm/dm/@resultsafe/core-fp-result.svg)](https://www.npmjs.com/package/@resultsafe/core-fp-result)
 [![license](https://img.shields.io/npm/l/@resultsafe/core-fp-result.svg)](./LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)](https://www.typescriptlang.org/)
-[![docs](https://img.shields.io/badge/docs-api-informational.svg)](./docs/api/README.md)
+[![docs](https://img.shields.io/badge/docs-api-informational.svg)](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/README.md)
 [![build status](https://img.shields.io/badge/build-local%20verified-success.svg)](./package.json)
-[![monorepo](https://img.shields.io/badge/monorepo-resultsafe%2Fmonorepo-0A0A0A.svg)](https://github.com/resultsafe/monorepo)
+[![monorepo](https://img.shields.io/badge/monorepo-resultsafe%2Fmonorepo-0A0A0A.svg)](https://github.com/Livooon/resultsafe)
 
 Rust-inspired Result-пакет для явных, композиционных и типобезопасных API в TypeScript и JavaScript.
 
-**Язык:** [English](./README.md) | Русский
+**Язык:** [English](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/README.md) | [Русский](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/README.ru.md)
 
-**Документация:** [API index](./docs/api/README.md) · [Modules](./docs/api/modules.md)
+**Документация:** [API index](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/README.md) · [Modules](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/modules.md)
 
 ---
 
+<!-- AI-AGENT: Каждый метод имеет 3 ссылки: Source (GitHub UI), Raw (код), Code (новый UI) -->
+<!-- Raw ссылки лучше всего подходят для автоматизированного анализа кода и парсинга -->
+
 ## Содержание
 
-- [@resultsafe/core-fp-result](#resultsafecore-fp-result)
-  - [Содержание](#содержание)
-  - [Зачем нужен этот пакет](#зачем-нужен-этот-пакет)
-  - [Контекст monorepo](#контекст-monorepo)
-  - [Ключевые возможности](#ключевые-возможности)
-  - [Пакет](#пакет)
-    - [`@resultsafe/core-fp-result`](#resultsafecore-fp-result-1)
-  - [Установка](#установка)
-    - [Пакет](#пакет-1)
-    - [Monorepo](#monorepo)
-  - [Быстрый старт](#быстрый-старт)
-    - [Базовый пример `Ok` / `Err`](#базовый-пример-ok--err)
-  - [Обзор основного API](#обзор-основного-api)
-    - [Constructors](#constructors)
-    - [Guards](#guards)
-    - [Methods](#methods)
-    - [Refiners](#refiners)
-    - [Type aliases](#type-aliases)
-  - [Форматы сборки и поставки](#форматы-сборки-и-поставки)
-  - [Структура monorepo и пакета](#структура-monorepo-и-пакета)
-  - [Когда использовать этот проект](#когда-использовать-этот-проект)
-  - [Ссылки на документацию](#ссылки-на-документацию)
-  - [License](#license)
+- [Зачем нужен этот пакет](#зачем-нужен-этот-пакет)
+- [Контекст monorepo](#контекст-monorepo)
+- [Ключевые возможности](#ключевые-возможности)
+- [Пакет](#пакет)
+- [Установка](#установка)
+- [Быстрый старт](#быстрый-старт)
+- [Обзор основного API](#обзор-основного-api)
+- [Форматы сборки и поставки](#форматы-сборки-и-поставки)
+- [Структура monorepo и пакета](#структура-monorepo-и-пакета)
+- [Когда использовать этот проект](#когда-использовать-этот-проект)
+- [Ссылки на документацию](#ссылки-на-документацию)
+- [License](#license)
 
 ---
 
@@ -140,15 +134,13 @@ import { Ok, Err, match } from '@resultsafe/core-fp-result';
 
 const parsePort = (input: string) => {
   const port = Number(input);
-  return Number.isInteger(port) && port > 0 ? Ok(port) : Err('Invalid port');
+  return Number.isInteger(port) && port > 0
+    ? Ok(port)
+    : Err('Invalid port');
 };
 
 const result = parsePort('3000');
-const message = match(
-  result,
-  (value) => `Port: ${value}`,
-  (error) => `Error: ${error}`,
-);
+const message = match(result, (value) => `Port: ${value}`, (error) => `Error: ${error}`);
 
 console.log(message);
 ```
@@ -157,63 +149,89 @@ console.log(message);
 
 ## Обзор основного API
 
+### Core Types
+
+- [`Result<T, E>`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/core/Result.ts) — Контейнер успеха/ошибки [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/core/Result.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Result.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/types/core/Result.ts "Open in Code view")
+- [`Option<T>`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/core/Option.ts) — Контейнер опционального значения [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/core/Option.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Option.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/types/core/Option.ts "Open in Code view")
+
+### Type Helpers
+
+- [`VariantConfig`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts) — Конфигурация варианта [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts "Open in Code view")
+- [`PayloadKeys<T>`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/PayloadKeys.ts) — Извлечение ключей payload [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/PayloadKeys.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/PayloadKeys.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/types/refiners/PayloadKeys.ts "Open in Code view")
+- [`ValidatorFn<T>`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts) — Синхронная функция валидатора [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts "Open in Code view")
+- [`AsyncValidatorFn`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts) — Асинхронная функция валидатора [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts "Open in Code view")
+
 ### Constructors
 
-- `Ok`
-- `Err`
+- [`Ok`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/constructors/Ok.ts) — Создать успешный результат [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/constructors/Ok.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Ok.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/constructors/Ok.ts "Open in Code view")
+- [`Err`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/constructors/Err.ts) — Создать ошибочный результат [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/constructors/Err.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Err.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/constructors/Err.ts "Open in Code view")
 
 ### Guards
 
-- `isOk`
-- `isOkAnd`
-- `isErr`
-- `isErrAnd`
+- [`isOk`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isOk.ts) — Проверка на успех [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isOk.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isOk.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/guards/isOk.ts "Open in Code view")
+- [`isErr`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isErr.ts) — Проверка на ошибку [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isErr.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isErr.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/guards/isErr.ts "Open in Code view")
+- [`isOkAnd`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isOkAnd.ts) — Проверка успеха с предикатом [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isOkAnd.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isOkAnd.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/guards/isOkAnd.ts "Open in Code view")
+- [`isErrAnd`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isErrAnd.ts) — Проверка ошибки с предикатом [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isErrAnd.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isErrAnd.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/guards/isErrAnd.ts "Open in Code view")
 
 ### Methods
 
-- `andThen`
-- `err`
-- `expect`
-- `expectErr`
-- `flatten`
-- `inspect`
-- `inspectErr`
-- `map`
-- `mapErr`
-- `match`
-- `ok`
-- `orElse`
-- `tap`
-- `tapErr`
-- `transpose`
-- `unwrap`
-- `unwrapErr`
-- `unwrapOr`
-- `unwrapOrElse`
+#### Transformation
+
+- [`map`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/map.ts) — Трансформация успешного значения [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/map.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/map.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/map.ts "Open in Code view")
+- [`mapErr`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/mapErr.ts) — Трансформация значения ошибки [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/mapErr.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/mapErr.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/mapErr.ts "Open in Code view")
+
+#### Chaining
+
+- [`andThen`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/andThen.ts) — Цепочка вычислений, возвращающих Result [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/andThen.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/andThen.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/andThen.ts "Open in Code view")
+- [`orElse`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/orElse.ts) — Восстановление после ошибки [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/orElse.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/orElse.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/orElse.ts "Open in Code view")
+
+#### Extraction
+
+- [`unwrap`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrap.ts) — Извлечь значение или выбросить [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrap.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrap.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/unwrap.ts "Open in Code view")
+- [`unwrapOr`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrapOr.ts) — Извлечь значение или default [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrapOr.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapOr.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/unwrapOr.ts "Open in Code view")
+- [`unwrapOrElse`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrapOrElse.ts) — Извлечь значение или вычислить default [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrapOrElse.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapOrElse.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/unwrapOrElse.ts "Open in Code view")
+- [`unwrapErr`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrapErr.ts) — Извлечь ошибку или выбросить [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrapErr.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapErr.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/unwrapErr.ts "Open in Code view")
+- [`expect`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/expect.ts) — Извлечь значение или выбросить с сообщением [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/expect.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/expect.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/expect.ts "Open in Code view")
+- [`expectErr`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/expectErr.ts) — Извлечь ошибку или выбросить с сообщением [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/expectErr.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/expectErr.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/expectErr.ts "Open in Code view")
+
+#### Side Effects
+
+- [`tap`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/tap.ts) — Побочный эффект на успехе [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/tap.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tap.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/tap.ts "Open in Code view")
+- [`tapErr`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/tapErr.ts) — Побочный эффект на ошибке [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/tapErr.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tapErr.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/tapErr.ts "Open in Code view")
+- [`inspect`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/inspect.ts) — Отладка на успехе [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/inspect.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/inspect.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/inspect.ts "Open in Code view")
+- [`inspectErr`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/inspectErr.ts) — Отладка на ошибке [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/inspectErr.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/inspectErr.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/inspectErr.ts "Open in Code view")
+
+#### Advanced
+
+- [`match`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/match.ts) — Pattern matching [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/match.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/match.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/match.ts "Open in Code view")
+- [`flatten`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/flatten.ts) — Схлопывание вложенного Result [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/flatten.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/flatten.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/flatten.ts "Open in Code view")
+- [`transpose`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/transpose.ts) — Result<Option> → Option<Result> [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/transpose.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/transpose.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/transpose.ts "Open in Code view")
+- [`ok`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/ok.ts) — Конвертировать в Option (успех) [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/ok.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/ok.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/ok.ts "Open in Code view")
+- [`err`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/err.ts) — Конвертировать в Option (ошибка) [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/err.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/err.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/methods/err.ts "Open in Code view")
 
 ### Refiners
 
-- `isTypedVariant`
-- `isTypedVariantOf`
-- `matchVariant`
-- `matchVariantStrict`
-- `refineAsyncResult`
-- `refineAsyncResultU`
-- `refineResult`
-- `refineResultU`
-- `refineVariantMap`
+- [`isTypedVariant`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/isTypedVariant.ts) — Type guard для варианта [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/isTypedVariant.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/isTypedVariant.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/isTypedVariant.ts "Open in Code view")
+- [`isTypedVariantOf`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/isTypedVariantOf.ts) — Type guard с картой вариантов [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/isTypedVariantOf.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/isTypedVariantOf.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/isTypedVariantOf.ts "Open in Code view")
+- [`matchVariant`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/matchVariant.ts) — Match варианта с обработчиками [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/matchVariant.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariant.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/matchVariant.ts "Open in Code view")
+- [`matchVariantStrict`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts) — Строгий match варианта [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts "Open in Code view")
+- [`refineAsyncResult`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts) — Асинхронное уточнение результата [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts "Open in Code view")
+- [`refineAsyncResultU`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineAsyncResultU.ts) — Асинхронное уточнение (некаррированное) [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineAsyncResultU.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineAsyncResultU.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/refineAsyncResultU.ts "Open in Code view")
+- [`refineResult`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineResult.ts) — Синхронное уточнение результата [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineResult.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineResult.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/refineResult.ts "Open in Code view")
+- [`refineResultU`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineResultU.ts) — Синхронное уточнение (некаррированное) [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineResultU.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineResultU.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/refineResultU.ts "Open in Code view")
+- [`refineVariantMap`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineVariantMap.ts) — Уточнение карты вариантов [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineVariantMap.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineVariantMap.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/refineVariantMap.ts "Open in Code view")
 
-### Type aliases
+### Type Aliases
 
-- `Handler`
-- `MatchBuilder`
-- `Matcher`
-- `SyncRefinedResult`
-- `SyncRefinedResultUnion`
-- `SyncValidatorMap`
-- `UniversalAsyncRefinedResult`
-- `UniversalRefinedResult`
-- `VariantOf`
+- [`Handler`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/Handler.ts) — Тип обработчика match [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/Handler.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/Handler.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/Handler.ts "Open in Code view")
+- [`MatchBuilder`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/MatchBuilder.ts) — Тип построителя match [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/MatchBuilder.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/MatchBuilder.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/MatchBuilder.ts "Open in Code view")
+- [`Matcher`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/Matcher.ts) — Тип функции match [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/Matcher.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/Matcher.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/Matcher.ts "Open in Code view")
+- [`SyncRefinedResult`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/SyncRefinedResult.ts) — Синхронный уточнённый результат [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/SyncRefinedResult.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncRefinedResult.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/SyncRefinedResult.ts "Open in Code view")
+- [`SyncRefinedResultUnion`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/SyncRefinedResultUnion.ts) — Объединение уточнённых результатов [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/SyncRefinedResultUnion.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncRefinedResultUnion.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/SyncRefinedResultUnion.ts "Open in Code view")
+- [`SyncValidatorMap`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/SyncValidatorMap.ts) — Тип карты валидаторов [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/SyncValidatorMap.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncValidatorMap.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/SyncValidatorMap.ts "Open in Code view")
+- [`UniversalAsyncRefinedResult`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/UniversalAsyncRefinedResult.ts) — Асинхронный уточнённый результат [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/UniversalAsyncRefinedResult.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/UniversalAsyncRefinedResult.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/UniversalAsyncRefinedResult.ts "Open in Code view")
+- [`UniversalRefinedResult`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/UniversalRefinedResult.ts) — Универсальный уточнённый результат [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/UniversalRefinedResult.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/UniversalRefinedResult.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/UniversalRefinedResult.ts "Open in Code view")
+- [`VariantOf`](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/VariantOf.ts) — Вспомогательный тип варианта [📄](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/types/VariantOf.ts "View on GitHub") · [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/VariantOf.ts "View raw code") · [💻](https://github.com/Livooon/resultsafe/code/main/packages/core/fp/result/src/refiners/types/VariantOf.ts "Open in Code view")
 
 ---
 
@@ -258,18 +276,24 @@ src/
 
 ## Ссылки на документацию
 
-- [API entry (README)](./docs/api/README.md)
-- [API entry (index)](./docs/api/index.md)
-- [Modules](./docs/api/modules.md)
-- [Constructors module](./docs/api/constructors/index.md)
-- [Guards module](./docs/api/guards/index.md)
-- [Methods module](./docs/api/methods/index.md)
-- [Refiners module](./docs/api/refiners/index.md)
-- [Type aliases module](./docs/api/type-aliases/index.md)
+- [API entry (README)](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/README.md)
+- [API entry (index)](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/index.md)
+- [Modules](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/modules.md)
+- [Constructors module](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/constructors/index.md)
+- [Guards module](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/guards/index.md)
+- [Methods module](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/methods/index.md)
+- [Refiners module](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/refiners/index.md)
+- [Type aliases module](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/type-aliases/index.md)
 
 ---
 
 Наверх: [@resultsafe/core-fp-result](#top)
+
+---
+
+## Author
+
+Denis Savasteev
 
 ---
 

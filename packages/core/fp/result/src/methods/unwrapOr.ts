@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isOk } from '../guards/isOk.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Возвращает успешное значение или переданный fallback по умолчанию.
@@ -23,5 +22,3 @@ import { isOk } from '../guards/isOk.js';
  */
 export const unwrapOr = <T, E>(result: Result<T, E>, defaultValue: T): T =>
   isOk(result) ? result.value : defaultValue;
-
-

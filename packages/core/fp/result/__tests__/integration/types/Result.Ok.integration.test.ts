@@ -69,5 +69,3 @@ describe('Result type integration tests — Ok variant / Интеграцион�
     }
   });
 });
-
-

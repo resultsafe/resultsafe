@@ -12,5 +12,3 @@ export type SyncRefinedResult<
 > = {
   type: K;
 } & Record<PayloadKeys<TMap[K]>, unknown>;
-
-

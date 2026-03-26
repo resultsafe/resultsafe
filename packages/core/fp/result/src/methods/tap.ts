@@ -28,5 +28,3 @@ export const tap = <T, E>(
   }
   return result;
 };
-
-

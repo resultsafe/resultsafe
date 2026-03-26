@@ -21,5 +21,3 @@ import type { Result } from '../shared-types.js';
 export const isErr = <T, E>(
   result: Result<T, E>,
 ): result is { ok: false; error: E } => result.ok === false;
-
-

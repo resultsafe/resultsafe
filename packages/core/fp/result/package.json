@@ -1,6 +1,6 @@
 {
   "name": "@resultsafe/core-fp-result",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Denis Savasteev",
   "license": "MIT",
   "type": "module",
@@ -67,5 +67,8 @@
     "README.md",
     "README.ru.md",
     "LICENSE"
-  ]
+  ],
+  "devDependencies": {
+    "eslint-plugin-jsdoc": "^62.8.1"
+  }
 }

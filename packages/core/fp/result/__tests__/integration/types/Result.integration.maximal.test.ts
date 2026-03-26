@@ -205,5 +205,3 @@ describe('Result full integration / Полная интеграция Result', (
     }
   });
 });
-
-

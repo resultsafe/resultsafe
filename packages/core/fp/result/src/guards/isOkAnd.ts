@@ -1,5 +1,4 @@
 import { type Result } from '../shared-types.js';
-
 import { isOk } from './isOk.js';
 
 /**
@@ -25,5 +24,3 @@ export const isOkAnd = <T, E>(
   result: Result<T, E>,
   predicate: (value: T) => boolean,
 ): boolean => isOk(result) && predicate(result.value);
-
-

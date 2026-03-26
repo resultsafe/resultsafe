@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isErr } from '../guards/isErr.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Возвращает значение ошибки или выбрасывает исключение с пользовательским сообщением.
@@ -28,5 +27,3 @@ export const expectErr = <T, E>(result: Result<T, E>, msg: string): E => {
   }
   throw new Error(msg);
 };
-
-

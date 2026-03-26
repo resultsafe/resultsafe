@@ -64,5 +64,3 @@ const umdConfig = defineConfig({
 });
 
 export default umdConfig;
-
-

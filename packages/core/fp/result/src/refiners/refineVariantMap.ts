@@ -3,7 +3,6 @@ import type {
   ValidatorFn,
   VariantConfig,
 } from '../shared-types.js';
-
 import type { SyncRefinedResultUnion } from './types/SyncRefinedResultUnion.js';
 import type { SyncValidatorMap } from './types/SyncValidatorMap.js';
 
@@ -80,5 +79,3 @@ export function refineVariantMap<
 
   return value as SyncRefinedResultUnion<TMap, TValidators>;
 }
-
-

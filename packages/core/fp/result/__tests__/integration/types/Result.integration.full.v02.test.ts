@@ -204,5 +204,3 @@ describe('Result full integration + type-safety tests / Полные интег�
     }
   });
 });
-
-

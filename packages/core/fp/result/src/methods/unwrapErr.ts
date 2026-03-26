@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isErr } from '../guards/isErr.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Возвращает значение ошибки или выбрасывает исключение, если результат `Ok`.
@@ -27,5 +26,3 @@ export const unwrapErr = <T, E>(result: Result<T, E>): E => {
   }
   throw new Error('Called unwrapErr on an Ok value');
 };
-
-

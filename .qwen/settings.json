@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(get-childitem *)",
+      "Bash(foreach-object *)",
+      "Bash(powershell *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm install)",
+      "Bash(mkdir *)"
+    ]
+  },
+  "$version": 3
+}

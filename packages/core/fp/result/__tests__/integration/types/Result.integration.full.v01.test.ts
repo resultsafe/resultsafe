@@ -136,5 +136,3 @@ describe('Result full integration tests / Полные интеграционн�
     }
   });
 });
-
-

@@ -75,5 +75,3 @@ describe('Result type integration tests / Интеграционные тест�
     expect(handled).toBe(0);
   });
 });
-
-

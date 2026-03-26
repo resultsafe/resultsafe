@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isOk } from '../guards/isOk.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Преобразует успешное значение, сохраняя ветку ошибки.
@@ -29,5 +28,3 @@ export const map = <T, U, E>(
   isOk(result)
     ? { ok: true, value: fn(result.value) }
     : (result as Result<U, E>);
-
-

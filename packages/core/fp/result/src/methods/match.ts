@@ -33,5 +33,3 @@ export const match = <T, E, U>(
     return errFn(error);
   }
 };
-
-

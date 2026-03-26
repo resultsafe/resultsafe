@@ -8,5 +8,3 @@ export type UniversalRefinedResult<
 > = {
   type: K;
 } & Record<string, unknown>;
-
-

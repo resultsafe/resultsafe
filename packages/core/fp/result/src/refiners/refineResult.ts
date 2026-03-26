@@ -1,10 +1,9 @@
+import { hasOwn, isObject } from '../internal/object.js';
 import type {
   PayloadKeys,
   ValidatorFn,
   VariantConfig,
 } from '../shared-types.js';
-
-import { hasOwn, isObject } from '../internal/object.js';
 import type { UniversalRefinedResult } from './types/index.js';
 import { getPayloadKeys } from './utils/index.js';
 
@@ -96,5 +95,3 @@ export const refineResultU = <
   validators: TValidators,
 ): UniversalRefinedResult<K, TMap, TValidators> | null =>
   refineResult(variantMap)(variant)(validators)(value);
-
-

@@ -1,7 +1,6 @@
+import { None, Some } from '../internal/option.js';
 import { type Option } from '../shared-types.js';
 import { type Result } from '../shared-types.js';
-
-import { None, Some } from '../internal/option.js';
 
 /**
  * Преобразует `Result<Option<T>, E>` в `Option<Result<T, E>>`.
@@ -31,5 +30,3 @@ export const transpose = <T, E>(
   }
   return Some({ ok: false, error: result.error });
 };
-
-

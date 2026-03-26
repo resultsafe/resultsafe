@@ -74,5 +74,3 @@ describe('Result type integration tests — Err variant / Интеграцион
     }
   });
 });
-
-

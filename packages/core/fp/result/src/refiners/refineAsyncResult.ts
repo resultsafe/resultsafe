@@ -1,10 +1,9 @@
+import { hasOwn, isObject } from '../internal/object.js';
 import type {
   AsyncValidatorFn,
   PayloadKeys,
   VariantConfig,
 } from '../shared-types.js';
-
-import { hasOwn, isObject } from '../internal/object.js';
 import type { UniversalAsyncRefinedResult } from './types/index.js';
 
 /** Resolves payload keys from variant configuration. @internal */
@@ -107,5 +106,3 @@ export const refineAsyncResultU = <
   validators: TValidators,
 ): Promise<UniversalAsyncRefinedResult<K, TMap, TValidators> | null> =>
   refineAsyncResult(variantMap)(variant)(validators)(value);
-
-

@@ -1,4 +1,10 @@
-// config/vite.config.shared.ts
+/**
+ * Shared Vite configuration utilities.
+ *
+ * @since 0.1.7
+ * @module
+ */
+
 import type { ExternalOption, OutputOptions, RollupOptions } from 'rollup';
 import type { ESBuildOptions } from 'vite';
 
@@ -106,5 +112,3 @@ export const getStringExternals = (externals: ExternalOption): string[] => {
     ? externals.filter((dep): dep is string => typeof dep === 'string')
     : [];
 };
-
-

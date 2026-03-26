@@ -1,7 +1,4 @@
-import type {
-  PayloadKeys,
-  VariantConfig,
-} from '../../shared-types.js';
+import type { PayloadKeys, VariantConfig } from '../../shared-types.js';
 
 /**
  * Нормализует конфигурацию payload варианта в список ключей.
@@ -26,5 +23,3 @@ export const getPayloadKeys = <C extends VariantConfig>(
   if (p === 'never') return [];
   return (Array.isArray(p) ? p : [p]) as readonly PayloadKeys<C>[];
 };
-
-

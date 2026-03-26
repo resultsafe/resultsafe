@@ -8,5 +8,3 @@ import type {
 export type SyncValidatorMap<TMap extends Record<string, VariantConfig>> = {
   [K in keyof TMap]?: Partial<Record<PayloadKeys<TMap[K]>, ValidatorFn>>;
 };
-
-

@@ -139,5 +139,3 @@ describe('Result integration tests / Интеграционные тесты Res
     }
   });
 });
-
-

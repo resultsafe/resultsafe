@@ -1,8 +1,7 @@
-import { type Option } from '../shared-types.js';
-import { type Result } from '../shared-types.js';
-
 import { isOk } from '../guards/isOk.js';
 import { None, Some } from '../internal/option.js';
+import { type Option } from '../shared-types.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Извлекает успешную ветку в виде `Option`.
@@ -24,5 +23,3 @@ import { None, Some } from '../internal/option.js';
  */
 export const ok = <T, E>(result: Result<T, E>): Option<T> =>
   isOk(result) ? Some(result.value) : None;
-
-

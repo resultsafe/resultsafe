@@ -21,5 +21,3 @@ import type { Result } from '../shared-types.js';
 export const isOk = <T, E>(
   result: Result<T, E>,
 ): result is { ok: true; value: T } => result.ok === true;
-
-

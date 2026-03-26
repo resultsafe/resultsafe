@@ -1,6 +1,5 @@
-import { type Result } from '../shared-types.js';
-
 import { isErr } from '../guards/isErr.js';
+import { type Result } from '../shared-types.js';
 
 /**
  * Выполняет побочный эффект для значения `Err` и возвращает входной `Result`.
@@ -30,5 +29,3 @@ export const tapErr = <T, E>(
   }
   return result;
 };
-
-
