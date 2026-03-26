@@ -43,5 +43,4 @@ Thumbs.db
 # local
 *.local
 **/.npmrc
-
-.npmrc
+**/.pytest_cache
