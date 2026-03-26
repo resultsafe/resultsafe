@@ -1,0 +1,29 @@
+{
+  "extends": "../../../../tsconfig.aliases.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "incremental": true
+  },
+  "include": [
+    "__examples__/**/*.ts",
+    "__scripts__/**/*.ts",
+    "docs/**/*.ts",
+    "__tests__/**/*.ts",
+    "config/**/*.ts",
+    "dist/**/*.ts",
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../option-shared"
+    },
+    {
+      "path": "../result-shared"
+    }
+  ]
+}
+

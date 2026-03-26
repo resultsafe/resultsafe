@@ -1,0 +1,1 @@
+{"version":3,"file":"matchDiscriminatedUnion.d.ts","sourceRoot":"","sources":["matchDiscriminatedUnion.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,kBAAkB,EAAE,MAAM,8BAA8B,CAAC;AAEvE,eAAO,MAAM,uBAAuB,GAClC,CAAC,SAAS,kBAAkB,EAC5B,CAAC,EACD,IAAI,SAAS,MAAM,CAAC,MAAM,EAAE,CAAC,KAAK,EAAE,CAAC,KAAK,CAAC,CAAC,EAE5C,OAAO,CAAC,EACR,OAAO,IAAI,KACV,CAMF,CAAC"}

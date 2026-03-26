@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    /* ! Strict Checks */
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    /* * Linter Checks * */
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    // production -> true
+    "noUnusedParameters": false,
+    // production -> true
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    /* * Base Strict Checks * */
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+    "suppressExcessPropertyErrors": false,
+    "suppressImplicitAnyIndexErrors": false,
+    /* ! Strict Checks --- end */
+    // Запрещаем импортировать .ts напрямую
+    "allowImportingTsExtensions": false,
+    // запрет на разные регистры в путях
+    "forceConsistentCasingInFileNames": true,
+    // различает ? и |undefined
+    "exactOptionalPropertyTypes": true,
+    /* Isolated Modules */
+    // проверка, что файлы независимы
+    "isolatedModules": true,
+
+    "noUncheckedIndexedAccess": true, // обращение к массиву/объекту может вернуть undefined
+    "noImplicitOverride": true, // методы должны явно писать override
+    /* Module & Interop */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true
+  }
+}

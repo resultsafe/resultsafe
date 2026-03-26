@@ -1,0 +1,19 @@
+{
+  "entryPoints": ["../src/index.ts"],
+  "tsconfig": "tsconfig.build.json",
+  "out": "../dist/docs/html",
+  "name": "@resultsafe-crate-core-result-core-types",
+  "includeVersion": true,
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"],
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeExternals": false,
+  "readme": "none",
+  "categorizeByGroup": true,
+  "hideGenerator": false,
+  "disableSources": true,
+  "sort": ["source-order"],
+  "gitRevision": true,
+  "theme": "default"
+}
+

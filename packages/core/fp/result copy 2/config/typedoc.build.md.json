@@ -1,0 +1,21 @@
+{
+  "entryPoints": ["../src/index.ts"],
+  "tsconfig": "tsconfig.build.json",
+  "out": "../dist/docs/md/api",
+  "name": "@resultsafe/core-fp-result",
+  "plugin": ["typedoc-plugin-markdown"],
+  "includeVersion": true,
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"],
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeExternals": false,
+  "readme": "none",
+  "categorizeByGroup": true,
+  "hideGenerator": false,
+  "hideBreadcrumbs": false,
+  "disableSources": true,
+  "sort": ["source-order"],
+  "gitRevision": true,
+  "theme": "markdown"
+}
+

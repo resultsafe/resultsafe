@@ -1,0 +1,13 @@
+{
+  "name": "@resultsafe/core-fp-flow",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "types": "./src/index.ts",
+  "main": "./src/index.ts",
+  "type": "module",
+  "sideEffects": false,
+  "license": "MIT"
+}
+
+

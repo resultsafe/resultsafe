@@ -1,0 +1,20 @@
+{
+  "name": "@resultsafe/playground-result",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Local playground for trying @resultsafe/core-fp-result from npm.",
+  "scripts": {
+    "run": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@resultsafe/core-fp-result": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.6"
+  },
+  "engines": {
+    "node": ">=20.10.0"
+  }
+}

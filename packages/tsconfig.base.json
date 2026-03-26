@@ -1,0 +1,63 @@
+{
+  "extends": "./tsconfig.base.strict.json",
+
+  "compilerOptions": {
+    // Целевая версия ECMAScript
+    "target": "ES2022",
+
+    // Тип модуля и его разрешение
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "moduleDetection": "force",
+    "verbatimModuleSyntax": true,
+
+    "rootDir": ".",
+    "baseUrl": ".",
+
+    // Подключаемые библиотеки
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+
+    // Пропуск проверки типов в .d.ts файлах
+    "skipLibCheck": true,
+
+    // Запрет на использование JS-файлов
+    "allowJs": false,
+    "checkJs": false,
+
+    // Инкрементальная компиляция для ускорения
+    "incremental": true,
+
+    // Разрешить генерацию выходных файлов
+    "noEmit": false,
+
+    // Генерация .d.ts файлов
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist", // чтобы типы не попадали в  src
+
+    // Импорт расширений
+    "allowArbitraryExtensions": false, // Запрет на произвольные расширения
+    "allowImportingTsExtensions": false, // Запрет на импорт .ts/.tsx с расширением
+    // "noResolve": true,                    // Отключение автоматического разрешения модулей (опционально)
+
+    // Карты исходников
+    "sourceMap": false, // Отключение внешних source map
+    "inlineSourceMap": true, // Встраивание source map в файл
+
+    // Комментарии
+    "removeComments": false // Сохранять комментарии в выходных файлах
+  },
+
+  "ts-node": {
+    // Поддержка ECMAScript модулей
+    "esm": true,
+
+    // Экспериментальный резолвер для ESM
+    "experimentalResolver": true,
+
+    // Быстрая компиляция без проверки типов
+    "transpileOnly": true
+  }
+}

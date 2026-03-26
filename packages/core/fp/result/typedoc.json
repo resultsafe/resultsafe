@@ -1,0 +1,4 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "extends": "./config/typedoc.build.md.json"
+}

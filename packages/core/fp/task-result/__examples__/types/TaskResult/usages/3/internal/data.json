@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice",
+      "email": "alice@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Bob",
+      "email": "bob@example.com"
+    },
+    {
+      "id": 3,
+      "name": "Charlie",
+      "email": "charlie@example.com"
+    }
+  ],
+  "meta": {
+    "totalUsers": 3,
+    "generatedAt": "2025-09-10T12:00:00Z"
+  }
+}

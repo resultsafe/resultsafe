@@ -1,0 +1,17 @@
+﻿{
+  "extends": "./tsconfig.aliases.json",
+  "files": [],
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "composite": true
+  },
+  "include": [
+    "__scripts__/**/*",
+    "packages/core/**/src/**/*",
+    "packages/adapter/**/src/**/*",
+    "config/**/*",
+    "vitest.config.ts"
+  ],
+  "exclude": ["dist", "node_modules"]
+}

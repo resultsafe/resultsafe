@@ -1,0 +1,110 @@
+########################################
+# 📦 Зависимости и менеджеры пакетов
+########################################
+node_modules/
+**/node_modules/
+.pnpm/
+**/.pnpm/
+
+########################################
+# ⚙️ Сборка и кеши инструментов
+########################################
+build/
+**/build/
+dist/
+**/dist/
+.lock-wscript
+**/.lock-wscript
+.rpt2_cache/
+**/.rpt2_cache/
+.rts2_cache_*/
+**/.rts2_cache_*/
+.eslintcache
+**/.eslintcache
+.stylelintcache
+**/.stylelintcache
+.nyc_output/
+**/.nyc_output/
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+########################################
+# 🚀 Vite и Vitest
+########################################
+.temp/
+**/.temp/
+coverage/
+**/coverage/
+*.lcov
+**/*.lcov
+
+########################################
+# 📚 Docusaurus
+########################################
+.docusaurus/
+**/.docusaurus/
+
+########################################
+# 🧪 Логи и отладка
+########################################
+logs/
+**/logs/
+*.log
+**/*.log
+npm-debug.log*
+**/npm-debug.log*
+.pnpm-debug.log*
+**/.pnpm-debug.log*
+report.*.json
+**/report.*.json
+
+########################################
+# 🧼 Временные и runtime файлы
+########################################
+pids/
+**/pids/
+*.pid
+**/*.pid
+*.seed
+**/*.seed
+*.pid.lock
+**/*.pid.lock
+.node_repl_history
+**/.node_repl_history
+*.tgz
+**/*.tgz
+
+########################################
+# 🔐 dotenv-файлы
+########################################
+.env*
+**/.env*
+!.env.example
+!**/.env.example
+
+########################################
+# 🧠 IDE и редакторы
+########################################
+.vscode/
+**/.vscode/
+.idea/
+**/.idea/
+.vscode-test/
+**/.vscode-test/
+
+########################################
+# 🖥️ Системные файлы
+########################################
+.DS_Store
+**/.DS_Store
+Thumbs.db
+**/Thumbs.db
+
+########################################
+# 🗂️ Кеши (все виды)
+########################################
+**cache**
+.cache/
+**/.cache/
+.exclude-cache.json
+**/.exclude-cache.json

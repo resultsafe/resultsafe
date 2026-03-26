@@ -1,0 +1,25 @@
+packages:
+  - packages/core/fp/result
+  - packages/core/fp/result-shared
+  - packages/core/fp/shared
+  - packages/core/fp/union
+  - packages/core/fp/option
+  - packages/core/fp/option-shared
+  - packages/core/fp/either
+  - packages/core/fp/void
+  - packages/core/fp/task
+  - packages/core/fp/task-result
+  - packages/core/fp/effect
+  - packages/core/fp/pipe
+  - packages/core/fp/flow
+  - packages/core/fp/do
+  - packages/core/fp/layer
+  - packages/core/fp/context
+  - packages/core/fp/codec
+  - packages/core/fp/module-loader
+  - packages/playground
+  - packages/adapter/core/fp/codec/zod
+
+ignoredBuiltDependencies:
+  - core-js
+  - core-js-pure

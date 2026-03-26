@@ -1,0 +1,22 @@
+# Указываем реестр npm
+registry=https://registry.npmjs.org/
+
+# Хранилище кэша
+store-dir=~/.pnpm-store
+
+# Автоматическая установка peer-зависимостей
+auto-install-peers=true
+
+# Отключаем строгую проверку peer-зависимостей
+strict-peer-dependencies=false
+
+# Разрешаем hoisting зависимостей
+shamefully-hoist=true
+
+# Поддержка workspace-режима (если используешь монорепо)
+shared-workspace-lockfile=true
+
+# Настройки для Vitest (если используешь ES-модули)
+node-linker=hoisted
+public-hoist-pattern[]=*vitest*
+public-hoist-pattern[]=*ts-node*

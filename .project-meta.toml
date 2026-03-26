@@ -1,0 +1,33 @@
+[project]
+id = "8f2c7a1d"
+uuid = "8f2c7a1d-5d21-4f3a-9b8c-1e2d3f4a5b6c"
+name = "OmniChannel Platform"
+type = "monorepo"
+created = "2023-01-15T08:30:00Z"
+parent_system = "digital-ecosystem"
+version = "2.5.1"
+workspace_role = "core"
+tags = ["polyglot", "customer-facing", "high-load", "cloud-native"]
+lifecycle_state = "active"
+
+[stack]
+languages = ["Go", "TypeScript", "Python", "HCL"]
+frameworks = ["Gin", "React", "FastAPI", "Terraform"]
+runtimes = ["Node.js 20", "Python 3.11", "Go 1.21"]
+
+[structure]
+components = ["api-gateway", "web-client", "worker-service", "infra"]
+
+[ownership]
+team = "platform-engineering"
+lead = "ivan.ivanov"
+codeowners = ["@platform-engineering", "@security-team"]
+
+[repository]
+url = "https://git.example.com/org/omnichannel-platform"
+branch = "main"
+
+[links]
+docs = "https://wiki.example.com/omni"
+jira = "PROJ-1000"
+swagger = "https://api.example.com/docs"

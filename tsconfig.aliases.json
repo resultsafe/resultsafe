@@ -1,0 +1,85 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@resultsafe/core-fp-result": ["packages/core/fp/result/src/index.ts"],
+      "@resultsafe/core-fp-result/*": ["packages/core/fp/result/src/*"],
+
+      "@resultsafe/core-fp-result-shared": [
+        "packages/core/fp/result-shared/src/index.ts"
+      ],
+      "@resultsafe/core-fp-result-shared/*": [
+        "packages/core/fp/result-shared/src/*"
+      ],
+
+      "@resultsafe/core-fp-shared": ["packages/core/fp/shared/src/index.ts"],
+      "@resultsafe/core-fp-shared/*": ["packages/core/fp/shared/src/*"],
+
+      "@resultsafe/core-fp-union": ["packages/core/fp/union/src/index.ts"],
+      "@resultsafe/core-fp-union/*": ["packages/core/fp/union/src/*"],
+
+      "@resultsafe/core-fp-option": ["packages/core/fp/option/src/index.ts"],
+      "@resultsafe/core-fp-option/*": ["packages/core/fp/option/src/*"],
+
+      "@resultsafe/core-fp-option-shared": [
+        "packages/core/fp/option-shared/src/index.ts"
+      ],
+      "@resultsafe/core-fp-option-shared/*": [
+        "packages/core/fp/option-shared/src/*"
+      ],
+
+      "@resultsafe/core-fp-either": ["packages/core/fp/either/src/index.ts"],
+      "@resultsafe/core-fp-either/*": ["packages/core/fp/either/src/*"],
+
+      "@resultsafe/core-fp-void": ["packages/core/fp/void/src/index.ts"],
+      "@resultsafe/core-fp-void/*": ["packages/core/fp/void/src/*"],
+
+      "@resultsafe/core-fp-task": ["packages/core/fp/task/src/index.ts"],
+      "@resultsafe/core-fp-task/*": ["packages/core/fp/task/src/*"],
+
+      "@resultsafe/core-fp-task-result": [
+        "packages/core/fp/task-result/src/index.ts"
+      ],
+      "@resultsafe/core-fp-task-result/*": [
+        "packages/core/fp/task-result/src/*"
+      ],
+
+      "@resultsafe/core-fp-effect": ["packages/core/fp/effect/src/index.ts"],
+      "@resultsafe/core-fp-effect/*": ["packages/core/fp/effect/src/*"],
+
+      "@resultsafe/core-fp-pipe": ["packages/core/fp/pipe/src/index.ts"],
+      "@resultsafe/core-fp-pipe/*": ["packages/core/fp/pipe/src/*"],
+
+      "@resultsafe/core-fp-flow": ["packages/core/fp/flow/src/index.ts"],
+      "@resultsafe/core-fp-flow/*": ["packages/core/fp/flow/src/*"],
+
+      "@resultsafe/core-fp-do": ["packages/core/fp/do/src/index.ts"],
+      "@resultsafe/core-fp-do/*": ["packages/core/fp/do/src/*"],
+
+      "@resultsafe/core-fp-layer": ["packages/core/fp/layer/src/index.ts"],
+      "@resultsafe/core-fp-layer/*": ["packages/core/fp/layer/src/*"],
+
+      "@resultsafe/core-fp-context": ["packages/core/fp/context/src/index.ts"],
+      "@resultsafe/core-fp-context/*": ["packages/core/fp/context/src/*"],
+
+      "@resultsafe/core-fp-codec": ["packages/core/fp/codec/src/index.ts"],
+      "@resultsafe/core-fp-codec/*": ["packages/core/fp/codec/src/*"],
+
+      "@resultsafe/core-fp-module-loader": [
+        "packages/core/fp/module-loader/src/index.ts"
+      ],
+      "@resultsafe/core-fp-module-loader/*": [
+        "packages/core/fp/module-loader/src/*"
+      ],
+
+      "@resultsafe/core-fp-codec-zod": [
+        "packages/adapter/core/fp/codec/zod/src/index.ts"
+      ],
+      "@resultsafe/core-fp-codec-zod/*": [
+        "packages/adapter/core/fp/codec/zod/src/*"
+      ]
+    }
+  }
+}
+
+

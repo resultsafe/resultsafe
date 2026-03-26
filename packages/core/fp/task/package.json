@@ -1,0 +1,16 @@
+{
+  "name": "@resultsafe/core-fp-task",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "types": "dist/esm/types/index.d.ts",
+  "main": "./src/index.ts",
+  "type": "module",
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {
+    "@resultsafe/core-fp-result": "workspace:*"
+  }
+}
+
+

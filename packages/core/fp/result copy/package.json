@@ -1,0 +1,55 @@
+{
+  "name": "@resultsafe/core-fp-result",
+  "version": "0.1.0",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "clean:dist": "rimraf dist",
+    "build:types": "tsc -b ./config/tsconfig.build.types.json",
+    "build:esm": "vite build --config ./config/vite.config.build.esm.ts",
+    "build:cjs": "vite build --config ./config/vite.config.build.cjs.ts && node ./__scripts__/build/write-cjs-package-json.mjs",
+    "build:umd": "vite build --config ./config/vite.config.build.umd.ts",
+    "prepare:dist:publish": "node ./__scripts__/build/prepare-dist-publish.mjs",
+    "build:all": "pnpm run clean:dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:umd && pnpm run build:types",
+    "build:release": "pnpm run build:all && pnpm run prepare:dist:publish",
+    "docs:api:clean": "rimraf docs/api",
+    "docs:api:generate": "typedoc --options typedoc.json --out docs/api",
+    "docs:api:mirror": "node ./__scripts__/docs/mirror-typedoc-api.mjs",
+    "docs:api": "pnpm run docs:api:generate && pnpm run docs:api:mirror",
+    "docs:api:check": "typedoc --options typedoc.json --emit none",
+    "docs:api:all": "pnpm run docs:api:clean && pnpm run docs:api && pnpm run docs:api:check && pnpm run test",
+    "test": "vitest run --config ./config/vitest.config.ts",
+    "test:coverage": "vitest run --config ./config/vitest.config.ts --coverage",
+    "lint": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs",
+    "lint:fix": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs --fix"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "browser": "dist/umd/resultsafe-monorepo-core-fp-result.umd.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./Ok": {
+      "types": "./dist/types/constructors/Ok.d.ts",
+      "import": "./dist/esm/constructors/Ok.js",
+      "require": "./dist/cjs/constructors/Ok.js"
+    },
+    "./Err": {
+      "types": "./dist/types/constructors/Err.d.ts",
+      "import": "./dist/esm/constructors/Err.js",
+      "require": "./dist/cjs/constructors/Err.js"
+    }
+  },
+  "files": [
+    "dist",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ]
+}
+
+

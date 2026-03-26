@@ -1,0 +1,20 @@
+files.exclude:
+  "**/node_modules": true
+  "__temp__": true
+  "__scripts__": true
+  ".*": false
+  ".dist": false
+  "commitlint*": false
+  "prettier*": false
+  "eslint*": false
+  "pnpm*": false
+  "README*": false
+  "tsconfig*": false
+  "vite*": false
+  "vitest*": false
+  "dist": false
+  "config": false
+  "package.json": false
+  "package-lock.json": false
+search.exclude:
+  "**/dist": false

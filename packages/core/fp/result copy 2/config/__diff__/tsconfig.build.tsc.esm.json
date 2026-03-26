@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "../src",
+    "outDir": "../dist/esmTSC",
+    "baseUrl": "..",
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "declarationMap": false,
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "composite": false,
+    "removeComments": false,
+    "stripInternal": false,
+    "tsBuildInfoFile": "../.tsbuildinfo/tsconfig.build.tsc.esm.tsbuildinfo"
+  },
+  "include": ["../src/**/*.ts"]
+}

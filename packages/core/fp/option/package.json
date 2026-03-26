@@ -1,0 +1,27 @@
+{
+  "name": "@resultsafe/core-fp-option",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "clean:dist": "rimraf dist",
+    "build:types": "tsc -b ./config/tsconfig.build.types.json",
+    "build:esm": "vite build --config ./config/vite.config.build.esm.ts",
+    "build:cjs": "vite build --config ./config/vite.config.build.cjs.ts",
+    "build:umd": "vite build --config ./config/vite.config.build.umd.ts",
+    "build:all": "pnpm run clean:dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:umd && pnpm run build:types",
+    "lint": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs",
+    "lint:fix": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs --fix"
+  },
+  "dependencies": {
+    "@resultsafe/core-fp-result-shared": "workspace:*",
+    "@resultsafe/core-fp-option-shared": "workspace:*"
+  },
+  "types": "dist/esm/index.d.ts",
+  "main": "dist/js/index.js"
+}
+
+

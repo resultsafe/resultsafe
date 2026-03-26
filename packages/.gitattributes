@@ -1,0 +1,42 @@
+# Автоматическая нормализация всех текстовых файлов
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# JavaScript, TypeScript, конфигурации — как текст
+*.js       text
+*.ts       text
+*.json     text
+*.yaml     text
+*.yml      text
+*.md       text
+*.html     text
+*.css      text
+*.scss     text
+*.env      text
+*.gitignore text
+*.gitattributes text
+
+# Скрипты и CLI
+*.sh       text
+*.bat      text
+*.cmd      text
+
+# Node-specific
+package.json  text
+package-lock.json text
+*.mjs       text
+*.cjs       text
+
+# Бинарные файлы
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.svg      binary
+*.ico      binary
+*.pdf      binary
+*.zip      binary
+
+# Исключить diff для lock-файлов (по желанию)
+package-lock.json -diff
+

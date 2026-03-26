@@ -1,0 +1,54 @@
+{
+  "name": "@resultsafe/core-fp-shared",
+  "version": "0.1.0",
+  "author": "Denis  Savasteev",
+  "description": "",
+  "keywords": [],
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "types": "dist/esm/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/types/index.js"
+    },
+    "./Result": {
+      "types": "./dist/esm/types/Result.d.ts"
+    },
+    "./Ok": {
+      "types": "./dist/esm/types/Ok.d.ts"
+    },
+    "./Err": {
+      "types": "./dist/esm/types/Err.d.ts"
+    }
+  },
+  "files": [
+    "dist/esm",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "lint": "eslint ./src ./__tests__ --config ./config/eslint.config.mjs --ext .ts",
+    "clean:dist": "rimraf dist",
+    "clean:dist:esm": "rimraf dist/esm",
+    "clean:dist:cjs": "rimraf dist/cjs",
+    "clean:dist:esm-cjs": "pnpm run clean:dist:esm && pnpm run clean:dist:cjs",
+    "readme:create": "ts-node __scripts__/create-readme.ts",
+    "test": "vitest run --config config/vitest.config.ts",
+    "test:watch": "vitest",
+    "build": "pnpm run clean:dist:esm-cjs && vite build --config ./config/vite.config.ts",
+    "build:tsc:types": "pnpm run clean:dist:esm-cjs  && tsc -p ./config/tsconfig.build.tsc.types.json",
+    "docs:html": "pnpm typedoc --options ./config/typedoc-html.json",
+    "docs:md": "pnpm typedoc --options ./config/typedoc-md.json",
+    "docs:docusaurus": "pnpm typedoc --options ./config/typedoc-docusaurus.json",
+    "docs": "pnpm docs:html && pnpm docs:md"
+  }
+}
+
+

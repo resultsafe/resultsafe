@@ -1,0 +1,9 @@
+{
+  "appName": "MyApp",
+  "port": 8080,
+  "theme": "dark",
+  "features": {
+    "login": true,
+    "analytics": false
+  }
+}

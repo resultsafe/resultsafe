@@ -1,0 +1,14 @@
+{
+  "name": "vscode-exclude-toggle",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "exclude": "node src/toggle-files-exclude.js exclude-patterns.yaml"
+  },
+  "bin": {
+    "toggle-exclude": "./src/toggle-exclude.js"
+  },
+  "dependencies": {
+    "yaml": "^2.3.1"
+  }
+}

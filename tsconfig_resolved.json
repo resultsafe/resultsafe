@@ -1,0 +1,252 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        "noImplicitUseStrict": false,
+        "noStrictGenericChecks": false,
+        "suppressExcessPropertyErrors": false,
+        "suppressImplicitAnyIndexErrors": false,
+        "allowImportingTsExtensions": false,
+        "forceConsistentCasingInFileNames": true,
+        "exactOptionalPropertyTypes": true,
+        "isolatedModules": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "verbatimModuleSyntax": true,
+        "target": "es2022",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "moduleDetection": "force",
+        "rootDir": "../src",
+        "baseUrl": "..",
+        "lib": [
+            "es2022",
+            "dom"
+        ],
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true,
+        "allowJs": false,
+        "checkJs": false,
+        "incremental": true,
+        "noEmit": false,
+        "declaration": true,
+        "declarationMap": true,
+        "emitDeclarationOnly": true,
+        "outDir": "../dist/types",
+        "allowArbitraryExtensions": false,
+        "sourceMap": false,
+        "inlineSourceMap": false,
+        "removeComments": false,
+        "composite": true,
+        "paths": {
+            "@resultsafe/core-fp-result": [
+                "packages/core/fp/result/src/index.ts"
+            ],
+            "@resultsafe/core-fp-result/*": [
+                "packages/core/fp/result/src/*"
+            ],
+            "@resultsafe/core-fp-result-shared": [
+                "packages/core/fp/result-shared/src/index.ts"
+            ],
+            "@resultsafe/core-fp-result-shared/*": [
+                "packages/core/fp/result-shared/src/*"
+            ],
+            "@resultsafe/core-fp-shared": [
+                "packages/core/fp/shared/src/index.ts"
+            ],
+            "@resultsafe/core-fp-shared/*": [
+                "packages/core/fp/shared/src/*"
+            ],
+            "@resultsafe/core-fp-union": [
+                "packages/core/fp/union/src/index.ts"
+            ],
+            "@resultsafe/core-fp-union/*": [
+                "packages/core/fp/union/src/*"
+            ],
+            "@resultsafe/core-fp-option": [
+                "packages/core/fp/option/src/index.ts"
+            ],
+            "@resultsafe/core-fp-option/*": [
+                "packages/core/fp/option/src/*"
+            ],
+            "@resultsafe/core-fp-option-shared": [
+                "packages/core/fp/option-shared/src/index.ts"
+            ],
+            "@resultsafe/core-fp-option-shared/*": [
+                "packages/core/fp/option-shared/src/*"
+            ],
+            "@resultsafe/core-fp-either": [
+                "packages/core/fp/either/src/index.ts"
+            ],
+            "@resultsafe/core-fp-either/*": [
+                "packages/core/fp/either/src/*"
+            ],
+            "@resultsafe/core-fp-void": [
+                "packages/core/fp/void/src/index.ts"
+            ],
+            "@resultsafe/core-fp-void/*": [
+                "packages/core/fp/void/src/*"
+            ],
+            "@resultsafe/core-fp-task": [
+                "packages/core/fp/task/src/index.ts"
+            ],
+            "@resultsafe/core-fp-task/*": [
+                "packages/core/fp/task/src/*"
+            ],
+            "@resultsafe/core-fp-task-result": [
+                "packages/core/fp/task-result/src/index.ts"
+            ],
+            "@resultsafe/core-fp-task-result/*": [
+                "packages/core/fp/task-result/src/*"
+            ],
+            "@resultsafe/core-fp-effect": [
+                "packages/core/fp/effect/src/index.ts"
+            ],
+            "@resultsafe/core-fp-effect/*": [
+                "packages/core/fp/effect/src/*"
+            ],
+            "@resultsafe/core-fp-pipe": [
+                "packages/core/fp/pipe/src/index.ts"
+            ],
+            "@resultsafe/core-fp-pipe/*": [
+                "packages/core/fp/pipe/src/*"
+            ],
+            "@resultsafe/core-fp-flow": [
+                "packages/core/fp/flow/src/index.ts"
+            ],
+            "@resultsafe/core-fp-flow/*": [
+                "packages/core/fp/flow/src/*"
+            ],
+            "@resultsafe/core-fp-do": [
+                "packages/core/fp/do/src/index.ts"
+            ],
+            "@resultsafe/core-fp-do/*": [
+                "packages/core/fp/do/src/*"
+            ],
+            "@resultsafe/core-fp-layer": [
+                "packages/core/fp/layer/src/index.ts"
+            ],
+            "@resultsafe/core-fp-layer/*": [
+                "packages/core/fp/layer/src/*"
+            ],
+            "@resultsafe/core-fp-context": [
+                "packages/core/fp/context/src/index.ts"
+            ],
+            "@resultsafe/core-fp-context/*": [
+                "packages/core/fp/context/src/*"
+            ],
+            "@resultsafe/core-fp-codec": [
+                "packages/core/fp/codec/src/index.ts"
+            ],
+            "@resultsafe/core-fp-codec/*": [
+                "packages/core/fp/codec/src/*"
+            ],
+            "@resultsafe/core-fp-module-loader": [
+                "packages/core/fp/module-loader/src/index.ts"
+            ],
+            "@resultsafe/core-fp-module-loader/*": [
+                "packages/core/fp/module-loader/src/*"
+            ],
+            "@resultsafe/core-fp-codec-zod": [
+                "packages/adapter/core/fp/codec/zod/src/index.ts"
+            ],
+            "@resultsafe/core-fp-codec-zod/*": [
+                "packages/adapter/core/fp/codec/zod/src/*"
+            ],
+            "@resultsafe/core-fp-codec-zod": [
+                "packages/adapter/core/fp/codec/zod/src/index.ts"
+            ],
+            "@resultsafe/core-fp-codec-zod/*": [
+                "packages/adapter/core/fp/codec/zod/src/*"
+            ]
+        },
+        "stripInternal": false,
+        "tsBuildInfoFile": "../.tsbuildinfo",
+        "resolvePackageJsonExports": true,
+        "resolvePackageJsonImports": true,
+        "preserveConstEnums": true,
+        "useDefineForClassFields": true,
+        "strictBuiltinIteratorReturn": true,
+        "useUnknownInCatchVariables": true
+    },
+    "files": [
+        "../src/index.ts",
+        "../src/constructors/Err.ts",
+        "../src/constructors/Ok.ts",
+        "../src/constructors/index.ts",
+        "../src/guards/index.ts",
+        "../src/guards/isErr.ts",
+        "../src/guards/isErrAnd.ts",
+        "../src/guards/isOk.ts",
+        "../src/guards/isOkAnd.ts",
+        "../src/methods/andThen.ts",
+        "../src/methods/err.ts",
+        "../src/methods/expect.ts",
+        "../src/methods/expectErr.ts",
+        "../src/methods/flatten.ts",
+        "../src/methods/index.ts",
+        "../src/methods/inspect.ts",
+        "../src/methods/inspectErr.ts",
+        "../src/methods/map.ts",
+        "../src/methods/mapErr.ts",
+        "../src/methods/match.ts",
+        "../src/methods/ok.ts",
+        "../src/methods/orElse.ts",
+        "../src/methods/tap.ts",
+        "../src/methods/tapErr.ts",
+        "../src/methods/transpose.ts",
+        "../src/methods/unwrap.ts",
+        "../src/methods/unwrapErr.ts",
+        "../src/methods/unwrapOr.ts",
+        "../src/methods/unwrapOrElse.ts",
+        "../src/refiners/index.ts",
+        "../src/refiners/isTypedVariant.ts",
+        "../src/refiners/isTypedVariantOf.ts",
+        "../src/refiners/matchVariant.ts",
+        "../src/refiners/matchVariantStrict.ts",
+        "../src/refiners/refineAsyncResult.ts",
+        "../src/refiners/refineAsyncResultU.ts",
+        "../src/refiners/refineResult.ts",
+        "../src/refiners/refineResultU.ts",
+        "../src/refiners/refineVariantMap.ts",
+        "../src/refiners/types/Handler.ts",
+        "../src/refiners/types/MatchBuilder.ts",
+        "../src/refiners/types/Matcher.ts",
+        "../src/refiners/types/SyncRefinedResult.ts",
+        "../src/refiners/types/SyncRefinedResultUnion.ts",
+        "../src/refiners/types/SyncValidatorMap.ts",
+        "../src/refiners/types/UniversalAsyncRefinedResult.ts",
+        "../src/refiners/types/UniversalRefinedResult.ts",
+        "../src/refiners/types/VariantOf.ts",
+        "../src/refiners/types/index.ts",
+        "../src/refiners/utils/getPayloadKeys.ts",
+        "../src/refiners/utils/index.ts"
+    ],
+    "include": [
+        "../src"
+    ],
+    "exclude": [
+        "../dist",
+        "../node_modules"
+    ]
+}
+
+

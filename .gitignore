@@ -1,0 +1,47 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build
+dist/
+build/
+coverage/
+.next/
+out/
+tmp/
+temp/
+
+# turbo / cache
+.turbo/
+.cache/
+.eslintcache
+.nyc_output/
+.playwright/
+test-results/
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env
+.env
+.env.*
+!.env.example
+
+# TypeScript
+*.tsbuildinfo
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# local
+*.local
+**/.npmrc
+
+.npmrc

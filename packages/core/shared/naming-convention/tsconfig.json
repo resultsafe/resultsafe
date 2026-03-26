@@ -1,0 +1,22 @@
+{
+  "extends": "../../../../tsconfig.aliases.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": ".",
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "incremental": true
+  },
+  "include": [
+    "__examples__/**/*.ts",
+    "__scripts__/**/*.ts",
+    "__tests__/**/*.ts",
+    "config/**/*.ts",
+    "dist/**/*.ts",
+    "src"
+  ]
+}
+

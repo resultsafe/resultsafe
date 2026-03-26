@@ -1,0 +1,56 @@
+{
+  "name": "@resultsafe/core-fp-result-shared",
+  "version": "0.1.0",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "clean:dist": "rimraf dist",
+    "build:types": "tsc -b ./config/tsconfig.build.types.json",
+    "check-exports-paths": "pnpx ts-node --esm __scripts__/package-json/check-exports-paths.ts",
+    "check-scripts-paths": "pnpx ts-node --esm __scripts__/package-json/check-scripts-paths.ts"
+  },
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts"
+    },
+    "./guards/isErr": {
+      "types": "./dist/types/guards/isErr.d.ts"
+    },
+    "./guards/isErrAnd": {
+      "types": "./dist/types/guards/isErrAnd.d.ts"
+    },
+    "./guards/isOk": {
+      "types": "./dist/types/guards/isOk.d.ts"
+    },
+    "./guards/isOkAnd": {
+      "types": "./dist/types/guards/isOkAnd.d.ts"
+    },
+    "./guards": {
+      "types": "./dist/types/guards/index.d.ts"
+    },
+    "./guards/*": {
+      "types": "./dist/types/guards/*.d.ts"
+    },
+    "./types/Err": {
+      "types": "./dist/types/types/Err.d.ts"
+    },
+    "./types/Ok": {
+      "types": "./dist/types/types/Ok.d.ts"
+    },
+    "./types/Result": {
+      "types": "./dist/types/types/Result.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
+    },
+    "./types/*": {
+      "types": "./dist/types/types/*.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ]
+}
+
+

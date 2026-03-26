@@ -1,0 +1,22 @@
+{
+  "name": "@resultsafe/core-fp-union",
+  "version": "0.1.0",
+  "type": "module",
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "clean:dist": "rimraf dist && echo Clean completed",
+    "prebuild": "pnpm clean",
+    "build": "tsc -p config/tsconfig.build.tsc.types.json"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ]
+}
+
+

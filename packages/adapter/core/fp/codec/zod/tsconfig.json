@@ -1,0 +1,10 @@
+﻿{
+  "extends": "../../../../../tsconfig.aliases.json",
+
+  "include": [
+    "src/**/*.ts",
+    "__tests__/**/*.ts",
+    "__examples__/**/*.ts",
+    "config"
+  ]
+}

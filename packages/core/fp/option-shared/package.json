@@ -1,0 +1,39 @@
+{
+  "name": "@resultsafe/core-fp-option-shared",
+  "version": "0.1.0",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "clean:dist": "rimraf dist",
+    "build:types": "tsc -b ./config/tsconfig.build.types.json"
+  },
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts"
+    },
+    "./guards": {
+      "types": "./dist/types/guards/index.d.ts"
+    },
+    "./guards/*": {
+      "types": "./dist/types/guards/*.d.ts"
+    },
+    "./guards/isNone": {
+      "types": "./dist/types/guards/isNone.d.ts"
+    },
+    "./guards/isSome": {
+      "types": "./dist/types/guards/isSome.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
+    },
+    "./types/Option": {
+      "types": "./dist/types/types/Option.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ]
+}
+
+
