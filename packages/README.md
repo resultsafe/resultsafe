@@ -1,1 +1,0 @@
-# aaasdv-resultio-monorepo-app

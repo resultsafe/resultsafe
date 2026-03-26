@@ -44,3 +44,10 @@ Thumbs.db
 *.local
 **/.npmrc
 **/.pytest_cache
+
+**/docs/api/
+**/docs/examples/
+**/dist/
+**/coverage/
+**/node_modules/
+

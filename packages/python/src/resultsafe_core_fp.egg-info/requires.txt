@@ -1,5 +1,0 @@
-
-[dev]
-pytest>=8.0
-mypy>=1.10
-build>=0.10
