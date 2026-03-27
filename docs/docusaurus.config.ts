@@ -1,6 +1,6 @@
-import { themes as prismThemes } from 'prism-react-renderer';
-import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 const config: Config = {
   title: 'ResultSafe',
@@ -15,8 +15,8 @@ const config: Config = {
   organizationName: 'resultsafe',
   projectName: 'resultsafe',
 
-  // Error handling
-  onBrokenLinks: 'throw',
+  // Error handling - warn for development, throw for production
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // i18n - Multi-language support

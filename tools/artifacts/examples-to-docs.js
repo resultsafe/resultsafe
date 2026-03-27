@@ -2,32 +2,25 @@
 
 /**
  * Examples to Docusaurus Documentation Generator
- *
- * Converts all examples from __examples__/ to Docusaurus documentation
  */
 
 const fs = require('fs');
 const path = require('path');
 
-// Paths
 const EXAMPLES_DIR = path.join(
   __dirname,
   '../../packages/core/fp/result/__examples__',
 );
 const DOCS_DIR = path.join(__dirname, '../../docs/docs/examples');
 
-// Ensure output directory exists
 fs.mkdirSync(DOCS_DIR, { recursive: true });
 
-// JSDoc parser
 function parseJSDoc(content) {
   const jsdocRegex = /\/\*\*([\s\S]*?)\*\//;
   const match = content.match(jsdocRegex);
-
   if (!match) return null;
 
   const comment = match[1];
-
   return {
     module: extractTag(comment, 'module'),
     title: extractTag(comment, 'title'),
@@ -38,7 +31,6 @@ function parseJSDoc(content) {
     difficulty: extractTag(comment, 'difficulty'),
     time: extractTag(comment, 'time'),
     category: extractTag(comment, 'category'),
-    see: extractTag(comment, 'see'),
   };
 }
 
@@ -48,18 +40,15 @@ function extractTag(comment, tagName) {
   return match ? match[1].trim() : '';
 }
 
-// Generate Markdown from example
 function generateMarkdown(filePath, content, jsdoc) {
   const relativePath = path.relative(EXAMPLES_DIR, filePath);
-
-  // Extract code (everything after JSDoc)
   const code = content.replace(/\/\*\*[\s\S]*?\*\//, '').trim();
 
   return `---
 id: ${path.basename(filePath, '.ts')}
 title: ${jsdoc.title || 'Example'}
 sidebar_label: ${jsdoc.title || 'Example'}
-description: ${jsdoc.description || ''}
+description: ${jsdoc.description || 'Code example demonstrating usage'}
 ${
   jsdoc.tags
     ? `tags: [${jsdoc.tags
@@ -79,20 +68,7 @@ ${jsdoc.description || ''}
 
 ## Source
 
-This example is located at: \`packages/core/fp/result/__examples__/${relativePath.replace(/\\/g, '/')}\`
-
-${
-  jsdoc.tags
-    ? `
-## Tags
-
-${jsdoc.tags
-  .split(',')
-  .map((t) => `- ${t.trim()}`)
-  .join('\n')}
-`
-    : ''
-}
+\`packages/core/fp/result/__examples__/${relativePath.replace(/\\/g, '/')}\`
 
 ${
   jsdoc.example
@@ -112,13 +88,10 @@ ${code}
 
 ---
 
-**Category:** ${jsdoc.category || 'examples'}  
-**Since:** ${jsdoc.since || 'unknown'}  
-${jsdoc.time ? `**Time:** ${jsdoc.time}\n` : ''}
+**Category:** ${jsdoc.category || 'examples'} | **Since:** ${jsdoc.since || 'unknown'}
 `;
 }
 
-// Process all example files
 function processExamples() {
   console.log('🔍 Processing examples...\n');
 
@@ -133,6 +106,32 @@ function processExamples() {
   let total = 0;
   let processed = 0;
 
+  // Create main index
+  const mainIndex = `---
+id: examples
+title: Examples
+sidebar_label: Examples
+description: All 51 examples from ResultSafe library
+---
+
+# Examples
+
+**51 examples** automatically generated from \`packages/core/fp/result/__examples__\`.
+
+## Categories
+
+| Category | Examples | Description |
+|----------|----------|-------------|
+| [Quick Start](./00-quick-start/index.md) | 4 | Get started in minutes |
+| [API Reference](./01-api-reference/index.md) | 38 | Complete API with examples |
+| [Patterns](./02-patterns/index.md) | 9 | Real-world patterns |
+
+---
+
+**Generated:** ${new Date().toISOString().split('T')[0]}
+`;
+  fs.writeFileSync(path.join(DOCS_DIR, 'index.md'), mainIndex);
+
   for (const [categoryDir, categoryName] of Object.entries(categories)) {
     const categoryPath = path.join(EXAMPLES_DIR, categoryDir);
 
@@ -143,32 +142,16 @@ function processExamples() {
 
     console.log(`📁 Processing ${categoryName}...`);
 
-    // Create category directory
     const docsCategoryPath = path.join(DOCS_DIR, categoryDir);
     fs.mkdirSync(docsCategoryPath, { recursive: true });
 
-    // Create category index
-    const categoryIndex = `---
-id: ${categoryDir}
-title: ${categoryName}
-sidebar_label: ${categoryName}
----
+    // Collect examples for index
+    const examplesList = [];
 
-# ${categoryName}
-
-Examples in this category are automatically generated from \`packages/core/fp/result/__examples__/${categoryDir}\`.
-
-## Available Examples
-
-<!-- AUTO-GENERATED LIST -->
-
-`;
-
-    // Recursively find all example.ts files
+    // Find all example.ts files recursively
     function findExampleFiles(dir) {
       let files = [];
       const entries = fs.readdirSync(dir, { withFileTypes: true });
-
       for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
         if (entry.isDirectory()) {
@@ -177,7 +160,6 @@ Examples in this category are automatically generated from \`packages/core/fp/re
           files.push(fullPath);
         }
       }
-
       return files;
     }
 
@@ -197,10 +179,8 @@ Examples in this category are automatically generated from \`packages/core/fp/re
           continue;
         }
 
-        // Generate markdown
         const markdown = generateMarkdown(exampleFile, content, jsdoc);
 
-        // Create relative path for docs file
         const relativePath = path.relative(
           categoryPath,
           path.dirname(exampleFile),
@@ -208,21 +188,18 @@ Examples in this category are automatically generated from \`packages/core/fp/re
         const docsSubdir = path.join(docsCategoryPath, relativePath);
         fs.mkdirSync(docsSubdir, { recursive: true });
 
-        // Write to docs
         const docsFile = path.join(
           docsSubdir,
           `${path.basename(exampleFile, '.ts')}.md`,
         );
         fs.writeFileSync(docsFile, markdown);
 
-        // Update category index
-        const categoryIndexPath = path.join(docsCategoryPath, 'index.md');
-        let categoryContent = fs.readFileSync(categoryIndexPath, 'utf-8');
         const docRelativePath = path
           .relative(docsCategoryPath, docsFile)
           .replace(/\\/g, '/');
-        categoryContent += `- [${jsdoc.title || path.basename(exampleFile, '.ts')}](${docRelativePath})\n`;
-        fs.writeFileSync(categoryIndexPath, categoryContent);
+        examplesList.push(
+          `- [${jsdoc.title || path.basename(exampleFile, '.ts')}](${docRelativePath})`,
+        );
 
         processed++;
         console.log(`  ✅ ${path.relative(EXAMPLES_DIR, exampleFile)}`);
@@ -230,6 +207,27 @@ Examples in this category are automatically generated from \`packages/core/fp/re
         console.error(`  ❌ Error:`, error.message);
       }
     }
+
+    // Write category index
+    const categoryIndex = `---
+id: ${categoryDir}
+title: ${categoryName}
+sidebar_label: ${categoryName}
+---
+
+# ${categoryName}
+
+**${examplesList.length} examples** from \`packages/core/fp/result/__examples__/${categoryDir}\`.
+
+## Examples
+
+${examplesList.join('\n')}
+
+---
+
+**Total:** ${examplesList.length} examples
+`;
+    fs.writeFileSync(path.join(docsCategoryPath, 'index.md'), categoryIndex);
 
     console.log();
   }
@@ -240,5 +238,4 @@ Examples in this category are automatically generated from \`packages/core/fp/re
   console.log('='.repeat(50));
 }
 
-// Run
 processExamples();

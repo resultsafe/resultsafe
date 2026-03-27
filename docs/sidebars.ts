@@ -5,10 +5,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Introduction',
-      link: {
-        type: 'doc',
-        id: 'introduction/01-overview',
-      },
+      link: { type: 'doc', id: 'introduction/01-overview' },
       items: [
         'introduction/01-overview',
         'introduction/02-installation',
@@ -18,36 +15,25 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Guides',
-      link: {
-        type: 'doc',
-        id: 'guides/index',
-      },
+      link: { type: 'doc', id: 'guides/index' },
       items: ['guides/index', 'guides/basic-usage'],
     },
     {
       type: 'category',
       label: 'Patterns',
-      link: {
-        type: 'doc',
-        id: 'patterns/index',
-      },
+      link: { type: 'doc', id: 'patterns/index' },
       items: ['patterns/index'],
     },
     {
       type: 'category',
       label: 'Examples',
-      link: {
-        type: 'doc',
-        id: 'examples/index',
-      },
+      link: { type: 'doc', id: 'examples/index' },
       items: [
+        'examples/index',
         {
           type: 'category',
           label: 'Quick Start',
-          link: {
-            type: 'doc',
-            id: 'examples/00-quick-start/index',
-          },
+          link: { type: 'doc', id: 'examples/00-quick-start/index' },
           items: [
             'examples/00-quick-start/index',
             'examples/00-quick-start/001-hello-world/example',
@@ -59,11 +45,9 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'API Reference',
-          link: {
-            type: 'doc',
-            id: 'examples/01-api-reference/index',
-          },
+          link: { type: 'doc', id: 'examples/01-api-reference/index' },
           items: [
+            'examples/01-api-reference/index',
             {
               type: 'category',
               label: 'Constructors',
@@ -131,11 +115,9 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'Patterns',
-          link: {
-            type: 'doc',
-            id: 'examples/02-patterns/index',
-          },
+          link: { type: 'doc', id: 'examples/02-patterns/index' },
           items: [
+            'examples/02-patterns/index',
             'examples/02-patterns/01-async/001-basics/example',
             'examples/02-patterns/01-async/002-concurrent/example',
             'examples/02-patterns/01-async/003-streams/example',
@@ -150,15 +132,11 @@ const sidebars: SidebarsConfig = {
       ],
     },
   ],
-
   apiSidebar: [
     {
       type: 'category',
       label: '@resultsafe/core-fp-result',
-      link: {
-        type: 'doc',
-        id: 'api/core-fp-result/index',
-      },
+      link: { type: 'doc', id: 'api/core-fp-result/index' },
       items: [
         {
           type: 'category',

@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Introduction": {
+    "message": "Introduction",
+    "description": "The label for category 'Introduction' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Guides": {
+    "message": "Guides",
+    "description": "The label for category 'Guides' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Patterns": {
+    "message": "Patterns",
+    "description": "The label for category 'Patterns' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.doc.Examples (Generated)": {
+    "message": "Examples (Generated)",
+    "description": "The label for the doc item 'Examples (Generated)' in sidebar 'docsSidebar', linking to the doc examples/README"
+  },
+  "sidebar.apiSidebar.category.@resultsafe/core-fp-result": {
+    "message": "@resultsafe/core-fp-result",
+    "description": "The label for category '@resultsafe/core-fp-result' in sidebar 'apiSidebar'"
+  },
+  "sidebar.apiSidebar.category.Constructors": {
+    "message": "Constructors",
+    "description": "The label for category 'Constructors' in sidebar 'apiSidebar'"
+  }
+}
