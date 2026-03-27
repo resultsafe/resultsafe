@@ -1,10 +1,88 @@
 # TypeScript Validation Rules
 
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **Effective Date:** 2026-03-27  
-**Author:** Denis Savasteev
+**Author:** Denis Savasteev  
+**Audience:** Human developers + AI agents (Cursor, Copilot, etc.)
 
 Common TypeScript validation errors and their fixes for examples in `__examples__/`.
+
+---
+
+## ⚡ Quick Start for AI Agents
+
+**If you see these errors, apply the fixes:**
+
+| Error Pattern                             | Quick Fix                               |
+| ----------------------------------------- | --------------------------------------- |
+| `Property 'X' does not exist on type`     | Use correct property from union variant |
+| `HeadersInit type error`                  | Use `Record<string, string>`            |
+| `Property is private`                     | Change to `protected`                   |
+| `undefined not assignable`                | Use `delete` or `\| undefined`          |
+| `Object is possibly 'undefined'` (RegExp) | Check: `match && match[1]`              |
+| `Index signature missing`                 | Add: `[key: string]: unknown`           |
+| `Cannot invoke possibly 'undefined'`      | Add guard: `if (!fn) return`            |
+| `Result<T,E> type mismatch`               | Use explicit return type                |
+
+---
+
+## 🚨 Critical: Understanding Example Validation
+
+### ⭐ Examples are NOT Tests!
+
+**IMPORTANT:** Files in `__examples__/` are **demonstrations**, not tests.
+
+```
+✅ Example files contain: Runnable code demonstrations
+❌ Example files do NOT contain: describe() / it() test blocks
+```
+
+### Why `test:examples` Shows Errors
+
+**Problem:** Running `vitest` on example files produces:
+
+```
+Error: No test suite found in file example.ts
+```
+
+**This is NOT a code error!** This means vitest expects `describe()`/`it()` blocks, but examples are demonstrations.
+
+### ✅ Correct Validation Pipeline
+
+**Use `validate:examples`, NOT `test:examples`:**
+
+```bash
+# ❌ WRONG - Examples are not tests
+pnpm run test:examples  # Will show "No test suite found" errors
+
+# ✅ CORRECT - Validates examples without running as tests
+pnpm run validate:examples
+```
+
+### What `validate:examples` Checks
+
+```bash
+pnpm run validate:examples
+├── pnpm run validate:ai-json    # ✅ AI JSDoc JSON structure
+├── pnpm run lint:examples       # ✅ ESLint code style
+└── pnpm run typecheck:examples  # ✅ TypeScript type checking
+```
+
+**All three must pass for examples to be valid.**
+
+---
+
+## 📋 For AI Agents: Validation Rules
+
+**When editing example files, ALWAYS:**
+
+1. **Check TypeScript types** - Run `pnpm run typecheck:examples`
+2. **Check ESLint** - Run `pnpm run lint:examples`
+3. **Check AI JSDoc** - Run `pnpm run validate:ai-json`
+4. **NEVER add `describe()`/`it()` blocks** - Examples are demonstrations
+5. **Use `validate:examples`** - NOT `test:examples`
+
+**If you see "No test suite found" - this is expected! Examples don't have tests.**
 
 ---
 
@@ -471,6 +549,8 @@ const tertiary = (): Result<string, FetchError> => Ok('Success!'); // ✅
 
 ## Validation Commands
 
+### For Human Developers
+
 ```bash
 # Full validation (AI JSDoc + ESLint + TypeScript)
 pnpm run validate:examples
@@ -493,6 +573,18 @@ pnpm publish --dry-run
 # Automatically runs: validate:examples
 ```
 
+### For AI Agents
+
+**When asked to validate examples:**
+
+```bash
+# ✅ ALWAYS use this command
+pnpm run validate:examples
+
+# ❌ NEVER use this - examples are NOT tests
+pnpm run test:examples  # Will fail with "No test suite found"
+```
+
 ### Automatic Validation Pipeline
 
 | Command                   | Runs Before | Checks                                               |
@@ -501,10 +593,95 @@ pnpm publish --dry-run
 | `pnpm publish`            | Publish     | `validate:examples` + `test` + `verify:release`      |
 | `pnpm run verify:release` | Release     | `test` + build artifacts                             |
 
-**Note:** `test:examples` is **NOT** used because example files are demonstrations, not tests. They contain runnable code, not `describe()`/`it()` blocks.
+---
+
+## ⚠️ Common Mistakes
+
+### Mistake #1: Using `test:examples`
+
+```bash
+# ❌ WRONG
+pnpm run test:examples
+# Error: No test suite found in file example.ts
+```
+
+**Why it's wrong:** Examples are demonstrations, not tests. They don't have `describe()`/`it()` blocks.
+
+**Correct:**
+
+```bash
+# ✅ RIGHT
+pnpm run validate:examples
+# Checks: AI JSDoc + ESLint + TypeScript
+```
+
+---
+
+### Mistake #2: Adding Test Blocks to Examples
+
+```typescript
+// ❌ WRONG - Don't add test blocks to examples
+describe('Example', () => {
+  it('should work', () => {
+    // This is NOT an example pattern
+  });
+});
+```
+
+**Why it's wrong:** Examples should be standalone runnable code, not tests.
+
+**Correct:**
+
+```typescript
+// ✅ RIGHT - Examples are demonstrations
+/**
+ * @module 001-basic
+ * @example
+ * const result = Ok(42);
+ * console.log(result);
+ */
+const result = Ok(42);
+console.log(result);
+```
+
+---
+
+### Mistake #3: Skipping Validation Before Build
+
+```bash
+# ❌ WRONG - Building without validation
+pnpm run build:all
+# May succeed even with TypeScript errors in examples
+```
+
+**Why it's wrong:** Since `prebuild:all` now runs `validate:examples`, this is actually automatic. But always check validation first when editing examples.
+
+**Correct:**
+
+```bash
+# ✅ RIGHT - Validate first, then build
+pnpm run validate:examples
+pnpm run build:all
+```
+
+---
+
+## ✅ Checklist for AI Agents
+
+**Before submitting changes to example files:**
+
+- [ ] Run `pnpm run typecheck:examples` - No TypeScript errors
+- [ ] Run `pnpm run lint:examples` - No ESLint errors
+- [ ] Run `pnpm run validate:ai-json` - All AI JSDoc valid
+- [ ] OR just run `pnpm run validate:examples` - All three checks
+- [ ] Did NOT add `describe()`/`it()` test blocks
+- [ ] Did NOT use `pnpm run test:examples`
+
+**If all checks pass → Changes are ready to commit!**
 
 ---
 
 **Last Updated:** 2026-03-27  
-**Version:** 1.0.0  
-**Maintainer:** Denis Savasteev
+**Version:** 1.1.0  
+**Maintainer:** Denis Savasteev  
+**Audience:** Human developers + AI agents
