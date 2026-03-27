@@ -32,7 +32,7 @@ console.log(
   '10 / 2 =',
   match(
     result1,
-    (value) => value,
+    (value) => `${value}`,
     (error) => `Error: ${error}`,
   ),
 ); // 5
@@ -43,7 +43,7 @@ console.log(
   '10 / 0 =',
   match(
     result2,
-    (value) => value,
+    (value) => `${value}`,
     (error) => `Error: ${error}`,
   ),
 ); // "Error: Division by zero"
