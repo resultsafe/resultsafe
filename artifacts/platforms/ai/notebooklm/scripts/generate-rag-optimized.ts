@@ -47,6 +47,10 @@ function parseExampleFile(filePath: string): RAGDoc | null {
     [];
   const answer = `Use ${[...new Set(functions)].join(', ')} to handle this.`;
 
+  // Extract category from folder structure
+  const relativePath = filePath.replace(EXAMPLES_DIR + '/', '');
+  const categoryFolder = relativePath.split('/')[0] || 'examples';
+
   return {
     module: getTag('module'),
     title: getTag('title') || 'Example',
@@ -58,7 +62,7 @@ function parseExampleFile(filePath: string): RAGDoc | null {
       .split(',')
       .map((t) => t.trim())
       .filter(Boolean),
-    category: getTag('category') || 'examples',
+    category: categoryFolder,
     difficulty: getTag('difficulty') || 'intermediate',
     related: extractRelated(code),
   };
