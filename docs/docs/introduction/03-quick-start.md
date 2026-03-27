@@ -1,5 +1,5 @@
 ---
-id: quick-start
+id: 03-quick-start
 title: Quick Start
 sidebar_label: Quick Start
 description: Get started with ResultSafe in 5 minutes

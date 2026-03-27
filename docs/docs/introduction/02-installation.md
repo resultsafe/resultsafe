@@ -1,5 +1,5 @@
 ---
-id: installation
+id: 02-installation
 title: Installation
 sidebar_label: Installation
 description: How to install ResultSafe in your project
