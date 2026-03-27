@@ -1,9 +1,11 @@
 # ResultSafe Project Context
 
 ## Project Overview
+
 ResultSafe is a functional programming library for TypeScript implementing Result type pattern.
 
 ## Key Concepts
+
 - **Result<T, E>** - Type for explicit error handling
 - **Ok(value)** - Success case constructor
 - **Err(error)** - Error case constructor
@@ -11,28 +13,77 @@ ResultSafe is a functional programming library for TypeScript implementing Resul
 - **Zero dependencies** - No external runtime dependencies
 
 ## Code Style
+
 - Always use explicit types for public APIs
 - JSDoc with @module, @title, @description tags
-- Examples in __examples__ directory
+- Examples in **examples** directory
 - Functional composition over OOP
 
 ## Common Patterns
+
 ```typescript
 // Error handling
 const result = divide(10, 2);
-match(result, 
+match(
+  result,
   (value) => console.log(value),
-  (error) => console.error(error)
+  (error) => console.error(error),
 );
 
 // Chaining
 Ok(5)
-  .map(x => x * 2)
-  .andThen(x => Ok(x.toString()));
+  .map((x) => x * 2)
+  .andThen((x) => Ok(x.toString()));
 ```
 
 ## When Editing
+
 - Always add JSDoc to new functions
 - Include at least one example
 - Update VALIDATION_GUIDE.md if changing validation logic
 - Run `pnpm run validate:examples` before commit
+
+## AI Agent: NotebookLM RAG Generation
+
+When user asks about generating documentation for NotebookLM:
+
+### Step 1: Check JSDoc Tags
+
+```bash
+pnpm exec tsx scripts/add-module-tags.ts
+```
+
+Ensure output shows "All examples have complete JSDoc!"
+
+### Step 2: Generate RAG Files
+
+```bash
+pnpm exec tsx artifacts/platforms/ai/notebooklm/scripts/generate-rag-optimized.ts
+```
+
+Expected: 3 files generated (getting-started, core-concepts, real-world)
+
+### Step 3: Validate
+
+```bash
+pnpm exec tsx artifacts/platforms/ai/notebooklm/scripts/validate.ts
+```
+
+Expected: "All validations passed!"
+
+### Step 4: Import Guide
+
+Direct user to:
+
+1. https://notebooklm.google.com/
+2. Create notebook "ResultSafe Documentation"
+3. Upload files from `artifacts/platforms/ai/notebooklm/output/`
+4. Wait for indexing
+5. Test with: "Show Ok constructor examples"
+
+## File Locations
+
+- RAG Generator: `artifacts/platforms/ai/notebooklm/scripts/generate-rag-optimized.ts`
+- Validator: `artifacts/platforms/ai/notebooklm/scripts/validate.ts`
+- Output: `artifacts/platforms/ai/notebooklm/output/`
+- Guide: `artifacts/platforms/ai/notebooklm/GENERATION_GUIDE.md`
