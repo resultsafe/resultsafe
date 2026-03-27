@@ -227,6 +227,21 @@ console.log(result2.value); // 42
 
 ## Implementation
 
+### Full Validation Pipeline
+
+```bash
+# Run all validations (recommended)
+pnpm run validate:examples
+
+# Individual checks
+pnpm run typecheck:examples    # TypeScript type checking
+pnpm run lint:examples          # ESLint code style
+pnpm run validate:ai-json       # AI JSDoc JSON validation
+pnpm run test:examples          # Runtime execution tests
+```
+
+**Documentation:** See [VALIDATION_GUIDE.md](./VALIDATION_GUIDE.md) for complete details.
+
 ### Validation (@ai JSON)
 
 ```bash
@@ -234,7 +249,7 @@ console.log(result2.value); // 42
 pnpm run validate:ai-json
 
 # Output:
-# ✅ Valid: 9
+# ✅ Valid: 51
 # ❌ Invalid: 0
 ```
 

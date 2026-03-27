@@ -5,9 +5,14 @@
 ### 1. **Local Development**
 
 ```bash
-# Before commit
-pnpm run validate:ai-json
-pnpm run lint:examples
+# Before commit (recommended)
+pnpm run validate:examples
+
+# Individual checks
+pnpm run typecheck:examples    # TypeScript type checking
+pnpm run lint:examples          # ESLint code style
+pnpm run validate:ai-json       # AI JSDoc validation
+pnpm run test:examples          # Runtime execution tests
 
 # Before build (automatic)
 pnpm run build:all
@@ -16,7 +21,10 @@ pnpm run build:all
 # Before publish (automatic)
 pnpm run prepublishOnly
 # Runs: verify:release → validate:ai-json → lint:examples
+# verify:release includes: test → test:examples → check:release:pack
 ```
+
+**Documentation:** See [VALIDATION_GUIDE.md](./VALIDATION_GUIDE.md) for complete details.
 
 ### 2. **GitHub Push/PR**
 
@@ -54,13 +62,16 @@ pnpm run prepublishOnly
 
 ## 📁 File Locations
 
-| File                | Location                            | Purpose                   |
-| ------------------- | ----------------------------------- | ------------------------- |
-| **Standard**        | `__examples__/AI_JSDOC_STANDARD.md` | AI JSDoc specification    |
-| **Validator**       | `__scripts__/validate-ai-json.js`   | AI JSON validation script |
-| **ESLint Config**   | `config/eslint.config.examples.mjs` | ESLint for examples       |
-| **GitHub Workflow** | `.github/workflows/examples.yml`    | CI/CD pipeline            |
-| **Package Scripts** | `package.json`                      | npm scripts               |
+| File                  | Location                            | Purpose                    |
+| --------------------- | ----------------------------------- | -------------------------- |
+| **Standard**          | `__examples__/AI_JSDOC_STANDARD.md` | AI JSDoc specification     |
+| **Validator**         | `__scripts__/validate-ai-json.js`   | AI JSON validation script  |
+| **TypeScript Config** | `tsconfig.examples.json`            | Type-check configuration   |
+| **Vitest Config**     | `config/vitest.config.examples.ts`  | Runtime test configuration |
+| **ESLint Config**     | `config/eslint.config.examples.mjs` | ESLint for examples        |
+| **Validation Guide**  | `__examples__/VALIDATION_GUIDE.md`  | Developer documentation    |
+| **GitHub Workflow**   | `.github/workflows/examples.yml`    | CI/CD pipeline             |
+| **Package Scripts**   | `package.json`                      | npm scripts                |
 
 ---
 
@@ -71,13 +82,18 @@ pnpm run prepublishOnly
 ```json
 {
   "scripts": {
+    "validate:examples": "pnpm run validate:ai-json && pnpm run lint:examples && pnpm run typecheck:examples",
+    "typecheck:examples": "tsc --noEmit -p ./tsconfig.examples.json",
+    "test:examples": "vitest run --config ./config/vitest.config.examples.ts",
+    "test:examples:watch": "vitest --config ./config/vitest.config.examples.ts",
     "validate:ai-json": "node ./__scripts__/validate-ai-json.js",
     "lint:examples": "eslint __examples__/**/*.ts --config config/eslint.config.examples.mjs",
     "lint": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs",
     "lint:fix": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs --fix",
     "prebuild:types": "pnpm run validate:ai-json",
     "prebuild:all": "pnpm run validate:ai-json && pnpm run lint:examples",
-    "prepublishOnly": "pnpm run verify:release && pnpm run validate:ai-json && pnpm run lint:examples && pnpm run lint"
+    "verify:release": "pnpm run build:release && pnpm run check:release:artifacts && pnpm run test && pnpm run test:examples && pnpm run check:release:pack",
+    "prepublishOnly": "pnpm run verify:release && pnpm run validate:ai-json && pnpm run lint:examples"
   }
 }
 ```
@@ -138,7 +154,37 @@ node ../../scripts/migrate-since-tags.mjs
 
 ## ✅ What Gets Validated
 
-### AI JSDoc JSON Structure
+### 1. TypeScript Type Checking
+
+**Command:** `pnpm run typecheck:examples`
+
+**Config:** `tsconfig.examples.json`
+
+**Checks:**
+
+- ✅ Type correctness
+- ✅ Import/export validity
+- ✅ Generic type parameters
+- ✅ No emit (compilation only)
+
+### 2. ESLint Code Style
+
+**Command:** `pnpm run lint:examples`
+
+**Config:** `config/eslint.config.examples.mjs`
+
+**Checks:**
+
+- ✅ JSDoc `@description` present (warn)
+- ✅ JSDoc `@example` present (warn)
+- ✅ TypeScript syntax valid
+- ✅ No console errors (disabled for examples)
+
+### 3. AI JSDoc JSON Structure
+
+**Command:** `pnpm run validate:ai-json`
+
+**Script:** `__scripts__/validate-ai-json.js`
 
 ```javascript
 @ai {
@@ -177,12 +223,14 @@ node ../../scripts/migrate-since-tags.mjs
 
 ## 🚨 Failure Scenarios
 
-| Scenario         | Where Blocked                       | Fix                |
-| ---------------- | ----------------------------------- | ------------------ |
-| Invalid @ai JSON | Local build, GitHub CI, npm publish | Fix JSON structure |
-| ESLint errors    | Local build, GitHub CI, npm publish | Fix code style     |
-| Missing @module  | Validation script                   | Add @module tag    |
-| Missing @ai      | Validation script                   | Add @ai JSON       |
+| Scenario         | Where Blocked                       | Fix                  |
+| ---------------- | ----------------------------------- | -------------------- |
+| Type errors      | Local build, GitHub CI              | Fix TypeScript types |
+| Invalid @ai JSON | Local build, GitHub CI, npm publish | Fix JSON structure   |
+| ESLint errors    | Local build, GitHub CI, npm publish | Fix code style       |
+| Missing @module  | Validation script                   | Add @module tag      |
+| Missing @ai      | Validation script                   | Add @ai JSON         |
+| Runtime errors   | test:examples                       | Fix execution errors |
 
 ---
 
@@ -190,19 +238,33 @@ node ../../scripts/migrate-since-tags.mjs
 
 ### Validation Output
 
-```
-🔍 Validating AI JSDoc JSON in examples...
+```bash
+# Full validation
+$ pnpm run validate:examples
 
-✅ __examples__/01-api-reference/01-constructors/01-ok/001-basic-usage/example.ts: Valid @ai JSON
-✅ __examples__/01-api-reference/01-constructors/01-ok/002-with-generics/example.ts: Valid @ai JSON
+🔍 Validating AI JSDoc JSON in examples...
+✅ __examples__/00-quick-start/001-hello-world/example.ts: Valid @ai JSON
+✅ __examples__/00-quick-start/002-basic-usage/example.ts: Valid @ai JSON
 
 ==================================================
-✅ Valid: 7
+✅ Valid: 51
 ❌ Invalid: 0
-⏭️  Skipped (no @module): 125
+⏭️  Skipped (no @module): 0
 ==================================================
 
 ✅ All examples have valid @ai JSON!
+
+# Type check
+$ pnpm run typecheck:examples
+✅ No type errors
+
+# ESLint
+$ pnpm run lint:examples
+✅ No lint errors
+
+# Runtime tests
+$ pnpm run test:examples
+✅ All examples executed successfully
 ```
 
 ### CI/CD Status
