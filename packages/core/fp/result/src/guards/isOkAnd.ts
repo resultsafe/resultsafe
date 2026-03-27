@@ -2,12 +2,12 @@ import { type Result } from '../types/core/index.js';
 import { isOk } from './isOk.js';
 
 /**
- * Проверяет, что `Result` успешен и удовлетворяет предикату.
+ * Checks that the `Result` is successful and satisfies the predicate.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - `Result` для проверки.
- * @param predicate - Предикат, применяемый к успешному значению.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The `Result` to check.
+ * @param predicate - The predicate applied to the success value.
  * @returns `true` when the value is `Ok` and the predicate returns `true`.
  * @since 0.1.0
  * @see {@link isOk} - Performs the base success check.

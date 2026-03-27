@@ -2,15 +2,15 @@ import { isErr } from '../guards/isErr.js';
 import { type Result } from '../types/core/index.js';
 
 /**
- * Выполняет побочный эффект для значения ошибки и возвращает исходный `Result`.
+ * Performs a side effect for the error value and returns the original `Result`.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @param fn - Функция побочного эффекта для ветки ошибки.
- * @returns Тот же экземпляр `Result`.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @param fn - The side effect function for the error branch.
+ * @returns The same `Result` instance.
  * @since 0.1.0
- * @see {@link tapErr} - Эквивалентный helper для ветки ошибки.
+ * @see {@link tapErr} - Equivalent helper for the error branch.
  * @example
  * ```ts
  * import { Err, inspectErr } from '@resultsafe/core-fp-result';

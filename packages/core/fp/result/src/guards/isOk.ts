@@ -1,11 +1,11 @@
 import type { Result } from '../types/core/index.js';
 
 /**
- * Проверяет, находится ли `Result` в ветке успеха.
+ * Checks whether a `Result` is in the success branch.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - `Result` для проверки.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The `Result` to check.
  * @returns `true` when `result.ok` equals `true`.
  * @since 0.1.0
  * @see {@link isErr} - Checks the error branch.

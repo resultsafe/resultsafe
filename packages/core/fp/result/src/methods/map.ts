@@ -2,16 +2,16 @@ import { isOk } from '../guards/isOk.js';
 import { type Result } from '../types/core/index.js';
 
 /**
- * Преобразует успешное значение, сохраняя ветку ошибки.
+ * Transforms the success value while preserving the error branch.
  *
- * @typeParam T - Тип входного успешного значения.
- * @typeParam U - Тип выходного успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @param fn - Функция преобразования успешного значения.
- * @returns Преобразованный `Ok` или исходный `Err`.
+ * @typeParam T - The input success value type.
+ * @typeParam U - The output success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @param fn - The transformation function for the success value.
+ * @returns The transformed `Ok` or the original `Err`.
  * @since 0.1.0
- * @see {@link mapErr} - Преобразует ветку ошибки.
+ * @see {@link mapErr} - Transforms the error branch.
  * @example
  * ```ts
  * import { Ok, map } from '@resultsafe/core-fp-result';

@@ -1,14 +1,14 @@
 import type { Handler, MatchBuilder, VariantOf } from './types/index.js';
 
 /**
- * Создает строгий matcher, выбрасывающий исключение для необработанных вариантов.
+ * Creates a strict matcher that throws an exception for unhandled variants.
  *
- * @typeParam T - Тип дискриминированного объединения.
- * @param value - Значение объединения для сопоставления.
- * @returns Строгий builder сопоставления, требующий явных обработчиков.
- * @throws Error - Выбрасывает исключение, если ни один зарегистрированный обработчик не соответствует `value.type`.
+ * @typeParam T - The discriminated union type.
+ * @param value - The union value to match.
+ * @returns A strict match builder requiring explicit handlers.
+ * @throws Error - Throws an exception if no registered handler matches `value.type`.
  * @since 0.1.0
- * @see {@link matchVariant} - Использует fallback-ветку вместо выброса исключения.
+ * @see {@link matchVariant} - Uses a fallback branch instead of throwing.
  * @example
  * ```ts
  * import { matchVariantStrict } from '@resultsafe/core-fp-result';

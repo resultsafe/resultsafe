@@ -2,16 +2,16 @@ import { isOk } from '../guards/isOk.js';
 import { type Result } from '../types/core/index.js';
 
 /**
- * Возвращает успешное значение или выбрасывает исключение с пользовательским сообщением.
+ * Returns the success value or throws an exception with a custom message.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @param msg - Сообщение об ошибке, используемое когда `result` имеет `Err`.
- * @returns Распакованное успешное значение.
- * @throws Error - Выбрасывает исключение, когда `result` имеет `Err`.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @param msg - The error message used when `result` is `Err`.
+ * @returns The unwrapped success value.
+ * @throws Error - Throws an exception when `result` is `Err`.
  * @since 0.1.0
- * @see {@link expectErr} - Симметричный helper для ветки ошибки.
+ * @see {@link expectErr} - Symmetric helper for the error branch.
  * @example
  * ```ts
  * import { Ok, expect } from '@resultsafe/core-fp-result';

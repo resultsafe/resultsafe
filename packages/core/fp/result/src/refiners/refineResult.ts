@@ -6,13 +6,13 @@ import type { UniversalRefinedResult } from './types/index.js';
 import { getPayloadKeys } from './utils/index.js';
 
 /**
- * Создает синхронный refiner варианта с валидаторами payload.
+ * Creates a sync variant refiner with payload validators.
  *
- * @typeParam TMap - Тип карты конфигурации вариантов.
- * @param variantMap - Карта, описывающая допустимые варианты и поля payload.
+ * @typeParam TMap - The variant configuration map type.
+ * @param variantMap - The map describing valid variants and payload fields.
  * @returns A curried refiner factory bound to `variantMap`.
  * @since 0.1.0
- * @see {@link refineResultU} - Непосредственный (не-curry) вариант helper.
+ * @see {@link refineResultU} - Direct (non-curried) helper variant.
  * @example
  * ```ts
  * import { refineResult } from '@resultsafe/core-fp-result';
@@ -55,19 +55,19 @@ export const refineResult =
   };
 
 /**
- * Уточняет значение по карте вариантов в не-curry стиле вызова.
+ * Refines a value by variant map in non-curried call style.
  *
- * @typeParam TMap - Тип карты конфигурации вариантов.
- * @typeParam K - Ключ целевого варианта.
- * @typeParam TValidators - Карта валидаторов для полей payload.
- * @param value - Значение для валидации и уточнения.
- * @param variant - Ключ целевого варианта.
- * @param variantMap - Карта конфигурации вариантов.
- * @param validators - Валидаторы payload для целевого варианта.
- * @returns Уточненное значение или `null`.
+ * @typeParam TMap - The variant configuration map type.
+ * @typeParam K - The target variant key.
+ * @typeParam TValidators - The validator map for payload fields.
+ * @param value - The value to validate and refine.
+ * @param variant - The target variant key.
+ * @param variantMap - The variant configuration map.
+ * @param validators - The payload validators for the target variant.
+ * @returns The refined value or `null`.
  * @remarks
- * Этот экспорт сохранен для совместимости. Предпочитайте {@link refineResultU} из
- * `refineResultU.ts` как каноническую точку входа без curry.
+ * This export is kept for compatibility. Prefer {@link refineResultU} from
+ * `refineResultU.ts` as the canonical non-curried entry point.
  * @since 0.1.0
  * @example
  * ```ts

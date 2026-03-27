@@ -5,14 +5,14 @@ import type { SyncRefinedResultUnion } from './types/SyncRefinedResultUnion.js';
 import type { SyncValidatorMap } from './types/SyncValidatorMap.js';
 
 /**
- * Уточняет значение дискриминированного объединения по полной карте вариантов.
+ * Refines a discriminated union value by a full variant map.
  *
- * @typeParam TMap - Тип карты конфигурации вариантов.
- * @typeParam TValidators - Тип карты валидаторов по вариантам.
- * @param value - Значение для валидации и уточнения.
- * @param variantMap - Полная карта конфигурации вариантов.
- * @param validators - Валидаторы, сгруппированные по ключу варианта.
- * @returns Уточненный элемент объединения или `null`.
+ * @typeParam TMap - The variant configuration map type.
+ * @typeParam TValidators - The validator map type by variant.
+ * @param value - The value to validate and refine.
+ * @param variantMap - The full variant configuration map.
+ * @param validators - The validators grouped by variant key.
+ * @returns The refined union member or `null`.
  * @since 0.1.0
  * @see {@link refineResult} - Refines one concrete variant key.
  * @example
@@ -48,20 +48,20 @@ export function refineVariantMap<
   const rawType = (value as { type?: unknown }).type;
   if (typeof rawType !== 'string' || !(rawType in variantMap)) return null;
 
-  // фиксируем конкретный ключ варианта
+  // fix the specific variant key
   type K = Extract<keyof TMap, string>;
   const k = rawType as K;
 
   const config = variantMap[k];
   if (!config) return null;
 
-  // ключи payload для конкретного K
+  // payload keys for the specific K
   const payload = config.payload;
   const keys = (
     payload === 'never' ? [] : Array.isArray(payload) ? payload : [payload]
   ) as readonly PayloadKeys<TMap[typeof k]>[];
 
-  // валидаторы, согласованные с конкретным K
+  // validators aligned with the specific K
   const vvs = validators[k] as
     | Partial<Record<PayloadKeys<TMap[typeof k]>, ValidatorFn>>
     | undefined;

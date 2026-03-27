@@ -2,15 +2,15 @@ import { isErr } from '../guards/isErr.js';
 import { type Result } from '../types/core/index.js';
 
 /**
- * Возвращает значение ошибки или выбрасывает исключение, если результат `Ok`.
+ * Returns the error value or throws an exception if the result is `Ok`.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @returns Payload ошибки.
- * @throws Error - Выбрасывает исключение при вызове на `Ok`.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @returns The error payload.
+ * @throws Error - Throws an exception when called on `Ok`.
  * @since 0.1.0
- * @see {@link unwrapOrElse} - Возвращает fallback успеха без выброса исключения.
+ * @see {@link unwrapOrElse} - Returns a success fallback without throwing.
  * @example
  * ```ts
  * import { Err, unwrapErr } from '@resultsafe/core-fp-result';

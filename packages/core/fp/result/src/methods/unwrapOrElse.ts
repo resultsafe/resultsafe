@@ -1,15 +1,15 @@
 import { type Result } from '../types/core/index.js';
 
 /**
- * Возвращает успешное значение или вычисляет fallback из ошибки.
+ * Returns the success value or computes a fallback from the error.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @param fn - Функция-поставщик fallback для `Err`.
- * @returns Payload успеха или вычисленный fallback.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @param fn - The fallback provider function for `Err`.
+ * @returns The success payload or the computed fallback.
  * @since 0.1.0
- * @see {@link unwrapOr} - Использует eager fallback-значение.
+ * @see {@link unwrapOr} - Uses an eager fallback value.
  * @example
  * ```ts
  * import { Err, unwrapOrElse } from '@resultsafe/core-fp-result';

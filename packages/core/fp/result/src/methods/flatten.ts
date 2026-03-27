@@ -1,11 +1,11 @@
 import { type Result } from '../types/core/index.js';
 
 /**
- * Схлопывает вложенный `Result<Result<T, E>, E>` на один уровень.
+ * Collapses a nested `Result<Result<T, E>, E>` one level.
  *
  * @typeParam T - The inner success value type.
  * @typeParam E - The shared error value type.
- * @param result - Вложенный `Result` для схлопывания.
+ * @param result - The nested `Result` to collapse.
  * @returns A single-layer `Result<T, E>`.
  * @since 0.1.0
  * @see {@link andThen} - Chains computations that already return `Result`.

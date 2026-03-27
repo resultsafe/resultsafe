@@ -1,11 +1,11 @@
 import type { Result } from '../types/core/index.js';
 
 /**
- * Создает успешное значение `Result` из переданного payload.
+ * Creates a successful `Result` value from the provided payload.
  *
- * @typeParam T - Тип успешного значения.
+ * @typeParam T - The success value type.
  * @typeParam E - The error type for the resulting `Result`.
- * @param value - Payload успеха для обёртки.
+ * @param value - The success payload to wrap.
  * @returns A `Result` with `ok: true` and the provided `value`.
  * @since 0.1.0
  * @see {@link Err} - Creates an error `Result`.

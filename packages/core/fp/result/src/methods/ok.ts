@@ -3,14 +3,14 @@ import { None, Some } from '../internal/option.js';
 import { type Option, type Result } from '../types/core/index.js';
 
 /**
- * Извлекает успешную ветку в виде `Option`.
+ * Extracts the success branch as an `Option`.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @returns `Some(value)` для `Ok`, иначе `None`.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @returns `Some(value)` for `Ok`, otherwise `None`.
  * @since 0.1.0
- * @see {@link err} - Извлекает ветку ошибки.
+ * @see {@link err} - Extracts the error branch.
  * @example
  * ```ts
  * import { Ok, ok } from '@resultsafe/core-fp-result';

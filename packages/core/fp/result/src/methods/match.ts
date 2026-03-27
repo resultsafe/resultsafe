@@ -1,15 +1,15 @@
 import { type Result } from '../types/core/index.js';
 
 /**
- * Выполняет сопоставление `Result` в единое выходное значение.
+ * Pattern matches the `Result` into a single output value.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
  * @typeParam U - The output type returned by both handlers.
- * @param result - Исходный `Result`.
- * @param okFn - Обработчик для ветки успеха.
- * @param errFn - Обработчик для ветки ошибки.
- * @returns Выходное значение, полученное от выбранного обработчика.
+ * @param result - The source `Result`.
+ * @param okFn - The handler for the success branch.
+ * @param errFn - The handler for the error branch.
+ * @returns The output value produced by the selected handler.
  * @since 0.1.0
  * @see {@link unwrapOrElse} - Similar shape with default fallback semantics.
  * @example

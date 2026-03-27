@@ -5,18 +5,18 @@ import { refineResult } from './refineResult.js';
 import type { SyncRefinedResult } from './types/index.js';
 
 /**
- * Уточняет значение по карте вариантов в не-curry стиле вызова.
+ * Refines a value by variant map in non-curried call style.
  *
- * @typeParam TMap - Тип карты конфигурации вариантов.
- * @typeParam K - Ключ целевого варианта.
- * @typeParam TValidators - Карта валидаторов для полей payload.
- * @param value - Значение для валидации и уточнения.
- * @param variant - Ключ целевого варианта.
- * @param variantMap - Карта конфигурации вариантов.
- * @param validators - Валидаторы payload для целевого варианта.
- * @returns Уточненное значение или `null`.
+ * @typeParam TMap - The variant configuration map type.
+ * @typeParam K - The target variant key.
+ * @typeParam TValidators - The validator map for payload fields.
+ * @param value - The value to validate and refine.
+ * @param variant - The target variant key.
+ * @param variantMap - The variant configuration map.
+ * @param validators - The payload validators for the target variant.
+ * @returns The refined value or `null`.
  * @since 0.1.0
- * @see {@link refineResult} - Curry-конструктор refiner.
+ * @see {@link refineResult} - Curry-style refiner constructor.
  * @example
  * ```ts
  * import { refineResultU } from '@resultsafe/core-fp-result';

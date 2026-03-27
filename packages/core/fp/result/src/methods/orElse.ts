@@ -2,16 +2,16 @@ import { isErr } from '../guards/isErr.js';
 import { type Result } from '../types/core/index.js';
 
 /**
- * Восстанавливается из ошибки, преобразуя `Err` в другой `Result`.
+ * Recovers from an error by transforming `Err` into another `Result`.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип входного значения ошибки.
- * @typeParam F - Тип выходного значения ошибки.
- * @param result - Исходный `Result`.
- * @param fn - Функция восстановления, применяемая для `Err`.
- * @returns Восстановленный `Result` или исходный `Ok`.
+ * @typeParam T - The success value type.
+ * @typeParam E - The input error value type.
+ * @typeParam F - The output error value type.
+ * @param result - The source `Result`.
+ * @param fn - The recovery function applied to `Err`.
+ * @returns The recovered `Result` or the original `Ok`.
  * @since 0.1.0
- * @see {@link andThen} - Цепляет ветку успеха.
+ * @see {@link andThen} - Chains the success branch.
  * @example
  * ```ts
  * import { Err, Ok, orElse } from '@resultsafe/core-fp-result';

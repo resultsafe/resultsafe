@@ -2,12 +2,12 @@ import { None, Some } from '../internal/option.js';
 import { type Option, type Result } from '../types/core/index.js';
 
 /**
- * Преобразует `Result<Option<T>, E>` в `Option<Result<T, E>>`.
+ * Transforms `Result<Option<T>, E>` into `Option<Result<T, E>>`.
  *
  * @typeParam T - The success value type inside `Option`.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`, содержащий `Option`.
- * @returns Транспонированный `Option<Result<T, E>>`.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result` containing an `Option`.
+ * @returns The transposed `Option<Result<T, E>>`.
  * @since 0.1.0
  * @see {@link flatten} - Collapses nested `Result` values.
  * @example

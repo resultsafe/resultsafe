@@ -1,12 +1,12 @@
 /**
- * Создает runtime type guard для варианта с дополнительными ключами payload.
+ * Creates a runtime type guard for a variant with additional payload keys.
  *
  * @typeParam K - The discriminant literal type.
  * @typeParam T - The required payload record shape.
- * @param variant - Значение дискриминанта для сопоставления.
+ * @param variant - The discriminant value to match.
  * @returns A predicate that checks variant and payload key presence.
  * @since 0.1.0
- * @see {@link isTypedVariant} - Проверяет только дискриминант.
+ * @see {@link isTypedVariant} - Checks only the discriminant.
  * @example
  * ```ts
  * import { isTypedVariantOf } from '@resultsafe/core-fp-result';

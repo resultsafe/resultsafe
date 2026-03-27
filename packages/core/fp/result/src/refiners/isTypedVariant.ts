@@ -1,11 +1,11 @@
 /**
- * Создает runtime type guard для варианта дискриминированного объединения.
+ * Creates a runtime type guard for a discriminated union variant.
  *
  * @typeParam K - The discriminant literal type.
- * @param variant - Значение дискриминанта для сопоставления.
+ * @param variant - The discriminant value to match.
  * @returns A predicate that checks `{ type: K }` shape.
  * @since 0.1.0
- * @see {@link isTypedVariantOf} - Расширяет проверку ключами payload.
+ * @see {@link isTypedVariantOf} - Extends check with payload keys.
  * @example
  * ```ts
  * import { isTypedVariant } from '@resultsafe/core-fp-result';

@@ -14,18 +14,18 @@ const getPayloadKeys = <C extends VariantConfig>(
 };
 
 /**
- * Уточняет значение асинхронно в не-curry стиле вызова.
+ * Refines a value asynchronously in non-curried call style.
  *
- * @typeParam TMap - Тип карты конфигурации вариантов.
- * @typeParam K - Ключ целевого варианта.
- * @typeParam TValidators - Карта асинхронных валидаторов для полей payload.
- * @param value - Значение для валидации и уточнения.
- * @param variant - Ключ целевого варианта.
- * @param variantMap - Карта конфигурации вариантов.
- * @param validators - Асинхронные валидаторы payload.
- * @returns Промис с уточненным значением или `null`.
+ * @typeParam TMap - The variant configuration map type.
+ * @typeParam K - The target variant key.
+ * @typeParam TValidators - The async validator map for payload fields.
+ * @param value - The value to validate and refine.
+ * @param variant - The target variant key.
+ * @param variantMap - The variant configuration map.
+ * @param validators - The async payload validators.
+ * @returns A promise resolving to the refined value or `null`.
  * @since 0.1.0
- * @see {@link refineAsyncResult} - Curry-конструктор асинхронного refiner.
+ * @see {@link refineAsyncResult} - Curry-style async refiner constructor.
  * @example
  * ```ts
  * import { refineAsyncResultU } from '@resultsafe/core-fp-result';
@@ -49,9 +49,9 @@ export const refineAsyncResultU = <
   variantMap: TMap,
   validators: TValidators,
 ): Promise<UniversalAsyncRefinedResult<K, TMap, TValidators> | null> => {
-  // Императивный стиль с early returns (как в Rust)
+  // Imperative style with early returns (Rust-style)
   return (async () => {
-    // Rust-style early returns с Option-like поведением
+    // Rust-style early returns with Option-like behavior
     if (!isObject(value)) return null;
     if (!hasOwn(value, 'type')) return null;
 
@@ -61,7 +61,7 @@ export const refineAsyncResultU = <
     const config = variantMap[variant];
     if (!config) return null;
 
-    // Payload validation с асинхронными валидаторами
+    // Payload validation with async validators
     const keys = getPayloadKeys(config);
     for (const key of keys) {
       const check = validators[key as keyof TValidators];
@@ -73,7 +73,7 @@ export const refineAsyncResultU = <
       if (!isValid) return null;
     }
 
-    // Safe cast после всех проверок
+    // Safe cast after all checks
     return value as UniversalAsyncRefinedResult<K, TMap, TValidators>;
   })();
 };

@@ -14,13 +14,13 @@ const getPayloadKeys = <C extends VariantConfig>(
 };
 
 /**
- * Создает асинхронный refiner варианта с асинхронными валидаторами payload.
+ * Creates an async variant refiner with async payload validators.
  *
- * @typeParam TMap - Тип карты конфигурации вариантов.
- * @param variantMap - Карта, описывающая допустимые варианты и поля payload.
+ * @typeParam TMap - The variant configuration map type.
+ * @param variantMap - The map describing valid variants and payload fields.
  * @returns A curried async refiner factory bound to `variantMap`.
  * @since 0.1.0
- * @see {@link refineAsyncResultU} - Непосредственный (не-curry) вариант helper.
+ * @see {@link refineAsyncResultU} - Direct (non-curried) helper variant.
  * @example
  * ```ts
  * import { refineAsyncResult } from '@resultsafe/core-fp-result';
@@ -58,7 +58,7 @@ export const refineAsyncResult =
       if (!check) continue;
 
       const field = value[key as keyof typeof value];
-      const isValid = await check(field); // ✅ Асинхронная валидация
+      const isValid = await check(field); // ✅ Async validation
       if (!isValid) return null;
     }
 
@@ -66,19 +66,19 @@ export const refineAsyncResult =
   };
 
 /**
- * Уточняет значение асинхронно в не-curry стиле вызова.
+ * Refines a value asynchronously in non-curried call style.
  *
- * @typeParam TMap - Тип карты конфигурации вариантов.
- * @typeParam K - Ключ целевого варианта.
- * @typeParam TValidators - Карта асинхронных валидаторов для полей payload.
- * @param value - Значение для валидации и уточнения.
- * @param variant - Ключ целевого варианта.
- * @param variantMap - Карта конфигурации вариантов.
- * @param validators - Асинхронные валидаторы payload.
- * @returns Промис с уточненным значением или `null`.
+ * @typeParam TMap - The variant configuration map type.
+ * @typeParam K - The target variant key.
+ * @typeParam TValidators - The async validator map for payload fields.
+ * @param value - The value to validate and refine.
+ * @param variant - The target variant key.
+ * @param variantMap - The variant configuration map.
+ * @param validators - The async payload validators.
+ * @returns A promise resolving to the refined value or `null`.
  * @remarks
  * This export is kept for compatibility. Prefer {@link refineAsyncResultU}
- * from `refineAsyncResultU.ts` как каноническую точку входа без curry.
+ * from `refineAsyncResultU.ts` as the canonical non-curried entry point.
  * @since 0.1.0
  * @example
  * ```ts

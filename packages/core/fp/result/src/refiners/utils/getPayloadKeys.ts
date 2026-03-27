@@ -2,11 +2,11 @@ import type { PayloadKeys } from '../../types/refiners/PayloadKeys.js';
 import type { VariantConfig } from '../../types/refiners/VariantConfig.js';
 
 /**
- * Нормализует конфигурацию payload варианта в список ключей.
+ * Normalizes a variant payload configuration into a list of keys.
  *
- * @typeParam C - Тип конфигурации варианта.
- * @param config - Конфигурация варианта с определением payload.
- * @returns Ключи payload как readonly-массив.
+ * @typeParam C - The variant configuration type.
+ * @param config - The variant configuration with payload definition.
+ * @returns The payload keys as a readonly array.
  * @since 0.1.0
  * @example
  * ```ts

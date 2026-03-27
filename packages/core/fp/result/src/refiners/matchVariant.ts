@@ -1,13 +1,13 @@
 import type { Handler, Matcher, VariantOf } from './types/index.js';
 
 /**
- * Создает цепочный matcher для значения дискриминированного объединения.
+ * Creates a chained matcher for a discriminated union value.
  *
- * @typeParam T - Тип дискриминированного объединения.
- * @param value - Значение объединения для сопоставления.
- * @returns Fluent matcher с ветками `with` и `otherwise`.
+ * @typeParam T - The discriminated union type.
+ * @param value - The union value to match.
+ * @returns A fluent matcher with `with` and `otherwise` branches.
  * @since 0.1.0
- * @see {@link matchVariantStrict} - Требует исчерпывающего сопоставления во время выполнения.
+ * @see {@link matchVariantStrict} - Requires exhaustive matching at runtime.
  * @example
  * ```ts
  * import { matchVariant } from '@resultsafe/core-fp-result';

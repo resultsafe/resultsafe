@@ -2,15 +2,15 @@ import { isOk } from '../guards/isOk.js';
 import { type Result } from '../types/core/index.js';
 
 /**
- * Возвращает успешное значение или переданный fallback по умолчанию.
+ * Returns the success value or the provided default fallback.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @param defaultValue - Fallback-значение для `Err`.
- * @returns Payload успеха или `defaultValue`.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @param defaultValue - The fallback value for `Err`.
+ * @returns The success payload or `defaultValue`.
  * @since 0.1.0
- * @see {@link unwrapOrElse} - Вычисляет fallback лениво.
+ * @see {@link unwrapOrElse} - Computes the fallback lazily.
  * @example
  * ```ts
  * import { Err, unwrapOr } from '@resultsafe/core-fp-result';

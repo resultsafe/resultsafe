@@ -2,15 +2,15 @@ import { isOk } from '../guards/isOk.js';
 import { type Result } from '../types/core/index.js';
 
 /**
- * Выполняет побочный эффект для успешного значения и возвращает исходный `Result`.
+ * Performs a side effect for the success value and returns the original `Result`.
  *
- * @typeParam T - Тип успешного значения.
- * @typeParam E - Тип значения ошибки.
- * @param result - Исходный `Result`.
- * @param fn - Функция побочного эффекта для ветки успеха.
- * @returns Тот же экземпляр `Result`.
+ * @typeParam T - The success value type.
+ * @typeParam E - The error value type.
+ * @param result - The source `Result`.
+ * @param fn - The side effect function for the success branch.
+ * @returns The same `Result` instance.
  * @since 0.1.0
- * @see {@link tap} - Эквивалентный helper для ветки успеха.
+ * @see {@link tap} - Equivalent helper for the success branch.
  * @example
  * ```ts
  * import { Ok, inspect } from '@resultsafe/core-fp-result';
