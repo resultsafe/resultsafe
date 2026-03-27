@@ -40,6 +40,7 @@ A Rust-inspired Result package for explicit, composable, and type-friendly APIs 
 - [Build and distribution formats](#build-and-distribution-formats)
 - [Monorepo and package structure](#monorepo-and-package-structure)
 - [When to use this project](#when-to-use-this-project)
+- [Documentation for developers](#documentation-for-developers)
 - [Documentation links](#documentation-links)
 - [License](#license)
 
@@ -286,6 +287,43 @@ Use this project when you want:
 - visible control flow
 - stronger type-guided result handling in TypeScript
 - advanced refinement tools for typed variants and strict result matching
+
+---
+
+## Documentation for developers
+
+This package includes comprehensive documentation for developers working with the codebase:
+
+### AI-Optimized JSDoc Standard
+
+The package uses an AI-optimized JSDoc documentation standard designed for:
+
+- **RAG systems** — Retrieval-Augmented Generation, vector search (Google NotebookLM, LangChain)
+- **LLM training** — Fine-tuning, code completion, instruction tuning
+- **Code Search** — Semantic search (GitHub Copilot, Cursor, Sourcegraph)
+- **Auto-complete** — Context-aware suggestions
+- **Human developers** — Readability, navigation, learning
+
+**Documentation:** [`__examples__/AI_JSDOC_STANDARD.md`](./__examples__/AI_JSDOC_STANDARD.md)
+
+### CI/CD Integration
+
+Examples are validated through GitHub Actions workflow:
+
+- **AI JSDoc JSON validation** — Validates `@ai` JSON structure in all example files
+- **ESLint checks** — Ensures code quality and JSDoc presence
+- **Type checking** — Validates TypeScript syntax in examples
+- **Automated testing** — Runs example tests on push/PR
+
+**Documentation:** [`__examples__/CI_CD_INTEGRATION.md`](./__examples__/CI_CD_INTEGRATION.md)
+
+### Example structure
+
+Examples are organized into structured directories:
+
+- `00-quick-start/` — Getting started examples
+- `01-api-reference/` — API documentation with examples
+- `02-patterns/` — Real-world usage patterns
 
 ---
 
