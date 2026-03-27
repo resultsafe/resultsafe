@@ -1,17 +1,29 @@
 # Docusaurus Integration Plan
 
-**Version:** 1.0.0  
+**Version:** 1.0.1  
 **Effective Date:** 2026-03-27  
 **Author:** Denis Savasteev  
-**Status:** Planning
+**Status:** Active
 
 Step-by-step plan for integrating Docusaurus documentation site into the monorepo root.
+
+---
+
+## 📋 Quick Links
+
+| Document                   | Description                                             |
+| -------------------------- | ------------------------------------------------------- |
+| [ROADMAP.md](./ROADMAP.md) | **Start here!** Step-by-step implementation checklist   |
+| [README.md](./README.md)   | This file - full implementation plan with code examples |
+
+**👉 For implementation, follow [ROADMAP.md](./ROADMAP.md)**
 
 ---
 
 ## 🎯 Goal
 
 Create a unified documentation website using Docusaurus that:
+
 - Aggregates documentation from all packages
 - Supports multi-language (English + Russian)
 - Follows Docusaurus best practices
@@ -119,6 +131,7 @@ npx create-docusaurus@latest . classic --typescript
 ```
 
 **Dependencies to add:**
+
 ```json
 {
   "dependencies": {
@@ -150,19 +163,19 @@ const config: Config = {
   title: 'ResultSafe',
   tagline: 'Functional Result type for TypeScript',
   favicon: 'img/favicon.ico',
-  
+
   // Set production URL
   url: 'https://resultsafe.github.io',
   baseUrl: '/resultsafe/',
-  
+
   // GitHub Pages deployment
   organizationName: 'resultsafe',
   projectName: 'resultsafe',
-  
+
   // Build configuration
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  
+
   // i18n support
   i18n: {
     defaultLocale: 'en',
@@ -176,7 +189,7 @@ const config: Config = {
       },
     },
   },
-  
+
   // Preset configuration
   presets: [
     [
@@ -195,7 +208,7 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-  
+
   themeConfig: {
     navbar: {
       title: 'ResultSafe',
@@ -294,11 +307,7 @@ const sidebars: SidebarsConfig = {
         type: 'doc',
         id: 'guides/index',
       },
-      items: [
-        'guides/basic-usage',
-        'guides/error-handling',
-        'guides/chaining',
-      ],
+      items: ['guides/basic-usage', 'guides/error-handling', 'guides/chaining'],
     },
     {
       type: 'category',
@@ -307,14 +316,10 @@ const sidebars: SidebarsConfig = {
         type: 'doc',
         id: 'patterns/index',
       },
-      items: [
-        'patterns/async',
-        'patterns/http',
-        'patterns/validation',
-      ],
+      items: ['patterns/async', 'patterns/http', 'patterns/validation'],
     },
   ],
-  
+
   apiSidebar: [
     {
       type: 'category',
@@ -367,7 +372,8 @@ mkdir -p docs/docs/api/core-fp-result
 ```
 
 **Example: docs/docs/introduction/01-overview.md**
-```markdown
+
+````markdown
 ---
 id: overview
 title: Overview
@@ -403,9 +409,10 @@ const result = divide(10, 2);
 match(
   result,
   (value) => console.log(value), // 5
-  (error) => console.error(error)
+  (error) => console.error(error),
 );
 ```
+````
 
 ## Installation
 
@@ -418,7 +425,8 @@ npm install @resultsafe/core-fp-result
 - [Installation](./02-installation.md)
 - [Quick Start](./03-quick-start.md)
 - [API Reference](../api/core-fp-result/index.md)
-```
+
+````
 
 ---
 
@@ -436,9 +444,10 @@ Already configured in `docusaurus.config.ts` (see Phase 1).
 # Create Russian translation directories
 mkdir -p docs/i18n/ru/docusaurus-plugin-content-docs/current
 mkdir -p docs/i18n/ru/docusaurus-theme-classic
-```
+````
 
 **Example: docs/i18n/ru/docusaurus-plugin-content-docs/current/introduction/01-overview.md**
+
 ```markdown
 ---
 id: overview
@@ -463,6 +472,7 @@ description: Введение в ResultSafe - функциональный ти�
 #### Step 2.3: Translate UI Elements
 
 **docs/i18n/ru/docusaurus-theme-classic/navbar.json**
+
 ```json
 {
   "item.label.Documentation": "Документация",
@@ -474,6 +484,7 @@ description: Введение в ResultSafe - функциональный ти�
 #### Step 2.4: Add Language Switcher
 
 Already configured in `docusaurus.config.ts`:
+
 ```typescript
 i18n: {
   defaultLocale: 'en',
@@ -490,6 +501,7 @@ i18n: {
 #### Step 3.1: Create Generator Script
 
 **tools/artifacts/platforms/web/docusaurus.ts**
+
 ```typescript
 import { generateTypedoc } from './generators/typedoc';
 import { copyExamples } from './generators/examples';
@@ -497,26 +509,26 @@ import { generateSidebars } from './generators/sidebars';
 
 export async function generateDocusaurus() {
   console.log('Generating Docusaurus site...');
-  
+
   // Step 1: Generate API docs from Typedoc
   await generateTypedoc({
     sourceDir: 'packages/core/fp/result/src',
     outputDir: 'docs/docs/api/core-fp-result',
   });
-  
+
   // Step 2: Copy and transform examples
   await copyExamples({
     sourceDir: 'packages/core/fp/result/__examples__',
     outputDir: 'docs/docs/examples',
   });
-  
+
   // Step 3: Generate sidebars
   await generateSidebars({
     apiDir: 'docs/docs/api',
     examplesDir: 'docs/docs/examples',
     output: 'docs/sidebars.ts',
   });
-  
+
   console.log('Docusaurus site generated successfully!');
 }
 
@@ -535,6 +547,7 @@ pnpm add -D typedoc typedoc-plugin-markdown
 ```
 
 **docs/typedoc.json**
+
 ```json
 {
   "entryPoints": ["../packages/core/fp/result/src/index.ts"],
@@ -561,6 +574,7 @@ pnpm add -D typedoc typedoc-plugin-markdown
 #### Step 4.1: Add Build Scripts
 
 **docs/package.json**
+
 ```json
 {
   "scripts": {
@@ -578,6 +592,7 @@ pnpm add -D typedoc typedoc-plugin-markdown
 ```
 
 **Root package.json** (already added)
+
 ```json
 {
   "scripts": {
@@ -589,6 +604,7 @@ pnpm add -D typedoc typedoc-plugin-markdown
 #### Step 4.2: GitHub Actions Workflow
 
 **.github/workflows/docs.yml**
+
 ```yaml
 name: Deploy Documentation
 
@@ -609,41 +625,41 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-      
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Generate API docs
         run: pnpm run artifacts:web:docusaurus
-      
+
       - name: Build Docusaurus
         run: pnpm run build
         working-directory: ./docs
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./docs/build
-  
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     runs-on: ubuntu-latest
     needs: build
-    
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
@@ -668,18 +684,19 @@ pnpm run serve
 
 ## 📊 Timeline
 
-| Phase | Duration | Tasks | Deliverables |
-|-------|----------|-------|--------------|
-| **Phase 1** | Week 1 | Setup, config, initial docs | Basic site with English docs |
-| **Phase 2** | Week 2 | i18n, translations | Multi-language (EN/RU) |
-| **Phase 3** | Week 3 | Auto-generation, Typedoc | API docs from source |
-| **Phase 4** | Week 4 | CI/CD, deployment | Automated builds |
+| Phase       | Duration | Tasks                       | Deliverables                 |
+| ----------- | -------- | --------------------------- | ---------------------------- |
+| **Phase 1** | Week 1   | Setup, config, initial docs | Basic site with English docs |
+| **Phase 2** | Week 2   | i18n, translations          | Multi-language (EN/RU)       |
+| **Phase 3** | Week 3   | Auto-generation, Typedoc    | API docs from source         |
+| **Phase 4** | Week 4   | CI/CD, deployment           | Automated builds             |
 
 ---
 
 ## ✅ Checklist
 
 ### Phase 1: Setup
+
 - [ ] Initialize Docusaurus
 - [ ] Configure docusaurus.config.ts
 - [ ] Create sidebars.ts
@@ -687,12 +704,14 @@ pnpm run serve
 - [ ] Test local build
 
 ### Phase 2: Multi-Language
+
 - [ ] Configure i18n
 - [ ] Create Russian translations
 - [ ] Translate UI elements
 - [ ] Test language switcher
 
 ### Phase 3: Package Integration
+
 - [ ] Create generator script
 - [ ] Configure Typedoc
 - [ ] Auto-generate API docs
@@ -700,10 +719,23 @@ pnpm run serve
 - [ ] Generate sidebars
 
 ### Phase 4: Deploy
+
 - [ ] Add build scripts
 - [ ] Create GitHub Actions workflow
 - [ ] Test deployment
 - [ ] Configure custom domain (optional)
+
+---
+
+## 📊 Progress Tracking
+
+**For detailed progress tracking, see: [ROADMAP.md](./ROADMAP.md)**
+
+**Current Status:**
+
+- **Phase:** Not Started
+- **Started:** -
+- **Last Updated:** 2026-03-27
 
 ---
 
@@ -713,10 +745,12 @@ pnpm run serve
 - [Docusaurus i18n Guide](https://docusaurus.io/docs/i18n/introduction)
 - [Docusaurus API Docs](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs)
 - [Typedoc Plugin](https://github.com/tgreyuk/typedoc-plugin-markdown)
+- [GitHub Pages Deployment](https://docusaurus.io/docs/deployment#github-pages)
 
 ---
 
 **Last Updated:** 2026-03-27  
-**Version:** 1.0.0  
+**Version:** 1.0.1  
 **Maintainer:** Denis Savasteev  
-**Status:** Planning
+**Status:** Active  
+**Next Phase:** Phase 1 - Setup & Configuration
