@@ -1,0 +1,5 @@
+# Examples validation cache
+__examples__/.validate-cache/
+
+# AI JSDoc validation
+**/validate-ai-json.log

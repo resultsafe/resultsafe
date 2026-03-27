@@ -2,9 +2,15 @@
 
 <a id="top"></a>
 
-> ✅ **Version 0.1.9** | UTF-8 encoded documentation | AI-optimized for developer collaboration
-
 ![ResultSafe Logo](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/docs/assets/logo.svg)
+
+## 🤖 AI Context
+
+This package implements the `Result<T, E>` pattern for explicit error handling without `try/catch`.
+
+- **Rust analogue:** `std::result::Result`
+- **Scala analogue:** `Either`
+- **Core principle:** Error is a value, not an exception.
 
 [![npm version](https://img.shields.io/npm/v/@resultsafe/core-fp-result.svg)](https://www.npmjs.com/package/@resultsafe/core-fp-result)
 [![npm downloads](https://img.shields.io/npm/dm/@resultsafe/core-fp-result.svg)](https://www.npmjs.com/package/@resultsafe/core-fp-result)
@@ -21,6 +27,7 @@ A Rust-inspired Result package for explicit, composable, and type-friendly APIs 
 **Documentation:** [API index](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/README.md) · [Modules](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/modules.md)
 
 ---
+
 ## Contents
 
 - [Why this package](#why-this-package)
@@ -116,11 +123,7 @@ pnpm install
 A typical Result flow starts with explicit constructors and then composes through functions rather than implicit exception paths.
 
 ```ts
-import {
-  Ok,
-  map,
-  unwrapOr,
-} from "@resultsafe/core-fp-result";
+import { Ok, map, unwrapOr } from '@resultsafe/core-fp-result';
 
 const initial = Ok(21);
 const doubled = map(initial, (value) => value * 2);
@@ -132,111 +135,118 @@ console.log(finalValue); // 42
 ### Basic `Ok` / `Err` example
 
 ```ts
-import { Ok, Err, match } from "@resultsafe/core-fp-result";
+import { Ok, Err, match } from '@resultsafe/core-fp-result';
 
 const parsePort = (input: string) => {
   const port = Number(input);
-  return Number.isInteger(port) && port > 0
-    ? Ok(port)
-    : Err("Invalid port");
+  return Number.isInteger(port) && port > 0 ? Ok(port) : Err('Invalid port');
 };
 
-const result = parsePort("3000");
-const message = match(result, (value) => `Port: ${value}`, (error) => `Error: ${error}`);
+const result = parsePort('3000');
+const message = match(
+  result,
+  (value) => `Port: ${value}`,
+  (error) => `Error: ${error}`,
+);
 
 console.log(message);
 ```
 
 ---
 
-<!-- AI-AGENT: Each function has 3 links: Source (GitHub UI), Raw (direct code), Code (new UI) -->
-<!-- Raw links are best for automated code analysis and parsing -->
+## API Reference
 
-## Core API overview
+### Core Functions
 
-### Core Types
+| Function    | Signature                     | Description                         | GitHub                                                                                                 | Raw                                                                                                              |
+| ----------- | ----------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `Ok`        | `(value: T) => Result<T, E>`  | Success constructor                 | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/constructors/Ok.ts)   | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Ok.ts)   |
+| `Err`       | `(error: E) => Result<T, E>`  | Error constructor                   | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/constructors/Err.ts)  | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Err.ts)  |
+| `match`     | `(r, onOk, onErr) => U`       | Branch on result                    | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/match.ts)     | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/match.ts)     |
+| `andThen`   | `(r, fn) => Result<U, E>`     | Chain (flatMap)                     | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/andThen.ts)   | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/andThen.ts)   |
+| `map`       | `(r, fn) => Result<U, E>`     | Transform success value             | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/map.ts)       | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/map.ts)       |
+| `mapErr`    | `(r, fn) => Result<T, U>`     | Transform error value               | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/mapErr.ts)    | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/mapErr.ts)    |
+| `orElse`    | `(r, fn) => Result<T, U>`     | Recover from error                  | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/orElse.ts)    | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/orElse.ts)    |
+| `unwrap`    | `(r) => T`                    | Extract value or throw              | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrap.ts)    | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrap.ts)    |
+| `unwrapOr`  | `(r, fallback: T) => T`       | Extract value or default            | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/unwrapOr.ts)  | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapOr.ts)  |
+| `expect`    | `(r, msg: string) => T`       | Extract value or throw with message | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/expect.ts)    | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/expect.ts)    |
+| `isOk`      | `(r) => boolean`              | Check if success                    | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isOk.ts)       | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isOk.ts)       |
+| `isErr`     | `(r) => boolean`              | Check if error                      | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/guards/isErr.ts)      | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isErr.ts)      |
+| `tap`       | `(r, fn) => Result<T, E>`     | Side effect on success              | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/tap.ts)       | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tap.ts)       |
+| `tapErr`    | `(r, fn) => Result<T, E>`     | Side effect on error                | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/tapErr.ts)    | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tapErr.ts)    |
+| `transpose` | `(r) => Option<Result<T, E>>` | Result<Option> to Option<Result>    | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/transpose.ts) | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/transpose.ts) |
+| `flatten`   | `(r) => Result<T, E>`         | Flatten nested Result               | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/methods/flatten.ts)   | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/flatten.ts)   |
 
-- [`Result<T, E>`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Result.ts) — Success/failure container [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Result.ts "View raw code")
-- [`Option<T>`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Option.ts) — Optional value container [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Option.ts "View raw code")
+### Advanced: Refiners
 
-### Type Helpers
+| Function             | Description                 | GitHub                                                                                                           | Raw                                                                                                                        |
+| -------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `isTypedVariant`     | Type guard for variant      | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/isTypedVariant.ts)     | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/isTypedVariant.ts)     |
+| `matchVariant`       | Match variant with handlers | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/matchVariant.ts)       | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariant.ts)       |
+| `matchVariantStrict` | Strict variant matching     | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts) | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts) |
+| `refineResult`       | Sync result refinement      | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineResult.ts)       | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineResult.ts)       |
+| `refineAsyncResult`  | Async result refinement     | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts)  | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts)  |
 
-- [`VariantConfig`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts) — Variant configuration [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts "View raw code")
-- [`PayloadKeys<T>`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/PayloadKeys.ts) — Extract payload keys [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/PayloadKeys.ts "View raw code")
-- [`ValidatorFn<T>`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts) — Sync validator function [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts "View raw code")
-- [`AsyncValidatorFn`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts) — Async validator function [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts "View raw code")
+### Type Aliases
 
-### Constructors
+| Type               | Description                   | GitHub                                                                                                               | Raw                                                                                                                            |
+| ------------------ | ----------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `Result<T, E>`     | Base success/error type       | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/core/Result.ts)               | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Result.ts)               |
+| `Option<T>`        | Optional value type           | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/core/Option.ts)               | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/core/Option.ts)               |
+| `VariantConfig`    | Variant configuration type    | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts)    | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/VariantConfig.ts)    |
+| `ValidatorFn<T>`   | Sync validator function type  | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts)      | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/ValidatorFn.ts)      |
+| `AsyncValidatorFn` | Async validator function type | [🔗](https://github.com/Livooon/resultsafe/blob/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts) | [📄](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/types/refiners/AsyncValidatorFn.ts) |
 
-- [`Ok`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Ok.ts) — Create success result [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Ok.ts "View raw code")
-- [`Err`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Err.ts) — Create error result [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/constructors/Err.ts "View raw code")
+> **Full API:** [All modules](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/modules.md) · [Constructors](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/constructors/index.md) · [Guards](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/guards/index.md) · [Methods](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/methods/index.md) · [Refiners](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/refiners/index.md)
 
-### Guards
+---
 
-- [`isOk`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isOk.ts) — Check if success [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isOk.ts "View raw code")
-- [`isErr`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isErr.ts) — Check if error [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isErr.ts "View raw code")
-- [`isOkAnd`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isOkAnd.ts) — Check success with predicate [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isOkAnd.ts "View raw code")
-- [`isErrAnd`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isErrAnd.ts) — Check error with predicate [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/guards/isErrAnd.ts "View raw code")
+## Examples
 
-### Methods
+### Example 1: Basic Usage
 
-#### Transformation
+```typescript
+import { Ok, Err, match } from '@resultsafe/core-fp-result';
 
-- [`map`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/map.ts) — Transform success value [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/map.ts "View raw code")
-- [`mapErr`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/mapErr.ts) — Transform error value [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/mapErr.ts "View raw code")
+const result = Ok(42);
+match(
+  result,
+  (value) => console.log(value),
+  (error) => console.error(error),
+);
+```
 
-#### Chaining
+### Example 2: Error Handling
 
-- [`andThen`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/andThen.ts) — Chain computations returning Result [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/andThen.ts "View raw code")
-- [`orElse`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/orElse.ts) — Recover from error [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/orElse.ts "View raw code")
+```typescript
+import { Ok, Err } from '@resultsafe/core-fp-result';
 
-#### Extraction
+const divide = (a: number, b: number) =>
+  b === 0 ? Err('Division by zero') : Ok(a / b);
 
-- [`unwrap`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrap.ts) — Extract value or throw [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrap.ts "View raw code")
-- [`unwrapOr`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapOr.ts) — Extract value or default [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapOr.ts "View raw code")
-- [`unwrapOrElse`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapOrElse.ts) — Extract value or compute default [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapOrElse.ts "View raw code")
-- [`unwrapErr`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapErr.ts) — Extract error or throw [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/unwrapErr.ts "View raw code")
-- [`expect`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/expect.ts) — Extract value or throw with message [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/expect.ts "View raw code")
-- [`expectErr`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/expectErr.ts) — Extract error or throw with message [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/expectErr.ts "View raw code")
+const result = divide(10, 0);
+// Err("Division by zero")
+```
 
-#### Side Effects
+### Example 3: Chaining Operations
 
-- [`tap`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tap.ts) — Side effect on success [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tap.ts "View raw code")
-- [`tapErr`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tapErr.ts) — Side effect on error [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/tapErr.ts "View raw code")
-- [`inspect`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/inspect.ts) — Debug on success [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/inspect.ts "View raw code")
-- [`inspectErr`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/inspectErr.ts) — Debug on error [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/inspectErr.ts "View raw code")
+```typescript
+import { Ok, andThen, map } from '@resultsafe/core-fp-result';
 
-#### Advanced
+const result = Ok(5);
+const doubled = andThen(result, (x) => Ok(x * 2));
+const squared = map(doubled, (x) => x ** 2);
+```
 
-- [`match`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/match.ts) — Pattern matching [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/match.ts "View raw code")
-- [`flatten`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/flatten.ts) — Flatten nested Result [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/flatten.ts "View raw code")
-- [`transpose`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/transpose.ts) — Result<Option> → Option<Result> [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/transpose.ts "View raw code")
-- [`ok`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/ok.ts) — Convert to Option (success) [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/ok.ts "View raw code")
-- [`err`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/err.ts) — Convert to Option (error) [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/methods/err.ts "View raw code")
+---
 
-### Refiners
+## Ecosystem
 
-- [`isTypedVariant`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/isTypedVariant.ts) — Type guard for variant [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/isTypedVariant.ts "View raw code")
-- [`isTypedVariantOf`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/isTypedVariantOf.ts) — Type guard with variant map [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/isTypedVariantOf.ts "View raw code")
-- [`matchVariant`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariant.ts) — Match variant with handlers [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariant.ts "View raw code")
-- [`matchVariantStrict`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts) — Strict variant matching [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/matchVariantStrict.ts "View raw code")
-- [`refineAsyncResult`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts) — Async result refinement [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineAsyncResult.ts "View raw code")
-- [`refineAsyncResultU`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineAsyncResultU.ts) — Async refinement (uncurried) [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineAsyncResultU.ts "View raw code")
-- [`refineResult`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineResult.ts) — Synchronous result refinement [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineResult.ts "View raw code")
-- [`refineResultU`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineResultU.ts) — Synchronous refinement (uncurried) [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineResultU.ts "View raw code")
-- [`refineVariantMap`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineVariantMap.ts) — Refine variant map [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/refineVariantMap.ts "View raw code")
+- `@resultsafe/core-fp-option` — Option/Maybe type
+- `@resultsafe/core-fp-either` — Either type
+- `@resultsafe/core-fp-result` — This package (Result type)
 
-### Type aliases
-
-- [`Handler`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/Handler.ts) — Match handler type [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/Handler.ts "View raw code")
-- [`MatchBuilder`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/MatchBuilder.ts) — Match builder type [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/MatchBuilder.ts "View raw code")
-- [`Matcher`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/Matcher.ts) — Matcher function type [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/Matcher.ts "View raw code")
-- [`SyncRefinedResult`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncRefinedResult.ts) — Synchronous refined result [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncRefinedResult.ts "View raw code")
-- [`SyncRefinedResultUnion`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncRefinedResultUnion.ts) — Union of refined results [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncRefinedResultUnion.ts "View raw code")
-- [`SyncValidatorMap`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncValidatorMap.ts) — Validator map type [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/SyncValidatorMap.ts "View raw code")
-- [`UniversalAsyncRefinedResult`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/UniversalAsyncRefinedResult.ts) — Async refined result [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/UniversalAsyncRefinedResult.ts "View raw code")
-- [`UniversalRefinedResult`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/UniversalRefinedResult.ts) — Universal refined result [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/UniversalRefinedResult.ts "View raw code")
-- [`VariantOf`](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/VariantOf.ts) — Variant type helper [🔗](https://raw.githubusercontent.com/Livooon/resultsafe/main/packages/core/fp/result/src/refiners/types/VariantOf.ts "View raw code")
+All packages follow the same API design pattern.
 
 ---
 
@@ -291,9 +301,11 @@ Use this project when you want:
 - [Type aliases module](https://unpkg.com/@resultsafe/core-fp-result@latest/docs/api/type-aliases/index.md)
 
 ---
+
 Back to top: [@resultsafe/core-fp-result](#top)
 
 ---
+
 ## Author
 
 Denis Savasteev

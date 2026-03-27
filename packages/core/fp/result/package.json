@@ -1,7 +1,11 @@
 {
   "name": "@resultsafe/core-fp-result",
   "version": "0.1.10",
-  "author": "Denis Savasteev",
+  "description": "Functional Result type for TypeScript with explicit error handling (Rust-style). Zero dependencies, tree-shakable, AI-friendly.",
+  "author": {
+    "name": "Denis Savasteev",
+    "url": "https://github.com/resultsafe"
+  },
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -16,7 +20,9 @@
   },
   "scripts": {
     "clean:dist": "rimraf dist .tsbuildinfo",
+    "prebuild:types": "pnpm run validate:ai-json",
     "build:types": "tsc -b ./config/tsconfig.build.types.json --force",
+    "prebuild:all": "pnpm run validate:ai-json && pnpm run lint:examples",
     "build:esm": "vite build --config ./config/vite.config.build.esm.ts",
     "build:cjs": "vite build --config ./config/vite.config.build.cjs.ts && node ./__scripts__/build/write-cjs-package-json.mjs",
     "build:umd": "vite build --config ./config/vite.config.build.umd.ts",
@@ -36,7 +42,10 @@
     "test:coverage": "vitest run --config ./config/vitest.config.ts --coverage",
     "lint": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs",
     "lint:fix": "eslint . --ext .ts,.tsx --config config/eslint.config.mjs --fix",
-    "prepublishOnly": "pnpm run verify:release",
+    "lint:examples": "eslint __examples__/**/*.ts --config config/eslint.config.examples.mjs",
+    "validate:ai-json": "node ./__scripts__/validate-ai-json.js",
+    "tasks:list": "type __examples__\\IMPROVEMENT_TASKS.md",
+    "prepublishOnly": "pnpm run verify:release && pnpm run validate:ai-json && pnpm run lint:examples",
     "npm:publish:dry": "pnpm run verify:release && npm publish ./dist --dry-run --access public",
     "npm:publish:public": "npm publish ./dist --access public --provenance"
   },
@@ -68,6 +77,29 @@
     "README.ru.md",
     "LICENSE"
   ],
+  "keywords": [
+    "functional-programming",
+    "result-type",
+    "error-handling",
+    "typescript",
+    "rust-style",
+    "fp",
+    "monad",
+    "ai-friendly",
+    "zero-dependencies",
+    "tree-shakable",
+    "type-safe",
+    "explicit-errors"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resultsafe/monorepo.git",
+    "directory": "packages/core/fp/result"
+  },
+  "bugs": {
+    "url": "https://github.com/resultsafe/monorepo/issues"
+  },
+  "homepage": "https://github.com/resultsafe/monorepo#readme",
   "devDependencies": {
     "eslint-plugin-jsdoc": "^62.8.1"
   }

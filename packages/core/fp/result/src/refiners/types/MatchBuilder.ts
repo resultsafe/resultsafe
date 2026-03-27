@@ -1,6 +1,25 @@
 import type { VariantOf } from './VariantOf.js';
 
-/** Описывает форму строгого builder для matcher. */
+/**
+ * Describes the shape of a strict builder for variant matching.
+ *
+ * @typeParam T - The variant union type.
+ * @typeParam R - The return type of the match operation.
+ * @typeParam Handled - The union of already handled variant types.
+ *
+ * @example
+ * ```ts
+ * import { MatchBuilder } from '@resultsafe/core-fp-result';
+ *
+ * const builder: MatchBuilder<MyVariant, string> = {
+ *   with: (variant, fn) => builder,
+ *   run: () => 'result'
+ * };
+ * ```
+ *
+ * @since 0.1.8
+ * @public
+ */
 export type MatchBuilder<
   T extends VariantOf,
   R,

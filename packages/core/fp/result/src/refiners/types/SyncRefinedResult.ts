@@ -4,7 +4,29 @@ import type {
   VariantConfig,
 } from '../../shared-types.js';
 
-/** Описывает синхронно уточненное конкретное значение варианта. */
+/**
+ * Describes a synchronously refined specific variant value.
+ *
+ * @typeParam K - The variant key type.
+ * @typeParam TMap - The variant configuration map.
+ * @typeParam _TValidators - The validator map for the variant.
+ *
+ * @remarks
+ * This type represents a refined variant with its payload fields
+ * validated synchronously. The `type` field discriminates the variant,
+ * and the remaining fields are the validated payload.
+ *
+ * @example
+ * ```ts
+ * import { SyncRefinedResult, VariantConfig } from '@resultsafe/core-fp-result';
+ *
+ * type MyVariant = SyncRefinedResult<'user', { user: { payload: 'name' } }, {}>;
+ * // { type: 'user'; name: unknown }
+ * ```
+ *
+ * @since 0.1.8
+ * @public
+ */
 export type SyncRefinedResult<
   K extends keyof TMap & string,
   TMap extends Record<string, VariantConfig>,

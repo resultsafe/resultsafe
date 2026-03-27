@@ -1,0 +1,71 @@
+# GitHub Actions Workflow for Examples Validation
+# Location: .github/workflows/examples.yml
+
+name: Examples Validation
+
+on:
+  push:
+    paths:
+      - 'packages/core/fp/result/__examples__/**'
+      - 'packages/core/fp/result/__scripts__/validate-ai-json.js'
+  pull_request:
+    paths:
+      - 'packages/core/fp/result/__examples__/**'
+      - 'packages/core/fp/result/__scripts__/validate-ai-json.js'
+
+jobs:
+  validate-examples:
+    name: Validate Examples
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Validate AI JSDoc JSON
+        run: pnpm run validate:ai-json
+        working-directory: packages/core/fp/result
+      
+      - name: Lint examples
+        run: pnpm run lint:examples
+        working-directory: packages/core/fp/result
+      
+      - name: Type check examples
+        run: pnpm exec tsc --noEmit __examples__/**/*.ts
+        working-directory: packages/core/fp/result
+        continue-on-error: true
+
+  test-examples:
+    name: Test Examples
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build package
+        run: pnpm run build:all
+        working-directory: packages/core/fp/result
+      
+      - name: Run example tests
+        run: pnpm exec vitest run __examples__/**/*.test.ts
+        working-directory: packages/core/fp/result
+        continue-on-error: true
