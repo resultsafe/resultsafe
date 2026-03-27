@@ -1,152 +1,153 @@
-# Artifacts Directory
+# Artifacts
 
-**Purpose:** Generated documentation and deployment artifacts from source code.
+**Purpose:** Generated documentation and deployment artifacts.
 
-**Scalable Structure:** Supports multiple output formats, languages, and platforms.
+**⚠️ DO NOT EDIT:** All files here are auto-generated from source.
 
 ---
 
-## 📁 Directory Structure
+## 📁 Structure
 
 ```
 artifacts/
-├── README.md                    # This file
-├── .gitkeep                     # Keep directory in git
+├── README.md               # This file
 │
-├── generated/                   # Auto-generated content (DO NOT EDIT)
-│   ├── api/                    # API documentation
-│   │   ├── json/              # Typedoc JSON output
-│   │   ├── markdown/          # Markdown for processing
-│   │   └── html/              # Static HTML site
+├── platforms/              # Platform-specific builds
+│   ├── web/               # Web documentation sites
+│   │   └── docusaurus/   # Docusaurus site
+│   │       ├── src/      # Generated React components
+│   │       ├── build/    # Production build
+│   │       └── deploy/   # Deployment config
 │   │
-│   ├── examples/              # Compiled examples
-│   │   ├── executable/        # Runnable code snippets
-│   │   ├── notebooks/         # Jupyter/Colab notebooks
-│   │   └── playground/        # Interactive TypeScript playground
-│   │
-│   └── analysis/              # Code analysis
-│       ├── coverage/          # Test coverage reports
-│       ├── bundle/            # Bundle size analysis
-│       └── metrics/           # Code metrics
+│   └── ai/                # AI/RAG platforms
+│       ├── notebooklm/   # Google NotebookLM
+│       │   ├── sources/  # Markdown for import
+│       │   ├── citations/ # Citation index
+│       │   └── exports/  # Q&A exports
+│       │
+│       ├── cursor/       # Cursor IDE
+│       │   └── context/  # AI context files
+│       │
+│       └── embeddings/   # Vector embeddings
+│           ├── index/    # Vector index
+│           └── metadata/ # Metadata
 │
-├── platforms/                  # Platform-specific builds
-│   ├── web/                   # Web documentation sites
-│   │   ├── docusaurus/       # Docusaurus v2/v3
-│   │   ├── vitepress/        # VitePress
-│   │   ├── astro/            # Astro Starlight
-│   │   └── nextjs/           # Next.js custom
-│   │
-│   ├── ai/                    # AI-powered platforms
-│   │   ├── notebooklm/       # Google NotebookLM sources
-│   │   ├── cursor/           # Cursor IDE context
-│   │   ├── copilot/          # GitHub Copilot context
-│   │   └── embeddings/       # Vector embeddings for RAG
-│   │
-│   ├── package/              # Package registries
-│   │   ├── npm/             # npmjs.com
-│   │   ├── pypi/            # PyPI (if Python bindings)
-│   │   └── jsr/             # JSR (Deno)
-│   │
-│   ├── vcs/                 # Version control systems
-│   │   ├── github/          # GitHub Wiki, Pages
-│   │   ├── gitlab/          # GitLab Pages
-│   │   └── bitbucket/       # Bitbucket Wiki
-│   │
-│   └── docs/                # Documentation hubs
-│       ├── readthedocs/     # ReadTheDocs
-│       ├── gitbook/         # GitBook
-│       └── notion/          # Notion workspace
+├── formats/                # Format-specific exports
+│   ├── markdown/
+│   ├── pdf/
+│   ├── json/
+│   └── epub/
 │
-├── languages/                 # Language-specific exports
-│   ├── en/                   # English (primary)
-│   │   ├── api/
-│   │   ├── guides/
-│   │   └── examples/
-│   │
-│   ├── ru/                   # Russian
-│   │   ├── api/
-│   │   ├── guides/
-│   │   └── examples/
-│   │
-│   └── <lang>/               # Future languages
-│       ├── api/
-│       ├── guides/
-│       └── examples/
-│
-├── formats/                   # Format-specific exports
-│   ├── markdown/             # Markdown collection
-│   │   ├── minimal/         # Clean markdown
-│   │   ├── github/          # GitHub-flavored
-│   │   └── obsidian/        # Obsidian vault
-│   │
-│   ├── pdf/                  # PDF documentation
-│   │   ├── api/
-│   │   ├── guides/
-│   │   └── complete/
-│   │
-│   ├── epub/                 # E-book format
-│   │   ├── api/
-│   │   └── guides/
-│   │
-│   ├── json/                 # Structured data
-│   │   ├── api/
-│   │   ├── examples/
-│   │   └── search-index/
-│   │
-│   └── xml/                  # XML feeds
-│       ├── sitemap/
-│       └── rss/
-│
-├── versions/                  # Versioned archives
-│   ├── latest/               # Current version (symlink)
-│   ├── 0.1.x/               # Patch versions
-│   ├── 0.2.x/
-│   └── ...
-│
-└── cache/                     # Build cache (gitignored)
-    ├── .gitkeep
-    └── (temporary files)
+└── cache/                  # Build cache (gitignored)
+    └── .gitkeep
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Generation
+
+### All Artifacts
 
 ```bash
-# Generate all artifacts
 pnpm run artifacts:generate
+```
 
-# Validate structure
-pnpm run artifacts:validate
+### Platform-Specific
 
-# Clean and regenerate
-pnpm run artifacts:clean && pnpm run artifacts:generate
+```bash
+# Docusaurus website
+pnpm run artifacts:web:docusaurus
+
+# NotebookLM sources
+pnpm run artifacts:ai:notebooklm
+
+# Cursor context
+pnpm run artifacts:ai:cursor
+```
+
+### Format-Specific
+
+```bash
+# Markdown export
+pnpm run artifacts:format:markdown
+
+# PDF export
+pnpm run artifacts:format:pdf
 ```
 
 ---
 
-## 📚 Documentation
+## 📋 For AI Agents
 
-| Document                                                                                                | Description                             |
-| ------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| [ARTIFACTS_RULES.md](./packages/core/fp/result/__examples__/ARTIFACTS_RULES.md)                         | Complete rules for artifacts generation |
-| [TYPESCRIPT_VALIDATION_RULES.md](./packages/core/fp/result/__examples__/TYPESCRIPT_VALIDATION_RULES.md) | TypeScript validation for examples      |
-| [AI_JSDOC_STANDARD.md](./packages/core/fp/result/__examples__/AI_JSDOC_STANDARD.md)                     | JSDoc annotation standard               |
+**Rules:**
+
+1. **NEVER edit** files in `artifacts/` manually
+2. **Always generate** from source:
+   ```bash
+   pnpm run artifacts:generate
+   ```
+3. **Source files** are in:
+   - `docs/source/` - Documentation
+   - `packages/**/__examples__/` - Code examples
+
+**Generation pipeline:**
+
+```
+Source → Process → Generate → Artifacts
+```
+
+---
+
+## 🔄 CI/CD Integration
+
+### GitHub Actions
+
+```yaml
+# .github/workflows/artifacts.yml
+name: Generate Artifacts
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Artifacts
+        run: pnpm run artifacts:generate
+
+      - name: Deploy Website
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./artifacts/platforms/web/docusaurus/build
+```
+
+---
+
+## 📊 Current Status
+
+| Platform   | Status     | Output                                |
+| ---------- | ---------- | ------------------------------------- |
+| Docusaurus | 🔄 Setup   | `artifacts/platforms/web/docusaurus/` |
+| NotebookLM | ⏳ Planned | `artifacts/platforms/ai/notebooklm/`  |
+| Cursor     | ⏳ Planned | `artifacts/platforms/ai/cursor/`      |
+| Embeddings | ⏳ Planned | `artifacts/platforms/ai/embeddings/`  |
 
 ---
 
 ## 🎯 Principles
 
-1. **Source of Truth:** Code in `packages/`, artifacts in `artifacts/`
-2. **Immutable:** Never edit generated files manually
-3. **Reproducible:** Same source → same artifacts
-4. **Versioned:** Artifacts follow package version
-5. **Multi-Language:** English primary, translations in `languages/`
-6. **Platform-Agnostic:** Generate once, deploy anywhere
-7. **Extensible:** Easy to add new platforms/languages/formats
+1. **Immutable:** Never edit generated files
+2. **Reproducible:** Same source → same artifacts
+3. **Versioned:** Follows package version
+4. **Clean:** Can delete and regenerate anytime
 
 ---
 
 **Last Updated:** 2026-03-27  
-**Version:** 1.0.0  
+**Version:** 2.0.0  
 **Maintainer:** Denis Savasteev

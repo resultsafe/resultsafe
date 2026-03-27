@@ -1,5 +1,6 @@
 # Build output
 build/
+dist/
 .docusaurus/
 
 # Dependencies
@@ -7,10 +8,17 @@ node_modules/
 
 # Cache
 .cache/
+*.log
+
+# Environment
+.env
+.env.local
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*~
 
 # OS
 .DS_Store

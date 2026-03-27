@@ -86,4 +86,4 @@ if (result.ok) {
 
 - [Basic Usage](../guides/basic-usage.md) - Deep dive
 - [Error Handling](../guides/error-handling.md) - Advanced patterns
-- [API Reference](../api/core-fp-result/index.md) - Full documentation
+- [API Reference](../api/core-fp-result/index.md) - Full API docs

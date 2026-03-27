@@ -51,5 +51,5 @@ const { Ok, Err, Result } = require('@resultsafe/core-fp-result');
 
 ## Next Steps
 
-- [Quick Start](./quick-start.md) - Get started in 5 minutes
+- [Quick Start](./03-quick-start.md) - Get started in 5 minutes
 - [Basic Usage](../guides/basic-usage.md) - Learn the fundamentals

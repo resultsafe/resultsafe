@@ -45,8 +45,8 @@ npm install @resultsafe/core-fp-result
 
 ## Next Steps
 
-- [Installation](./installation.md) - Setup guide
-- [Quick Start](./quick-start.md) - Get started in 5 minutes
+- [Installation](./02-installation.md) - Setup guide
+- [Quick Start](./03-quick-start.md) - Get started in 5 minutes
 - [API Reference](../api/core-fp-result/index.md) - Full API docs
 
 ## Learn More
