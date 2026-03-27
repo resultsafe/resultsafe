@@ -1,5 +1,5 @@
 import { isOk } from '../guards/isOk.js';
-import { type Result } from '../shared-types.js';
+import { type Result } from '../types/core/index.js';
 
 /**
  * Цепляет вычисление, которое возвращает другой `Result`.

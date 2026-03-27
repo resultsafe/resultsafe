@@ -2,4 +2,4 @@ export * from './constructors/index.js';
 export * from './guards/index.js';
 export * from './methods/index.js';
 export * from './refiners/index.js';
-export * from './shared-types.js';
+export * from './types/index.js';

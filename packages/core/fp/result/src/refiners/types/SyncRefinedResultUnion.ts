@@ -1,4 +1,4 @@
-import type { VariantConfig } from '../../shared-types.js';
+import type { VariantConfig } from '../../types/refiners/VariantConfig.js';
 import type { SyncRefinedResult } from './SyncRefinedResult.js';
 import type { SyncValidatorMap } from './SyncValidatorMap.js';
 

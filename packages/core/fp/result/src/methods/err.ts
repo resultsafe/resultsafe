@@ -1,7 +1,6 @@
 import { isErr } from '../guards/isErr.js';
 import { None, Some } from '../internal/option.js';
-import { type Option } from '../shared-types.js';
-import { type Result } from '../shared-types.js';
+import { type Option, type Result } from '../types/core/index.js';
 
 /**
  * Извлекает ветку ошибки в виде `Option`.

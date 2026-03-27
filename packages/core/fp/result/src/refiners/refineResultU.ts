@@ -1,8 +1,6 @@
-import type {
-  PayloadKeys,
-  ValidatorFn,
-  VariantConfig,
-} from '../shared-types.js';
+import type { PayloadKeys } from '../types/refiners/PayloadKeys.js';
+import type { ValidatorFn } from '../types/refiners/ValidatorFn.js';
+import type { VariantConfig } from '../types/refiners/VariantConfig.js';
 import { refineResult } from './refineResult.js';
 import type { SyncRefinedResult } from './types/index.js';
 

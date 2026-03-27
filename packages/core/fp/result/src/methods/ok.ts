@@ -1,7 +1,6 @@
 import { isOk } from '../guards/isOk.js';
 import { None, Some } from '../internal/option.js';
-import { type Option } from '../shared-types.js';
-import { type Result } from '../shared-types.js';
+import { type Option, type Result } from '../types/core/index.js';
 
 /**
  * Извлекает успешную ветку в виде `Option`.

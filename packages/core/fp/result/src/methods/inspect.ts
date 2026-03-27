@@ -1,5 +1,5 @@
 import { isOk } from '../guards/isOk.js';
-import { type Result } from '../shared-types.js';
+import { type Result } from '../types/core/index.js';
 
 /**
  * Выполняет побочный эффект для успешного значения и возвращает исходный `Result`.

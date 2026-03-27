@@ -1,9 +1,7 @@
 import { hasOwn, isObject } from '../internal/object.js';
-import type {
-  PayloadKeys,
-  ValidatorFn,
-  VariantConfig,
-} from '../shared-types.js';
+import type { PayloadKeys } from '../types/refiners/PayloadKeys.js';
+import type { ValidatorFn } from '../types/refiners/ValidatorFn.js';
+import type { VariantConfig } from '../types/refiners/VariantConfig.js';
 import type { UniversalRefinedResult } from './types/index.js';
 import { getPayloadKeys } from './utils/index.js';
 

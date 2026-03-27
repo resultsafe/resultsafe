@@ -1,5 +1,5 @@
 import { isErr } from '../guards/isErr.js';
-import { type Result } from '../shared-types.js';
+import { type Result } from '../types/core/index.js';
 
 /**
  * Преобразует значение ошибки, сохраняя ветку успеха.

@@ -1,4 +1,5 @@
-import type { PayloadKeys, VariantConfig } from '../../shared-types.js';
+import type { PayloadKeys } from '../../types/refiners/PayloadKeys.js';
+import type { VariantConfig } from '../../types/refiners/VariantConfig.js';
 
 /**
  * Нормализует конфигурацию payload варианта в список ключей.

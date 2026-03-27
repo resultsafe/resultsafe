@@ -1,9 +1,7 @@
 import { hasOwn, isObject } from '../internal/object.js';
-import type {
-  AsyncValidatorFn,
-  PayloadKeys,
-  VariantConfig,
-} from '../shared-types.js';
+import type { AsyncValidatorFn } from '../types/refiners/AsyncValidatorFn.js';
+import type { PayloadKeys } from '../types/refiners/PayloadKeys.js';
+import type { VariantConfig } from '../types/refiners/VariantConfig.js';
 import type { UniversalAsyncRefinedResult } from './types/index.js';
 
 /** Resolves payload keys from variant configuration. @internal */

@@ -1,4 +1,4 @@
-import type { VariantConfig } from '../../shared-types.js';
+import type { VariantConfig } from '../../types/refiners/VariantConfig.js';
 
 /**
  * Describes a generalized asynchronously refined variant value.

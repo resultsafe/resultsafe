@@ -1,4 +1,4 @@
-import { type Result } from '../shared-types.js';
+import { type Result } from '../types/core/index.js';
 
 /**
  * Схлопывает вложенный `Result<Result<T, E>, E>` на один уровень.

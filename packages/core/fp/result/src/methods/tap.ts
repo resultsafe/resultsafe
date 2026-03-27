@@ -1,4 +1,4 @@
-import type { Result } from '../shared-types.js';
+import type { Result } from '../types/core/index.js';
 
 /**
  * Выполняет побочный эффект для значения `Ok` и возвращает входной `Result`.
