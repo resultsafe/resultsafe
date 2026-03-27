@@ -1,0 +1,38 @@
+# ResultSafe Project Context
+
+## Project Overview
+ResultSafe is a functional programming library for TypeScript implementing Result type pattern.
+
+## Key Concepts
+- **Result<T, E>** - Type for explicit error handling
+- **Ok(value)** - Success case constructor
+- **Err(error)** - Error case constructor
+- **match(result, okFn, errFn)** - Pattern matching
+- **Zero dependencies** - No external runtime dependencies
+
+## Code Style
+- Always use explicit types for public APIs
+- JSDoc with @module, @title, @description tags
+- Examples in __examples__ directory
+- Functional composition over OOP
+
+## Common Patterns
+```typescript
+// Error handling
+const result = divide(10, 2);
+match(result, 
+  (value) => console.log(value),
+  (error) => console.error(error)
+);
+
+// Chaining
+Ok(5)
+  .map(x => x * 2)
+  .andThen(x => Ok(x.toString()));
+```
+
+## When Editing
+- Always add JSDoc to new functions
+- Include at least one example
+- Update VALIDATION_GUIDE.md if changing validation logic
+- Run `pnpm run validate:examples` before commit

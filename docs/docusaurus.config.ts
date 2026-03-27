@@ -4,47 +4,32 @@ import { themes as prismThemes } from 'prism-react-renderer';
 
 const config: Config = {
   title: 'ResultSafe',
-  tagline: 'Functional Result type for TypeScript',
+  tagline: 'Functional Programming for TypeScript',
   favicon: 'img/favicon.ico',
 
-  // Production URL
   url: 'https://resultsafe.github.io',
-  baseUrl: '/resultsafe/',
+  baseUrl: '/',
 
-  // GitHub Pages
   organizationName: 'resultsafe',
   projectName: 'resultsafe',
 
-  // Error handling - warn for development, throw for production
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
-  // i18n - Multi-language support
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ru'],
-    localeConfigs: {
-      en: {
-        htmlLang: 'en-US',
-      },
-      ru: {
-        htmlLang: 'ru-RU',
-      },
-    },
+    locales: ['en'],
   },
 
-  // Presets
   presets: [
     [
       'classic',
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/resultsafe/resultsafe/tree/main/docs/',
-          showLastUpdateAuthor: true,
-          showLastUpdateTime: true,
+          editUrl: 'https://github.com/Livooon/resultsafe/tree/main/docs/',
         },
-        blog: false, // Disable blog for now
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -52,7 +37,6 @@ const config: Config = {
     ],
   ],
 
-  // Theme configuration
   themeConfig: {
     navbar: {
       title: 'ResultSafe',
@@ -65,20 +49,10 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'docsSidebar',
           position: 'left',
-          label: 'Documentation',
+          label: 'Docs',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'apiSidebar',
-          position: 'left',
-          label: 'API',
-        },
-        {
-          type: 'localeDropdown',
-          position: 'right',
-        },
-        {
-          href: 'https://github.com/resultsafe/resultsafe',
+          href: 'https://github.com/Livooon/resultsafe',
           label: 'GitHub',
           position: 'right',
         },
@@ -92,11 +66,11 @@ const config: Config = {
           items: [
             {
               label: 'Introduction',
-              to: '/docs/introduction/overview',
+              to: '/docs/introduction/01-overview',
             },
             {
-              label: 'API',
-              to: '/docs/api/core-fp-result',
+              label: 'Examples',
+              to: '/docs/examples',
             },
           ],
         },
@@ -105,7 +79,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/resultsafe/resultsafe',
+              href: 'https://github.com/Livooon/resultsafe',
             },
           ],
         },

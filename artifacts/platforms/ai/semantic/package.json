@@ -1,0 +1,22 @@
+{
+  "name": "@resultsafe/semantic-search",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "generate": "tsx scripts/generate-metadata.ts",
+    "embeddings": "tsx scripts/create-embeddings.ts",
+    "build": "pnpm run generate && pnpm run embeddings"
+  },
+  "dependencies": {
+    "comment-parser": "^1.4.1",
+    "natural": "^6.0.0",
+    "compromise": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/natural": "^6.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
