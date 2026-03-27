@@ -288,6 +288,11 @@ node_modules/@resultsafe/core-fp-result/__examples__/
 - [ ] Error handling shown
 - [ ] Type-safe (no `any`)
 - [ ] English only
+- [ ] Discriminated unions: correct property names
+- [ ] Headers: `Record<string, string>` not `HeadersInit`
+- [ ] Class inheritance: `protected` for subclass access
+- [ ] Optional properties: no `= undefined` assignment
+- [ ] ES modules: no `require.main` syntax
 
 ---
 
@@ -310,6 +315,17 @@ node_modules/@resultsafe/core-fp-result/__examples__/
 - [TypeDoc](https://typedoc.org/)
 - [Docusaurus](https://docusaurus.io/)
 - [npm package](https://www.npmjs.com/package/@resultsafe/core-fp-result)
+
+---
+
+## 📚 Documentation
+
+| Document                                                           | Description                                      |
+| ------------------------------------------------------------------ | ------------------------------------------------ |
+| [VALIDATION_GUIDE.md](./VALIDATION_GUIDE.md)                       | Complete validation pipeline and troubleshooting |
+| [TYPESCRIPT_VALIDATION_RULES.md](./TYPESCRIPT_VALIDATION_RULES.md) | TypeScript error patterns and fixes              |
+| [AI_JSDOC_STANDARD.md](./AI_JSDOC_STANDARD.md)                     | JSDoc annotation standard for AI/RAG             |
+| [CI_CD_INTEGRATION.md](./CI_CD_INTEGRATION.md)                     | CI/CD pipeline configuration                     |
 
 ---
 

@@ -22,7 +22,7 @@
  * @ai {"purpose":"Teach async/await patterns with Result","prerequisites":["Result type","Async/await"],"objectives":["Async Result functions","Error handling"],"rag":{"queries":["Result async await example","Result promise pattern"],"intents":["learning","practical"],"expectedAnswer":"Use async functions returning Promise<Result<T,E>>","confidence":0.95},"embedding":{"semanticKeywords":["async","promise","await","result","functional"],"conceptualTags":["async-programming","error-handling"],"useCases":["api-calls","file-io"]},"codeSearch":{"patterns":["async () => Promise<Result","await fetchJson()"],"imports":["import { Ok, Err, match } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["002-concurrent","003-streams"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"async","tokenCount":350,"relatedChunks":["002-concurrent","003-streams"]}}
  */
 
-import { Err, match, Ok } from '@resultsafe/core-fp-result';
+import { Err, match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Async function returning Result =====
 

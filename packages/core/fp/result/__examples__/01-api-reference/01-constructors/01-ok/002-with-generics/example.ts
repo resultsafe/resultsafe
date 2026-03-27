@@ -18,14 +18,14 @@
  * @ai {"purpose":"Teach explicit generic usage with Ok","prerequisites":["Ok constructor","TypeScript generics"],"objectives":["Explicit type parameters","Type inference"],"rag":{"queries":["Ok with generics","explicit type Ok"],"intents":["learning","reference"],"expectedAnswer":"Use Ok<T,E>(value) for explicit types","confidence":0.95},"embedding":{"semanticKeywords":["generics","typescript","types","parameters"],"conceptualTags":["type-safety","generics","inference"],"useCases":["api-response","validation"]},"codeSearch":{"patterns":["Ok<T,E>(value)","Ok<number,string>(42)"],"imports":["import { Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["003-real-world"]},"chunking":{"type":"self-contained","section":"constructors","subsection":"ok","tokenCount":250,"relatedChunks":["003-real-world"]}}
  */
 
-import { Ok } from '@resultsafe/core-fp-result';
+import { Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Example 1: Explicit type parameters =====
 const explicitTypes = () => {
-  const numberResult = Ok<number, string>(42);
+  const numberResult: Result<number, string> = Ok<number, string>(42);
   console.log(numberResult); // { ok: true, value: 42 }
 
-  const stringResult = Ok<string, Error>('success');
+  const stringResult: Result<string, Error> = Ok<string, Error>('success');
   console.log(stringResult); // { ok: true, value: 'success' }
 };
 
@@ -38,12 +38,14 @@ interface User {
 type ApiError = { code: number; message: string };
 
 const complexTypes = () => {
-  const userResult = Ok<User, ApiError>({
+  const userResult: Result<User, ApiError> = Ok<User, ApiError>({
     id: 'user-1',
     name: 'John',
   });
 
-  console.log(userResult.value.name); // 'John'
+  if (userResult.ok) {
+    console.log('Value:', userResult.value.name); // 'John'
+  }
 };
 
 // ===== Run if standalone =====

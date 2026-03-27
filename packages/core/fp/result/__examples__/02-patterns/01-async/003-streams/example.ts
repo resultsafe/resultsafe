@@ -2,14 +2,25 @@
  * @module 003-streams
  * @title Async Stream Processing
  * @description Processing async iterables and streams with Result error handling. Demonstrates generators, backpressure, and batch processing.
+ *
  * @example
- * // Process async stream
+ * // Process async stream with generators
  * import { Ok, Err } from '@resultsafe/core-fp-result';
+ *
  * async function* processStream(stream) {
  *   for await (const item of stream) {
- *     yield Ok(item);
+ *     const result = await processItem(item);
+ *     yield result.ok ? Ok(result.value) : Err(result.error);
  *   }
  * }
+ *
+ * @example
+ * // Batch processing with backpressure
+ * import { processInBatches, Ok } from '@resultsafe/core-fp-result';
+ * const items = [1, 2, 3, 4, 5];
+ * const result = await processInBatches(items, async (n) => Ok(n * 2), 2);
+ * console.log(result); // Ok([2, 4, 6, 8, 10])
+ *
  * @tags async,streams,generators,backpressure,advanced
  * @since 0.1.0
  * @difficulty Advanced
@@ -19,7 +30,7 @@
  * @ai {"purpose":"Teach async stream processing with Result","prerequisites":["async/await","generators","iterables"],"objectives":["Async generators","Stream processing","Backpressure"],"rag":{"queries":["async stream processing Result","async generators TypeScript"],"intents":["learning","advanced"],"expectedAnswer":"Use async generators with Result for stream processing","confidence":0.95},"embedding":{"semanticKeywords":["async","streams","generators","backpressure","processing"],"conceptualTags":["async-patterns","streaming","backpressure"],"useCases":["data-processing","real-time","pipelines"]},"codeSearch":{"patterns":["async function*","for await (const item of stream)"],"imports":["import { Ok, Err } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["06-workers"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"async","tokenCount":500,"relatedChunks":["002-concurrent","06-workers"]}}
  */
 
-import { Err, match, Ok } from '@resultsafe/core-fp-result';
+import { Err, match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Pattern 1: Async Generator with Result =====
 
@@ -97,11 +108,9 @@ const processInBatches = async <T, U, E>(
 
 const runExample = async () => {
   // Example 1: Async generator
-  async function* numberGenerator() {
-    for (let i = 1; i <= 5; i++) yield i;
-  }
+  const numbers: number[] = [1, 2, 3, 4, 5];
 
-  const generator = asyncResultGenerator(numberGenerator(), async (n) => {
+  const generator = asyncResultGenerator(numbers, async (n) => {
     await new Promise((resolve) => setTimeout(resolve, 100));
     return n % 2 === 0 ? Ok(n * 2) : Err(`Odd: ${n}`);
   });
@@ -116,6 +125,5 @@ const runExample = async () => {
   console.log('Batch result:', batchResult);
 };
 
-if (require.main === module) {
-  runExample().catch(console.error);
-}
+// Run example
+runExample().catch(console.error);

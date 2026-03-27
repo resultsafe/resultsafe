@@ -26,7 +26,7 @@
  * @ai {"purpose":"Teach production Ok usage patterns","prerequisites":["Ok constructor","async/await","API patterns"],"objectives":["API responses","Error handling","Type safety"],"rag":{"queries":["Ok real-world example","Result API client TypeScript"],"intents":["practical","production"],"expectedAnswer":"Use Ok for successful API responses with typed errors","confidence":0.95},"embedding":{"semanticKeywords":["api","production","fetch","response","async"],"conceptualTags":["error-handling","type-safety","production"],"useCases":["api-client","http-request","fetch"]},"codeSearch":{"patterns":["Ok<User,ApiError>","return Ok(data)","Promise<Ok<T,E>>"],"imports":["import { Ok, Err } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["04-error-handling/001-error-recovery"]},"chunking":{"type":"self-contained","section":"constructors","subsection":"ok","tokenCount":400,"relatedChunks":["001-basic-usage","002-with-generics"]}}
  */
 
-import { Err, Ok } from '@resultsafe/core-fp-result';
+import { Err, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Example 1: API Response Pattern =====
 interface User {
@@ -40,7 +40,7 @@ interface ApiError {
   message: string;
 }
 
-type UserResult = Ok<User, ApiError> | Err<ApiError>;
+type UserResult = Result<User, ApiError>;
 
 const fetchUser = async (id: string): Promise<UserResult> => {
   try {
@@ -53,7 +53,7 @@ const fetchUser = async (id: string): Promise<UserResult> => {
       });
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as User;
     return Ok(data);
   } catch (error) {
     return Err({
@@ -69,9 +69,7 @@ interface ValidationError {
   message: string;
 }
 
-const validateEmail = (
-  email: string,
-): Ok<string, ValidationError> | Err<ValidationError> => {
+const validateEmail = (email: string): Result<string, ValidationError> => {
   if (!email.includes('@')) {
     return Err({ field: 'email', message: 'Invalid email format' });
   }

@@ -21,7 +21,7 @@
  * @ai {"purpose":"Teach concurrent async operations with Result","prerequisites":["async/await","Promise.all","Result type"],"objectives":["Promise.all with Result","Error handling in parallel"],"rag":{"queries":["concurrent async operations Result","Promise.all Result TypeScript"],"intents":["learning","practical"],"expectedAnswer":"Use Promise.all with Result to fetch multiple resources","confidence":0.95},"embedding":{"semanticKeywords":["async","concurrent","promise","parallel","fetch"],"conceptualTags":["async-patterns","error-handling","concurrency"],"useCases":["api-calls","batch-operations"]},"codeSearch":{"patterns":["Promise.all(promises)","fetchAll(resources)"],"imports":["import { Ok, Err } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["003-streams","06-workers"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"async","tokenCount":450,"relatedChunks":["001-basics","003-streams"]}}
  */
 
-import { Err, Ok } from '@resultsafe/core-fp-result';
+import { Err, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Pattern 1: Promise.all with Result =====
 
@@ -36,7 +36,11 @@ const fetchAll = async <T>(
     }
   }
 
-  return Ok(results.map((r) => r.value));
+  return Ok(
+    results
+      .map((r) => (r.ok ? r.value : undefined))
+      .filter((v): v is T => v !== undefined),
+  );
 };
 
 // ===== Pattern 2: Promise.allSettled =====

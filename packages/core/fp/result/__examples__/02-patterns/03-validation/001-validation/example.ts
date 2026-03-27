@@ -20,7 +20,7 @@
  * @ai {"purpose":"Teach form validation with error accumulation using Result","prerequisites":["Result type","Type guards"],"objectives":["Error accumulation","Field validation"],"rag":{"queries":["Result form validation example","error accumulation pattern"],"intents":["learning","practical"],"expectedAnswer":"Use Result with error array for validation accumulation","confidence":0.95},"embedding":{"semanticKeywords":["validation","form","error-accumulation","pipeline","fields"],"conceptualTags":["validation","user-feedback"],"useCases":["form-validation","input-sanitization"]},"codeSearch":{"patterns":["validateForm(data)","validateUsername(username)"],"imports":["import { Err, match, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-error-recovery","005-refine-result"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"validation","tokenCount":400,"relatedChunks":["001-error-recovery","005-refine-result"]}}
  */
 
-import { Err, match, Ok } from '@resultsafe/core-fp-result';
+import { Err, match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Types =====
 
@@ -36,7 +36,7 @@ interface FormErrors {
   message: string;
 }
 
-type ValidationResult<T> = Ok<T, FormErrors[]> | Err<FormErrors[]>;
+type ValidationResult<T> = Result<T, FormErrors[]>;
 
 // ===== Validators =====
 

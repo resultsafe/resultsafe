@@ -20,7 +20,7 @@
  * @ai {"purpose":"Teach event handling patterns with Result-based error aggregation","prerequisites":["Result type","Event emitters","Async patterns"],"objectives":["Typed events","Error aggregation","Command queue"],"rag":{"queries":["Result event handler example","event bus pattern Result"],"intents":["learning","practical"],"expectedAnswer":"Use Result-based event handlers with error aggregation","confidence":0.95},"embedding":{"semanticKeywords":["events","event-bus","async","pubsub","error-aggregation"],"conceptualTags":["event-driven","messaging"],"useCases":["microservices","real-time-apps"]},"codeSearch":{"patterns":["new TypedEventEmitter(","bus.subscribe(","commandQueue.enqueue("],"imports":["import { Ok, Err, match } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-async-basics","001-worker-pool"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"events","tokenCount":450,"relatedChunks":["001-async-basics","001-worker-pool"]}}
  */
 
-import { Err, Ok } from '@resultsafe/core-fp-result';
+import { Err, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Pattern 1: Event Emitter with Result =====
 
@@ -239,6 +239,7 @@ class CommandQueue {
 // ===== Example usage =====
 
 interface AppEvents {
+  [key: string]: unknown;
   userLogin: { userId: string; email: string };
   userLogout: { userId: string };
   dataUpdate: { table: string; records: number };
@@ -324,6 +325,9 @@ const createMiddlewarePipeline = <T>(
       }
 
       const middleware = middlewares[index];
+      if (!middleware) {
+        return Ok(undefined);
+      }
       return middleware(event, dispatch);
     };
 

@@ -20,7 +20,7 @@
  * @ai {"purpose":"Teach error recovery strategies with Result","prerequisites":["Result type","Async patterns","Error handling"],"objectives":["Retry patterns","Circuit breaker","Bulkhead"],"rag":{"queries":["Result retry pattern example","circuit breaker Result"],"intents":["learning","practical"],"expectedAnswer":"Use retry, circuit breaker, and fallback patterns with Result","confidence":0.95},"embedding":{"semanticKeywords":["error-recovery","retry","circuit-breaker","bulkhead","timeout"],"conceptualTags":["resilience","fault-tolerance"],"useCases":["microservices","distributed-systems"]},"codeSearch":{"patterns":["retryWithBackoff(operation","new CircuitBreaker(","fallbackChain("],"imports":["import { Err, match, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-api-client","002-web-scraping"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"error-handling","tokenCount":500,"relatedChunks":["001-api-client","002-web-scraping"]}}
  */
 
-import { Err, match, Ok } from '@resultsafe/core-fp-result';
+import { Err, match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Error Types =====
 
@@ -31,7 +31,7 @@ type FetchError =
   | { type: 'parse'; message: string }
   | { type: 'circuit-open'; message: string };
 
-type Result<T, E = FetchError> = Ok<T, E> | Err<E>;
+type ResultType<T, E = FetchError> = Result<T, E>;
 
 // ===== Strategy 1: Retry with Exponential Backoff =====
 
@@ -43,10 +43,10 @@ interface RetryConfig {
 }
 
 const retryWithBackoff = async <T, E extends FetchError>(
-  operation: () => Promise<Result<T, E>>,
+  operation: () => Promise<ResultType<T, E>>,
   config: RetryConfig,
   isRetryable: (error: E) => boolean,
-): Promise<Result<T, E>> => {
+): Promise<ResultType<T, E>> => {
   let lastError: E | null = null;
   let delay = config.baseDelay;
 
@@ -95,7 +95,7 @@ const fallbackChain = <T, E>(
     lastError = result.error;
   }
 
-  return Err(lastError!);
+  return Err(lastError!) as Result<T, E>;
 };
 
 // ===== Strategy 3: Circuit Breaker =====
@@ -118,8 +118,8 @@ class CircuitBreaker {
   ) {}
 
   async execute<T, E extends FetchError>(
-    operation: () => Promise<Result<T, E>>,
-  ): Promise<Result<T, E | { type: 'circuit-open'; message: string }>> {
+    operation: () => Promise<ResultType<T, E>>,
+  ): Promise<ResultType<T, E | { type: 'circuit-open'; message: string }>> {
     // Check if circuit is open
     if (this.state.state === 'open') {
       if (Date.now() - (this.state.lastFailureTime || 0) > this.timeout) {
@@ -170,8 +170,8 @@ class Bulkhead {
   constructor(private maxConcurrent: number) {}
 
   async execute<T, E>(
-    operation: () => Promise<Result<T, E>>,
-  ): Promise<Result<T, E | { type: 'rejected'; message: string }>> {
+    operation: () => Promise<ResultType<T, E>>,
+  ): Promise<ResultType<T, E | { type: 'rejected'; message: string }>> {
     if (this.running >= this.maxConcurrent) {
       // Wait for a slot
       await new Promise<void>((resolve) => {
@@ -196,9 +196,9 @@ class Bulkhead {
 // ===== Strategy 5: Timeout =====
 
 const withTimeout = async <T, E>(
-  operation: () => Promise<Result<T, E>>,
+  operation: () => Promise<ResultType<T, E>>,
   timeoutMs: number,
-): Promise<Result<T, E | { type: 'timeout'; ms: number }>> => {
+): Promise<ResultType<T, E | { type: 'timeout'; ms: number }>> => {
   return Promise.race([
     operation(),
     new Promise<ReturnType<typeof operation>>((_, reject) =>
@@ -224,10 +224,10 @@ class ResilientApiClient {
   async fetchWithRetry<T>(
     endpoint: string,
     options?: RequestInit,
-  ): Promise<Result<T>> {
+  ): Promise<ResultType<T>> {
     const url = `${this.baseUrl}${endpoint}`;
 
-    const operation = async (): Promise<Result<T>> => {
+    const operation = async (): Promise<ResultType<T>> => {
       try {
         const response = await fetch(url, {
           ...options,
@@ -240,10 +240,10 @@ class ResilientApiClient {
             status: response.status,
             statusText: response.statusText,
             retryable: response.status >= 500 || response.status === 429,
-          });
+          } as FetchError);
         }
 
-        return Ok(await response.json());
+        return Ok((await response.json()) as T);
       } catch (error) {
         if (error instanceof Error && error.name === 'AbortError') {
           return Err({ type: 'timeout', ms: 5000 });
@@ -267,7 +267,7 @@ class ResilientApiClient {
 
     // Apply retry with backoff
     return retryWithBackoff(
-      () => operation() as Promise<Result<T, FetchError>>,
+      () => operation() as Promise<ResultType<T, FetchError>>,
       { maxRetries: 3, baseDelay: 1000, maxDelay: 10000, factor: 2 },
       (error) => 'retryable' in error && error.retryable,
     );
@@ -282,7 +282,7 @@ const runExample = async () => {
   // Example 1: Retry with backoff
   console.log('--- Test 1: Retry with Backoff ---');
   let attempt = 0;
-  const flakyOperation = async (): Promise<Result<string>> => {
+  const flakyOperation = async (): Promise<ResultType<string>> => {
     attempt++;
     console.log(`  Attempt ${attempt}`);
 
@@ -299,7 +299,8 @@ const runExample = async () => {
   const retryResult = await retryWithBackoff(
     flakyOperation,
     { maxRetries: 5, baseDelay: 500, maxDelay: 5000, factor: 2 },
-    (error) => error.retryable,
+    (error) =>
+      error.type === 'network' || (error.type === 'http' && error.retryable),
   );
 
   match(
@@ -310,19 +311,19 @@ const runExample = async () => {
 
   // Example 2: Fallback chain
   console.log('\n--- Test 2: Fallback Chain ---');
-  const primary = () =>
-    Err<string, FetchError>({
+  const primary = (): Result<string, FetchError> =>
+    Err({
       type: 'network',
       message: 'Primary down',
       retryable: true,
-    });
-  const secondary = () =>
-    Err<string, FetchError>({
+    } as FetchError);
+  const secondary = (): Result<string, FetchError> =>
+    Err({
       type: 'network',
       message: 'Secondary down',
       retryable: true,
-    });
-  const tertiary = () => Ok('Tertiary succeeded!');
+    } as FetchError);
+  const tertiary = (): Result<string, FetchError> => Ok('Tertiary succeeded!');
 
   const fallbackResult = fallbackChain(primary, secondary, tertiary);
   match(
@@ -335,7 +336,7 @@ const runExample = async () => {
   console.log('\n--- Test 3: Circuit Breaker ---');
   const breaker = new CircuitBreaker(3, 5000);
 
-  const failingOperation = async (): Promise<Result<string>> => {
+  const failingOperation = async (): Promise<ResultType<string>> => {
     return Err({
       type: 'http',
       status: 500,
@@ -381,7 +382,7 @@ const runExample = async () => {
 
   // Example 5: Timeout
   console.log('\n--- Test 5: Timeout ---');
-  const slowApi = async (): Promise<Result<string>> => {
+  const slowApi = async (): Promise<ResultType<string>> => {
     await new Promise((resolve) => setTimeout(resolve, 3000));
     return Ok('Too late!');
   };
@@ -424,8 +425,8 @@ class RateLimiter {
   }
 
   async execute<T, E>(
-    operation: () => Promise<Result<T, E>>,
-  ): Promise<Result<T, E | { type: 'rate-limited'; message: string }>> {
+    operation: () => Promise<ResultType<T, E>>,
+  ): Promise<ResultType<T, E | { type: 'rate-limited'; message: string }>> {
     this.refill();
 
     if (this.tokens <= 0) {

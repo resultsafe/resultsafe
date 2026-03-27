@@ -340,6 +340,7 @@ export default defineConfig([{
 
 | Version | Date       | Author          | Changes                                                                                                             |
 | ------- | ---------- | --------------- | ------------------------------------------------------------------------------------------------------------------- |
+| 2.1.0   | 2026-03-27 | Denis Savasteev | Added TypeScript validation rules: discriminated unions, HeadersInit, protected members, exactOptionalPropertyTypes |
 | 2.0.0   | 2026-03-27 | Denis Savasteev | Added Table of Contents, cross-references, author attribution, confidence score, better chunking, multiple examples |
 | 1.0.0   | 2026-03-27 | Denis Savasteev | Initial release                                                                                                     |
 

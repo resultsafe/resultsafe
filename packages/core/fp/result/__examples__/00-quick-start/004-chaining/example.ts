@@ -4,7 +4,7 @@
  * @description Learn to compose Result operations with map, mapErr, andThen, and orElse. Functional chaining patterns for clean, readable pipelines.
  * @example
  * import { Ok, map, andThen } from '@resultsafe/core-fp-result';
- * const result = Ok(21).map(x => x * 2).andThen(parsePort).orElse(() => Ok(3000));
+ * const result = andThen(map(Ok(21), x => x * 2), parsePort).orElse(() => Ok(3000));
  * @example
  * import { Ok, Err, map, mapErr } from '@resultsafe/core-fp-result';
  * map(Ok(5), x => x * 2); // Ok(10)
@@ -26,6 +26,7 @@ import {
   mapErr,
   Ok,
   orElse,
+  type Result,
 } from '@resultsafe/core-fp-result';
 
 // ===== map: Transform success value =====
@@ -98,12 +99,14 @@ console.log(withFallback('99999')); // Ok(3000) - fallback
 
 // ===== Pipe-style composition =====
 
-const pipeline = (input: string) =>
-  Ok(input)
-    .andThen(parsePort)
-    .andThen(validatePort)
-    .orElse(() => Ok(3000));
+// Functional pipeline approach
+const pipeline = (input: string): Result<number, string> => {
+  const step1 = Ok(input);
+  const step2 = andThen(step1, parsePort);
+  const step3 = andThen(step2, validatePort);
+  return orElse(step3, () => Ok(3000));
+};
 
-// Note: For function-style (as shown above), you'd use:
+// Note: The functional approach uses nested function calls:
 // andThen(Ok(input), parsePort)
-// This demonstrates the functional approach
+// This demonstrates the functional approach vs method chaining

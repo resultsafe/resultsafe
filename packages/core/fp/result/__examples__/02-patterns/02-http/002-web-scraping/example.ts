@@ -19,7 +19,7 @@
  * @ai {"purpose":"Teach web scraping patterns with Result-based error handling","prerequisites":["Result type","Fetch API","HTML parsing"],"objectives":["Retry logic","Rate limiting","Error recovery"],"rag":{"queries":["Result web scraping example","retry pattern scraping"],"intents":["learning","practical"],"expectedAnswer":"Use Result-based scraping with retry and rate limiting","confidence":0.95},"embedding":{"semanticKeywords":["web-scraping","retry","rate-limit","error-recovery","html"],"conceptualTags":["resilience","batch-processing"],"useCases":["data-extraction","monitoring"]},"codeSearch":{"patterns":["await scrapeUrl(","await scrapeMultiple(["],"imports":["import { Ok, Err, match, andThen, orElse } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-api-client","001-error-recovery"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"http","tokenCount":400,"relatedChunks":["001-api-client","001-error-recovery"]}}
  */
 
-import { Err, match, Ok } from '@resultsafe/core-fp-result';
+import { Err, match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Error types =====
 
@@ -102,7 +102,8 @@ const parseHtml = (
   try {
     // Simulated parsing (in real code, use cheerio, jsdom, or similar)
     const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
-    const title = titleMatch ? titleMatch[1].trim() : 'Untitled';
+    const title =
+      titleMatch && titleMatch[1] ? titleMatch[1].trim() : 'Untitled';
 
     // Extract links
     const linkMatches = html.match(/href=["']([^"']+)["']/g) || [];

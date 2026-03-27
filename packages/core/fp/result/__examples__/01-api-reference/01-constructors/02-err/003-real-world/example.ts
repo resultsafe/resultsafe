@@ -19,7 +19,7 @@
  * @ai {"purpose":"Teach production Err usage patterns","prerequisites":["Err constructor","async/await"],"objectives":["API errors","Error propagation"],"rag":{"queries":["Err real-world example","API error handling Result"],"intents":["practical","production"],"expectedAnswer":"Use Err for API errors with structured types","confidence":0.95},"embedding":{"semanticKeywords":["err","api","error","fetch","production"],"conceptualTags":["error-handling","production","api-client"],"useCases":["api-error","http-error","fetch"]},"codeSearch":{"patterns":["Err({status,message})","return Err(error)","Promise<Err<T,E>>"],"imports":["import { Err, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["04-error-handling/001-error-recovery"]},"chunking":{"type":"self-contained","section":"constructors","subsection":"err","tokenCount":350,"relatedChunks":["001-basic-usage","002-with-custom-error"]}}
  */
 
-import { Err, Ok } from '@resultsafe/core-fp-result';
+import { Err, Ok, type Result } from '@resultsafe/core-fp-result';
 
 interface User {
   id: string;
@@ -31,7 +31,7 @@ interface ApiError {
   message: string;
 }
 
-type UserResult = Ok<User, ApiError> | Err<ApiError>;
+type UserResult = Result<User, ApiError>;
 
 const fetchUser = async (id: string): Promise<UserResult> => {
   try {
@@ -44,7 +44,7 @@ const fetchUser = async (id: string): Promise<UserResult> => {
       });
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as User;
     return Ok(data);
   } catch (error) {
     return Err({

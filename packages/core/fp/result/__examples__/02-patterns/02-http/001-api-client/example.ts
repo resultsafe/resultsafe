@@ -21,7 +21,7 @@
  * @ai {"purpose":"Teach production HTTP client patterns with Result","prerequisites":["Result type","Fetch API","Class design"],"objectives":["Typed errors","Retry logic","Auth handling"],"rag":{"queries":["Result HTTP client example","API client retry pattern"],"intents":["learning","practical"],"expectedAnswer":"Use Result-based API client with typed errors and retry","confidence":0.95},"embedding":{"semanticKeywords":["http","api-client","retry","authentication","typed-errors"],"conceptualTags":["production-patterns","resilience"],"useCases":["rest-api","microservices"]},"codeSearch":{"patterns":["new ApiClient({","await client.getUser"],"imports":["import { Err, match, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["002-web-scraping","001-error-recovery"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"http","tokenCount":500,"relatedChunks":["002-web-scraping","001-error-recovery"]}}
  */
 
-import { Err, match, Ok } from '@resultsafe/core-fp-result';
+import { Err, match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Error Types =====
 
@@ -34,7 +34,7 @@ type ApiError =
   | { type: 'rate-limit'; retryAfter: number }
   | { type: 'timeout'; ms: number };
 
-type Result<T, E = ApiError> = Ok<T, E> | Err<E>;
+type ResultType<T, E = ApiError> = Result<T, E>;
 
 // ===== API Client Configuration =====
 
@@ -67,19 +67,25 @@ class ApiClient {
   }
 
   // Generic request method
-  private async request<T>(
+  protected async request<T>(
     endpoint: string,
     options?: RequestInit,
-  ): Promise<Result<T>> {
+  ): Promise<ResultType<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
-    const headers: HeadersInit = {
+    const headersInit: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...(this.config.token
-        ? { Authorization: `Bearer ${this.config.token}` }
-        : {}),
-      ...options?.headers,
     };
+
+    if (this.config.token) {
+      headersInit['Authorization'] = `Bearer ${this.config.token}`;
+    }
+
+    if (options?.headers) {
+      Object.assign(headersInit, options.headers);
+    }
+
+    const headers = headersInit;
 
     // Retry loop
     let lastError: ApiError | null = null;
@@ -192,7 +198,7 @@ class ApiClient {
 
   // ===== CRUD Operations =====
 
-  async getUser(id: string): Promise<Result<User>> {
+  async getUser(id: string): Promise<ResultType<User>> {
     if (!id.startsWith('user-')) {
       return Err({
         type: 'validation',
@@ -203,7 +209,7 @@ class ApiClient {
     return this.request<User>(`/users/${id}`);
   }
 
-  async createUser(input: CreateUserInput): Promise<Result<User>> {
+  async createUser(input: CreateUserInput): Promise<ResultType<User>> {
     // Validate input
     const validationError = this.validateUserInput(input);
     if (validationError) {
@@ -219,21 +225,21 @@ class ApiClient {
   async updateUser(
     id: string,
     input: Partial<CreateUserInput>,
-  ): Promise<Result<User>> {
+  ): Promise<ResultType<User>> {
     return this.request<User>(`/users/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(input),
     });
   }
 
-  async deleteUser(id: string): Promise<Result<void>> {
+  async deleteUser(id: string): Promise<ResultType<void>> {
     return this.request<void>(`/users/${id}`, { method: 'DELETE' });
   }
 
   async listUsers(params?: {
     page?: number;
     limit?: number;
-  }): Promise<Result<User[]>> {
+  }): Promise<ResultType<User[]>> {
     const queryParams = new URLSearchParams();
     if (params?.page) queryParams.append('page', params.page.toString());
     if (params?.limit) queryParams.append('limit', params.limit.toString());
@@ -295,7 +301,7 @@ const handleApiError = (error: ApiError): string => {
     case 'rate-limit':
       return `Rate limited. Retry after ${error.retryAfter}s`;
     case 'timeout':
-      return `Request timed out after ${error.timeout}ms`;
+      return `Request timed out after ${error.ms}ms`;
     default:
       return 'Unknown error';
   }
@@ -414,7 +420,7 @@ class AuthApiClient extends ApiClient {
   async requestWithRefresh<T>(
     endpoint: string,
     options?: RequestInit,
-  ): Promise<Result<T>> {
+  ): Promise<ResultType<T>> {
     const result = await this.request<T>(endpoint, options);
 
     if (result.ok === false && isAuthError(result.error)) {

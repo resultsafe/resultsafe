@@ -20,7 +20,7 @@
  * @ai {"purpose":"Teach explicit error handling without exceptions","prerequisites":["Result type","TypeScript unions"],"objectives":["Error propagation","Custom error types"],"rag":{"queries":["Result error handling example","no try catch pattern"],"intents":["learning","practical"],"expectedAnswer":"Use Result for explicit error handling without try/catch","confidence":0.95},"embedding":{"semanticKeywords":["error-handling","explicit","propagation","custom-types","result"],"conceptualTags":["functional-error","type-safety"],"useCases":["api-errors","validation"]},"codeSearch":{"patterns":["Err({ type:","if (result.ok === false)"],"imports":["import { Ok, Err, match } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["002-basic-usage","004-chaining"]},"chunking":{"type":"self-contained","section":"quick-start","subsection":"error-handling","tokenCount":350,"relatedChunks":["002-basic-usage","004-chaining"]}}
  */
 
-import { Err, match, Ok } from '@resultsafe/core-fp-result';
+import { Err, match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // A function that can fail - returns Result instead of throwing
 const divide = (a: number, b: number) =>

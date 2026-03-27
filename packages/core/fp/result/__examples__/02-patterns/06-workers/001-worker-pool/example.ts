@@ -23,7 +23,7 @@
  * @ai {"purpose":"Teach worker pool and task management patterns with Result","prerequisites":["Result type","Worker threads","Task queues"],"objectives":["Worker pool","Priority queue","Job scheduler"],"rag":{"queries":["Result worker pool example","task queue priority pattern"],"intents":["learning","practical"],"expectedAnswer":"Use Result-based worker pool with task queues and scheduling","confidence":0.95},"embedding":{"semanticKeywords":["worker-pool","task-queue","priority","scheduler","concurrency"],"conceptualTags":["concurrency","task-management"],"useCases":["background-jobs","batch-processing"]},"codeSearch":{"patterns":["new WorkerPool(","queue.enqueue(","scheduler.addJob("],"imports":["import { Ok, Err, match } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-async-basics","001-event-handling"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"workers","tokenCount":450,"relatedChunks":["001-async-basics","001-event-handling"]}}
  */
 
-import { match, Ok } from '@resultsafe/core-fp-result';
+import { match, Ok, type Result } from '@resultsafe/core-fp-result';
 
 // ===== Pattern 1: Simple Worker Pool =====
 
@@ -202,12 +202,12 @@ class PriorityTaskQueue<T, R> {
 interface Job {
   id: string;
   name: string;
-  cron?: string; // Simple cron-like: '*/5 * * * *' for every 5 minutes
-  interval?: number; // milliseconds
+  cron?: string;
+  interval?: number;
   handler: () => Promise<Result<void, Error>>;
   enabled: boolean;
   lastRun?: number;
-  nextRun?: number;
+  nextRun?: number | undefined;
 }
 
 class JobScheduler {
@@ -254,7 +254,7 @@ class JobScheduler {
     } else if (job.interval) {
       job.nextRun = Date.now() + job.interval;
     } else {
-      job.nextRun = undefined;
+      delete job.nextRun;
     }
 
     this.scheduleJob(job);
@@ -262,9 +262,9 @@ class JobScheduler {
 
   private parseCron(cron: string): number {
     // Simplified cron parser - only supports */N pattern for minutes
-    const match = cron.match(/^\*\/(\d+) \* \* \* \*$/);
-    if (match) {
-      const minutes = parseInt(match[1], 10);
+    const cronMatch = cron.match(/^\*\/(\d+) \* \* \* \*$/);
+    if (cronMatch && cronMatch[1]) {
+      const minutes = parseInt(cronMatch[1], 10);
       return Date.now() + minutes * 60 * 1000;
     }
     // Default: run in 1 minute

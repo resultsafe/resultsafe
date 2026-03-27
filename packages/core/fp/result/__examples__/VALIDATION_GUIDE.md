@@ -28,6 +28,7 @@ pnpm run typecheck:examples
 **Config:** `tsconfig.examples.json`
 
 **What it checks:**
+
 - Type correctness
 - Import/export validity
 - Generic type parameters
@@ -44,6 +45,7 @@ pnpm run lint:examples
 **Config:** `config/eslint.config.examples.mjs`
 
 **What it checks:**
+
 - JSDoc `@description` present (warn)
 - JSDoc `@example` present (warn)
 - TypeScript syntax valid
@@ -60,6 +62,7 @@ pnpm run validate:ai-json
 **Script:** `__scripts__/validate-ai-json.js`
 
 **What it checks:**
+
 - `@module` tag present
 - `@ai` JSON valid and complete
 - Required fields: `purpose`, `prerequisites`, `objectives`, `rag`, `embedding`, `codeSearch`, `learningPath`, `chunking`
@@ -75,6 +78,7 @@ pnpm run test:examples
 **Config:** `config/vitest.config.examples.ts`
 
 **What it checks:**
+
 - No runtime errors
 - No unhandled exceptions
 - Console output (for debugging)
@@ -84,6 +88,7 @@ pnpm run test:examples
 Examples are automatically validated in:
 
 1. **Local Development**
+
    ```bash
    pnpm run validate:examples
    ```
@@ -155,6 +160,7 @@ console.log(result); // { ok: true, value: 42 }
 ### "Cannot find name 'Result'"
 
 **Fix:** Import `Result` type:
+
 ```typescript
 import type { Result } from '@resultsafe/core-fp-result';
 ```
@@ -162,6 +168,7 @@ import type { Result } from '@resultsafe/core-fp-result';
 ### "Property 'value' does not exist on type 'Result'"
 
 **Fix:** Narrow the type first:
+
 ```typescript
 if (result.ok) {
   console.log(result.value); // ✅ TypeScript knows it's Ok
@@ -171,6 +178,7 @@ if (result.ok) {
 ### "TS2749: 'Ok' refers to a value, but is being used as a type"
 
 **Fix:** Use `typeof Ok` for types:
+
 ```typescript
 // Wrong:
 type MyResult = Ok<number, string>;
@@ -184,19 +192,128 @@ type MyResult = Result<number, string>;
 ### "@ai JSON validation failed"
 
 **Fix:** Ensure all required fields are present:
+
 ```typescript
 @ai {"purpose":"...","prerequisites":[],"objectives":[],"rag":{"queries":[],"intents":[],"expectedAnswer":"...","confidence":0.95},"embedding":{"semanticKeywords":[],"conceptualTags":[],"useCases":[]},"codeSearch":{"patterns":[],"imports":[]},"learningPath":{"progression":[]},"chunking":{"type":"...","section":"...","tokenCount":200,"relatedChunks":[]}}
+```
+
+### "Property 'X' does not exist on type '...'" (Discriminated Union)
+
+**Problem:** Accessing a property that exists only in one variant of a union type without narrowing.
+
+**Example Error:**
+
+```
+Property 'timeout' does not exist on type '{ type: "timeout"; ms: number; }'
+```
+
+**Fix:** Use discriminated union pattern matching or type guards:
+
+```typescript
+// Wrong:
+case 'timeout':
+  return `Timeout after ${error.timeout}ms`; // ❌ 'timeout' not in union
+
+// Correct:
+case 'timeout':
+  return `Timeout after ${error.ms}ms`; // ✅ Use correct property from union variant
+```
+
+**For union types:**
+
+```typescript
+type ApiError =
+  | { type: 'timeout'; ms: number }
+  | { type: 'network'; message: string };
+
+// Narrow first:
+if (error.type === 'timeout') {
+  console.log(error.ms); // ✅ TypeScript knows it's timeout variant
+}
+```
+
+### "HeadersInit cannot be found" or "HeadersInit type error"
+
+**Problem:** `HeadersInit` type may not be available in all TypeScript configurations.
+
+**Fix:** Use `Record<string, string>` instead:
+
+```typescript
+// Wrong (may fail):
+const headers: HeadersInit = {
+  'Content-Type': 'application/json',
+  ...options?.headers, // ❌ Spread with HeadersInit causes type issues
+};
+
+// Correct:
+const headersInit: Record<string, string> = {
+  'Content-Type': 'application/json',
+};
+
+if (options?.headers) {
+  Object.assign(headersInit, options.headers); // ✅ Safe assignment
+}
+
+const headers = headersInit;
+```
+
+### "Property is private and only accessible within class"
+
+**Problem:** Child class cannot access private members of parent class.
+
+**Fix:** Change `private` to `protected` for members that need inheritance:
+
+```typescript
+// Parent class:
+class ApiClient {
+  // Wrong:
+  private async request<T>() { ... } // ❌ Not accessible in subclasses
+
+  // Correct:
+  protected async request<T>() { ... } // ✅ Accessible in subclasses
+}
+
+// Child class:
+class AuthApiClient extends ApiClient {
+  async requestWithRefresh<T>() {
+    return this.request<T>(); // ✅ Now works with 'protected'
+  }
+}
+```
+
+### "Type 'undefined' is not assignable" (exactOptionalPropertyTypes)
+
+**Problem:** TypeScript's `exactOptionalPropertyTypes` flag disallows assigning `undefined` to optional properties.
+
+**Fix:** Use `delete` or explicitly allow `undefined` in type:
+
+```typescript
+// Wrong:
+interface Job {
+  nextRun?: number;
+}
+job.nextRun = undefined; // ❌ Fails with exactOptionalPropertyTypes
+
+// Correct:
+delete job.nextRun; // ✅ Remove property entirely
+
+// Or allow undefined explicitly:
+interface Job {
+  nextRun?: number | undefined;
+}
 ```
 
 ## Best Practices
 
 1. **Always import types explicitly**
+
    ```typescript
    import type { Result, Option } from '@resultsafe/core-fp-result';
    import { Ok, Err } from '@resultsafe/core-fp-result';
    ```
 
 2. **Narrow types before accessing properties**
+
    ```typescript
    if (result.ok) {
      return result.value; // ✅ Safe
@@ -204,11 +321,12 @@ type MyResult = Result<number, string>;
    ```
 
 3. **Use `match()` for exhaustive handling**
+
    ```typescript
    const value = match(
      result,
      (ok) => ok.value,
-     (err) => err.error
+     (err) => err.error,
    );
    ```
 
