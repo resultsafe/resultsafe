@@ -1,12 +1,23 @@
 /**
- * @example Form Validation Pipeline
- *
- * Complete form validation with error accumulation.
- *
+ * @module 001-validation
+ * @title Form Validation with Error Accumulation
+ * @description Complete form validation pipeline with error accumulation. Validates multiple fields and collects all errors for user feedback.
+ * @example
+ * import { Err, Ok, match } from '@resultsafe/core-fp-result';
+ * const result = validateForm({ username: 'john', email: 'john@example.com', password: 'Secure123', age: 25 });
+ * match(result, data => console.log('Valid:', data), errors => errors.forEach(e => console.error(e.message)));
+ * @example
+ * import { Err, Ok, match } from '@resultsafe/core-fp-result';
+ * const invalidResult = validateForm({ username: 'J', email: 'invalid', password: 'weak', age: 15 });
+ * match(invalidResult, displaySuccess, displayErrors);
+ * @tags validation,form,error-accumulation,pipeline,intermediate
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
  * @difficulty Intermediate
- * @time 15 minutes
- * @category validation
- * @see https://github.com/Livooon/resultsafe
+ * @time 15min
+ * @category patterns
+ * @see {@link ../../01-api-reference/04-refiners/05-refine-result} @see {@link ../../02-patterns/04-error-handling/001-error-recovery} @see {@link https://github.com/Livooon/resultsafe}
+ * @ai {"purpose":"Teach form validation with error accumulation using Result","prerequisites":["Result type","Type guards"],"objectives":["Error accumulation","Field validation"],"rag":{"queries":["Result form validation example","error accumulation pattern"],"intents":["learning","practical"],"expectedAnswer":"Use Result with error array for validation accumulation","confidence":0.95},"embedding":{"semanticKeywords":["validation","form","error-accumulation","pipeline","fields"],"conceptualTags":["validation","user-feedback"],"useCases":["form-validation","input-sanitization"]},"codeSearch":{"patterns":["validateForm(data)","validateUsername(username)"],"imports":["import { Err, match, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-error-recovery","005-refine-result"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"validation","tokenCount":400,"relatedChunks":["001-error-recovery","005-refine-result"]}}
  */
 
 import { Err, match, Ok } from '@resultsafe/core-fp-result';

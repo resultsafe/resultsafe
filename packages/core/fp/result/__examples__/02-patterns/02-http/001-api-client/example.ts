@@ -1,12 +1,24 @@
 /**
- * @example HTTP API Client
- *
- * Complete REST API client with typed errors, retry logic, and authentication.
- *
+ * @module 001-api-client
+ * @title HTTP API Client with Typed Errors
+ * @description Complete REST API client implementation with typed errors, retry logic, authentication, and rate limiting. Production-ready pattern for HTTP operations.
+ * @example
+ * import { Err, Ok, match } from '@resultsafe/core-fp-result';
+ * const client = new ApiClient({ baseUrl: 'https://api.example.com' });
+ * const result = await client.getUser('user-123');
+ * match(result, user => console.log(user), err => console.error(err));
+ * @example
+ * import { Err, Ok, match } from '@resultsafe/core-fp-result';
+ * const createResult = await client.createUser({ name: 'John', email: 'john@example.com' });
+ * match(createResult, user => console.log('Created:', user), err => handleApiError(err));
+ * @tags http,api-client,retry,authentication,production,advanced
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
  * @difficulty Advanced
- * @time 25 minutes
- * @category http
- * @see https://github.com/Livooon/resultsafe
+ * @time 25min
+ * @category patterns
+ * @see {@link 002-web-scraping} @see {@link ../../02-patterns/04-error-handling/001-error-recovery} @see {@link https://github.com/Livooon/resultsafe}
+ * @ai {"purpose":"Teach production HTTP client patterns with Result","prerequisites":["Result type","Fetch API","Class design"],"objectives":["Typed errors","Retry logic","Auth handling"],"rag":{"queries":["Result HTTP client example","API client retry pattern"],"intents":["learning","practical"],"expectedAnswer":"Use Result-based API client with typed errors and retry","confidence":0.95},"embedding":{"semanticKeywords":["http","api-client","retry","authentication","typed-errors"],"conceptualTags":["production-patterns","resilience"],"useCases":["rest-api","microservices"]},"codeSearch":{"patterns":["new ApiClient({","await client.getUser"],"imports":["import { Err, match, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["002-web-scraping","001-error-recovery"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"http","tokenCount":500,"relatedChunks":["002-web-scraping","001-error-recovery"]}}
  */
 
 import { Err, match, Ok } from '@resultsafe/core-fp-result';

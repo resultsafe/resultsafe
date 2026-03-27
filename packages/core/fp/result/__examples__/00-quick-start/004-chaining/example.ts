@@ -1,10 +1,32 @@
 /**
- * @example Chaining Operations
- * 
- * Demonstrates composing operations with map, mapErr, andThen, and orElse.
+ * @module 004-chaining
+ * @title Chaining Operations with Result
+ * @description Learn to compose Result operations with map, mapErr, andThen, and orElse. Functional chaining patterns for clean, readable pipelines.
+ * @example
+ * import { Ok, map, andThen } from '@resultsafe/core-fp-result';
+ * const result = Ok(21).map(x => x * 2).andThen(parsePort).orElse(() => Ok(3000));
+ * @example
+ * import { Ok, Err, map, mapErr } from '@resultsafe/core-fp-result';
+ * map(Ok(5), x => x * 2); // Ok(10)
+ * mapErr(Err('e'), e => e.toUpperCase()); // Err('E')
+ * @tags chaining,map,andthen,orelse,functional,intermediate
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
+ * @difficulty Intermediate
+ * @time 15min
+ * @category quick-start
+ * @see {@link 002-basic-usage} @see {@link 003-error-handling} @see {@link ../01-api-reference/03-methods}
+ * @ai {"purpose":"Teach functional chaining patterns with Result","prerequisites":["Result type","Function composition"],"objectives":["map/andThen/orElse","Pipeline composition"],"rag":{"queries":["Result chaining example","map andThen orElse pattern"],"intents":["learning","practical"],"expectedAnswer":"Use map, andThen, orElse for functional Result chaining","confidence":0.95},"embedding":{"semanticKeywords":["chaining","map","andthen","orelse","functional","pipeline"],"conceptualTags":["functional-composition","pipeline"],"useCases":["data-processing","validation"]},"codeSearch":{"patterns":["map(result, fn)","andThen(result, fn)","orElse(result"],"imports":["import { Ok, Err, map, mapErr, andThen, orElse } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["002-basic-usage","003-error-handling"]},"chunking":{"type":"self-contained","section":"quick-start","subsection":"chaining","tokenCount":350,"relatedChunks":["002-basic-usage","003-error-handling"]}}
  */
 
-import { Ok, Err, map, mapErr, andThen, orElse } from '@resultsafe/core-fp-result';
+import {
+  andThen,
+  Err,
+  map,
+  mapErr,
+  Ok,
+  orElse,
+} from '@resultsafe/core-fp-result';
 
 // ===== map: Transform success value =====
 
@@ -43,9 +65,7 @@ const parsePort = (raw: string) => {
 };
 
 const validatePort = (port: number) =>
-  port < 1024
-    ? Err('privileged-port')
-    : Ok(port);
+  port < 1024 ? Err('privileged-port') : Ok(port);
 
 const result3 = andThen(Ok('8080'), parsePort);
 console.log(result3); // Ok(8080)
@@ -67,8 +87,7 @@ console.log(successNoRecovery); // Ok(8080) - success passes through
 
 // ===== Complex chain =====
 
-const parseAndValidate = (raw: string) =>
-  andThen(Ok(raw), parsePort);
+const parseAndValidate = (raw: string) => andThen(Ok(raw), parsePort);
 
 const withFallback = (raw: string) =>
   orElse(parseAndValidate(raw), () => Ok(3000));

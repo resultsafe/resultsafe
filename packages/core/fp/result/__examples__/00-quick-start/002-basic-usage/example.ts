@@ -1,11 +1,24 @@
 /**
- * @example Basic Usage
- *
- * Creating Ok/Err values, pattern matching, and type-safe access.
- *
+ * @module 002-basic-usage
+ * @title Basic Usage - Creating and Matching Results
+ * @description Learn to create Ok/Err values, use pattern matching with match, and access values safely with type guards. Complete introduction to Result fundamentals.
+ * @example
+ * import { Ok, Err, match } from '@resultsafe/core-fp-result';
+ * const success = Ok(42);
+ * const failure = Err('error');
+ * match(success, v => console.log(v), e => console.error(e));
+ * @example
+ * import { Ok, Err, isOk } from '@resultsafe/core-fp-result';
+ * const result = Ok({ id: '1', name: 'John' });
+ * if (isOk(result)) { console.log(result.value.name); }
+ * @tags result,ok,err,match,pattern-matching,beginner
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
  * @difficulty Beginner
- * @time 5 minutes
+ * @time 5min
  * @category quick-start
+ * @see {@link 001-hello-world} @see {@link 003-error-handling} @see {@link 004-chaining}
+ * @ai {"purpose":"Teach basic Result creation and pattern matching","prerequisites":["TypeScript types"],"objectives":["Ok/Err creation","Pattern matching"],"rag":{"queries":["Result basic usage example","Ok Err match pattern"],"intents":["learning","quick-start"],"expectedAnswer":"Use Ok(value) for success, Err(error) for failure, match for handling","confidence":0.95},"embedding":{"semanticKeywords":["result","ok","err","match","pattern-matching","beginner"],"conceptualTags":["getting-started","fundamentals"],"useCases":["error-handling","validation"]},"codeSearch":{"patterns":["Ok(value)","Err(error)","match(result"],"imports":["import { Err, isOk, match, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["003-error-handling","004-chaining"]},"chunking":{"type":"self-contained","section":"quick-start","subsection":"basic-usage","tokenCount":400,"relatedChunks":["001-hello-world","003-error-handling"]}}
  */
 
 import { Err, isOk, match, Ok } from '@resultsafe/core-fp-result';

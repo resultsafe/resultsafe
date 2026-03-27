@@ -1,10 +1,28 @@
 /**
- * @example Async Operations
- * 
- * Demonstrates working with promises and async functions using Result.
+ * @module 001-basics
+ * @title Async Operations with Result
+ * @description Learn to use Result with async/await patterns. Covers async functions returning Result, parallel operations, and sequential chaining.
+ * @example
+ * import { Ok, Err, match } from '@resultsafe/core-fp-result';
+ * const fetchJson = async (url) => {
+ *   try { return Ok(await fetch(url).then(r => r.json())); }
+ *   catch (e) { return Err(e.message); }
+ * };
+ * @example
+ * import { Ok, Err, match } from '@resultsafe/core-fp-result';
+ * const result = await fetchJson('https://api.example.com/data');
+ * match(result, data => console.log(data), err => console.error(err));
+ * @tags async,promise,await,functional,pattern,intermediate
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
+ * @difficulty Intermediate
+ * @time 15min
+ * @category patterns
+ * @see {@link 002-concurrent} @see {@link 003-streams} @see {@link ../../01-api-reference/03-methods/02-chaining/01-and-then}
+ * @ai {"purpose":"Teach async/await patterns with Result","prerequisites":["Result type","Async/await"],"objectives":["Async Result functions","Error handling"],"rag":{"queries":["Result async await example","Result promise pattern"],"intents":["learning","practical"],"expectedAnswer":"Use async functions returning Promise<Result<T,E>>","confidence":0.95},"embedding":{"semanticKeywords":["async","promise","await","result","functional"],"conceptualTags":["async-programming","error-handling"],"useCases":["api-calls","file-io"]},"codeSearch":{"patterns":["async () => Promise<Result","await fetchJson()"],"imports":["import { Ok, Err, match } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["002-concurrent","003-streams"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"async","tokenCount":350,"relatedChunks":["002-concurrent","003-streams"]}}
  */
 
-import { Ok, Err, match } from '@resultsafe/core-fp-result';
+import { Err, match, Ok } from '@resultsafe/core-fp-result';
 
 // ===== Async function returning Result =====
 
@@ -24,11 +42,11 @@ const fetchJson = async (url: string): Promise<Result<unknown, string>> => {
 
 const getUserData = async (userId: string) => {
   const result = await fetchJson(`https://api.example.com/users/${userId}`);
-  
+
   return match(
     result,
     (data) => Ok({ userId, data, fetchedAt: new Date().toISOString() }),
-    (error) => Err({ type: 'fetch' as const, error })
+    (error) => Err({ type: 'fetch' as const, error }),
   );
 };
 
@@ -36,15 +54,15 @@ const getUserData = async (userId: string) => {
 
 const fetchWithTimeout = async (
   url: string,
-  timeoutMs: number
+  timeoutMs: number,
 ): Promise<Result<unknown, string>> => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-  
+
   try {
     const response = await fetch(url, { signal: controller.signal });
     clearTimeout(timeoutId);
-    
+
     if (!response.ok) {
       return Err(`HTTP ${response.status}`);
     }
@@ -79,7 +97,9 @@ const fetchUser = async (id: string): Promise<Result<User, string>> => {
   return Ok({ id, name: 'John Doe', email: 'john@example.com' });
 };
 
-const fetchUserPosts = async (userId: string): Promise<Result<Post[], string>> => {
+const fetchUserPosts = async (
+  userId: string,
+): Promise<Result<Post[], string>> => {
   // Simulated API call
   await new Promise((resolve) => setTimeout(resolve, 100));
   return Ok([
@@ -88,13 +108,15 @@ const fetchUserPosts = async (userId: string): Promise<Result<Post[], string>> =
   ]);
 };
 
-const getUserPostCount = async (userId: string): Promise<Result<number, string>> => {
+const getUserPostCount = async (
+  userId: string,
+): Promise<Result<number, string>> => {
   const userResult = await fetchUser(userId);
   if (userResult.ok === false) return userResult;
-  
+
   const postsResult = await fetchUserPosts(userId);
   if (postsResult.ok === false) return postsResult;
-  
+
   return Ok(postsResult.value.length);
 };
 
@@ -102,15 +124,15 @@ const getUserPostCount = async (userId: string): Promise<Result<number, string>>
 
 const runExample = async () => {
   console.log('=== Async Operations Example ===\n');
-  
+
   // Example 1: Simple async Result
   const result1 = await fetchWithTimeout('https://api.example.com/data', 5000);
   console.log('Fetch result:', result1);
-  
+
   // Example 2: getUserData
   const result2 = await getUserData('user-123');
   console.log('User data:', result2);
-  
+
   // Example 3: Sequential operations
   const postCount = await getUserPostCount('user-123');
   console.log('Post count:', postCount); // Ok(2)

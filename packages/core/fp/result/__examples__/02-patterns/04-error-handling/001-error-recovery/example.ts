@@ -1,12 +1,23 @@
 /**
- * @example Error Recovery Strategies
- *
- * Retry logic, fallback values, circuit breaker, and error recovery patterns.
- *
+ * @module 001-error-recovery
+ * @title Error Recovery Strategies
+ * @description Comprehensive error recovery patterns including retry with exponential backoff, fallback chains, circuit breaker, bulkhead, and timeout. Production-ready resilience patterns.
+ * @example
+ * import { Err, Ok, match } from '@resultsafe/core-fp-result';
+ * const result = await retryWithBackoff(operation, { maxRetries: 3, baseDelay: 1000 }, isRetryable);
+ * match(result, value => console.log('Success:', value), err => console.error('Failed:', err));
+ * @example
+ * import { Err, Ok } from '@resultsafe/core-fp-result';
+ * const fallbackResult = fallbackChain(primary, secondary, tertiary);
+ * const circuitResult = await circuitBreaker.execute(operation);
+ * @tags error-recovery,retry,circuit-breaker,bulkhead,timeout,advanced
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
  * @difficulty Advanced
- * @time 25 minutes
- * @category error-handling
- * @see https://github.com/Livooon/resultsafe
+ * @time 25min
+ * @category patterns
+ * @see {@link 001-api-client} @see {@link 002-web-scraping} @see {@link https://github.com/Livooon/resultsafe}
+ * @ai {"purpose":"Teach error recovery strategies with Result","prerequisites":["Result type","Async patterns","Error handling"],"objectives":["Retry patterns","Circuit breaker","Bulkhead"],"rag":{"queries":["Result retry pattern example","circuit breaker Result"],"intents":["learning","practical"],"expectedAnswer":"Use retry, circuit breaker, and fallback patterns with Result","confidence":0.95},"embedding":{"semanticKeywords":["error-recovery","retry","circuit-breaker","bulkhead","timeout"],"conceptualTags":["resilience","fault-tolerance"],"useCases":["microservices","distributed-systems"]},"codeSearch":{"patterns":["retryWithBackoff(operation","new CircuitBreaker(","fallbackChain("],"imports":["import { Err, match, Ok } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-api-client","002-web-scraping"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"error-handling","tokenCount":500,"relatedChunks":["001-api-client","002-web-scraping"]}}
  */
 
 import { Err, match, Ok } from '@resultsafe/core-fp-result';

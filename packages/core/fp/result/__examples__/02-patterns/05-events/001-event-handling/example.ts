@@ -1,15 +1,26 @@
 /**
- * @example Async Event Handling
- * 
- * Event-driven architectures with Result-based error handling.
- * 
+ * @module 001-event-handling
+ * @title Async Event Handling with Result
+ * @description Event-driven architecture patterns with Result-based error handling. Includes TypedEventEmitter, EventBus, and CommandQueue with comprehensive error aggregation.
+ * @example
+ * import { Ok, Err, match } from '@resultsafe/core-fp-result';
+ * const emitter = new TypedEventEmitter();
+ * emitter.on('userLogin', async (data) => { console.log(data.userId); return Ok(undefined); });
+ * @example
+ * import { Ok, Err } from '@resultsafe/core-fp-result';
+ * const bus = new EventBus();
+ * await bus.publish('data-update', { table: 'users', records: 100 });
+ * @tags events,event-bus,async,pubsub,pattern,advanced
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
  * @difficulty Advanced
- * @time 20 minutes
- * @category async
- * @see https://nodejs.org/api/events.html
+ * @time 20min
+ * @category patterns
+ * @see {@link 001-async-basics} @see {@link 001-worker-pool} @see {@link https://nodejs.org/api/events.html}
+ * @ai {"purpose":"Teach event handling patterns with Result-based error aggregation","prerequisites":["Result type","Event emitters","Async patterns"],"objectives":["Typed events","Error aggregation","Command queue"],"rag":{"queries":["Result event handler example","event bus pattern Result"],"intents":["learning","practical"],"expectedAnswer":"Use Result-based event handlers with error aggregation","confidence":0.95},"embedding":{"semanticKeywords":["events","event-bus","async","pubsub","error-aggregation"],"conceptualTags":["event-driven","messaging"],"useCases":["microservices","real-time-apps"]},"codeSearch":{"patterns":["new TypedEventEmitter(","bus.subscribe(","commandQueue.enqueue("],"imports":["import { Ok, Err, match } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-async-basics","001-worker-pool"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"events","tokenCount":450,"relatedChunks":["001-async-basics","001-worker-pool"]}}
  */
 
-import { Ok, Err, match } from '@resultsafe/core-fp-result';
+import { Err, Ok } from '@resultsafe/core-fp-result';
 
 // ===== Pattern 1: Event Emitter with Result =====
 
@@ -18,10 +29,7 @@ type EventHandler<T> = (data: T) => Promise<Result<void, Error>>;
 class TypedEventEmitter<Events extends Record<string, unknown>> {
   private listeners: Map<keyof Events, Array<EventHandler<any>>> = new Map();
 
-  on<K extends keyof Events>(
-    event: K,
-    handler: EventHandler<Events[K]>
-  ): this {
+  on<K extends keyof Events>(event: K, handler: EventHandler<Events[K]>): this {
     const handlers = this.listeners.get(event) || [];
     handlers.push(handler);
     this.listeners.set(event, handlers);
@@ -30,7 +38,7 @@ class TypedEventEmitter<Events extends Record<string, unknown>> {
 
   off<K extends keyof Events>(
     event: K,
-    handler: EventHandler<Events[K]>
+    handler: EventHandler<Events[K]>,
   ): this {
     const handlers = this.listeners.get(event) || [];
     const index = handlers.indexOf(handler);
@@ -42,7 +50,7 @@ class TypedEventEmitter<Events extends Record<string, unknown>> {
 
   async emit<K extends keyof Events>(
     event: K,
-    data: Events[K]
+    data: Events[K],
   ): Promise<Result<void, Error[]>> {
     const handlers = this.listeners.get(event) || [];
     const errors: Error[] = [];
@@ -54,7 +62,7 @@ class TypedEventEmitter<Events extends Record<string, unknown>> {
           errors.push(
             result.error instanceof Error
               ? result.error
-              : new Error(String(result.error))
+              : new Error(String(result.error)),
           );
         }
       } catch (error) {
@@ -71,7 +79,7 @@ class TypedEventEmitter<Events extends Record<string, unknown>> {
 
   once<K extends keyof Events>(
     event: K,
-    handler: EventHandler<Events[K]>
+    handler: EventHandler<Events[K]>,
   ): this {
     const onceHandler = async (data: Events[K]) => {
       this.off(event, onceHandler);
@@ -99,7 +107,7 @@ class EventBus {
 
   subscribe(
     type: string,
-    handler: (event: EventBusEvent) => Promise<Result<void, unknown>>
+    handler: (event: EventBusEvent) => Promise<Result<void, unknown>>,
   ): () => void {
     const handlers = this.handlers.get(type) || [];
     handlers.push(handler);
@@ -114,7 +122,7 @@ class EventBus {
 
   async publish(
     type: string,
-    payload: unknown
+    payload: unknown,
   ): Promise<Result<void, unknown[]>> {
     const event: EventBusEvent = {
       type,
@@ -186,7 +194,7 @@ class CommandQueue {
   }
 
   async process<T>(
-    handler: (command: Command<T>) => Promise<Result<unknown, unknown>>
+    handler: (command: Command<T>) => Promise<Result<unknown, unknown>>,
   ): Promise<Result<Command<T>[], unknown[]>> {
     if (this.processing) {
       return Err(['Already processing']);
@@ -300,11 +308,11 @@ const runExample = async () => {
 // Pattern: Middleware chain for events
 type EventMiddleware<T> = (
   event: T,
-  next: () => Promise<Result<void, Error>>
+  next: () => Promise<Result<void, Error>>,
 ) => Promise<Result<void, Error>>;
 
 const createMiddlewarePipeline = <T>(
-  middlewares: EventMiddleware<T>[]
+  middlewares: EventMiddleware<T>[],
 ): ((event: T) => Promise<Result<void, Error>>) => {
   return async (event: T) => {
     let index = -1;
@@ -326,7 +334,7 @@ const createMiddlewarePipeline = <T>(
 // Pattern: Retry failed event handlers
 const withRetry = <T>(
   handler: (event: T) => Promise<Result<void, Error>>,
-  maxRetries: number
+  maxRetries: number,
 ): ((event: T) => Promise<Result<void, Error>>) => {
   return async (event: T) => {
     let lastError: Error | null = null;

@@ -1,15 +1,29 @@
 /**
- * @example Async Worker Pool
- * 
- * Managing worker threads/tasks with Result-based error handling.
- * 
+ * @module 001-worker-pool
+ * @title Async Worker Pool with Task Management
+ * @description Worker pool implementation with task queues, priority scheduling, and job scheduling. Includes retry logic, timeout handling, and concurrency control.
+ * @example
+ * import { Ok, Err } from '@resultsafe/core-fp-result';
+ * const pool = new WorkerPool({ size: 3, maxRetries: 3, timeout: 5000 });
+ * pool.start();
+ * const result = await pool.submit(asyncTask, inputData);
+ * @example
+ * import { Ok, Err } from '@resultsafe/core-fp-result';
+ * const queue = new PriorityTaskQueue();
+ * queue.enqueue(handler, data, 'high');
+ * const scheduler = new JobScheduler();
+ * scheduler.addJob({ id: 'job-1', name: 'Periodic', interval: 1000, handler: async () => Ok(undefined) });
+ * @tags worker-pool,task-queue,priority,scheduler,concurrency,advanced
+ * @since 0.1.0
+ * @lastModified 2026-03-27T14:30:00Z
  * @difficulty Advanced
- * @time 25 minutes
- * @category async
- * @see https://nodejs.org/api/worker_threads.html
+ * @time 25min
+ * @category patterns
+ * @see {@link 001-async-basics} @see {@link 001-event-handling} @see {@link https://nodejs.org/api/worker_threads.html}
+ * @ai {"purpose":"Teach worker pool and task management patterns with Result","prerequisites":["Result type","Worker threads","Task queues"],"objectives":["Worker pool","Priority queue","Job scheduler"],"rag":{"queries":["Result worker pool example","task queue priority pattern"],"intents":["learning","practical"],"expectedAnswer":"Use Result-based worker pool with task queues and scheduling","confidence":0.95},"embedding":{"semanticKeywords":["worker-pool","task-queue","priority","scheduler","concurrency"],"conceptualTags":["concurrency","task-management"],"useCases":["background-jobs","batch-processing"]},"codeSearch":{"patterns":["new WorkerPool(","queue.enqueue(","scheduler.addJob("],"imports":["import { Ok, Err, match } from '@resultsafe/core-fp-result'"]},"learningPath":{"progression":["001-async-basics","001-event-handling"]},"chunking":{"type":"self-contained","section":"patterns","subsection":"workers","tokenCount":450,"relatedChunks":["001-async-basics","001-event-handling"]}}
  */
 
-import { Ok, Err, match } from '@resultsafe/core-fp-result';
+import { match, Ok } from '@resultsafe/core-fp-result';
 
 // ===== Pattern 1: Simple Worker Pool =====
 
@@ -73,7 +87,7 @@ class WorkerPool<T, R> {
         const result = await Promise.race([
           task.fn(task.input),
           new Promise<R>((_, reject) =>
-            setTimeout(() => reject(new Error('Timeout')), timeout)
+            setTimeout(() => reject(new Error('Timeout')), timeout),
           ),
         ]);
         return result as R;
@@ -81,7 +95,7 @@ class WorkerPool<T, R> {
         lastError = error as Error;
         if (attempt < maxRetries - 1) {
           await new Promise((resolve) =>
-            setTimeout(resolve, 1000 * (attempt + 1))
+            setTimeout(resolve, 1000 * (attempt + 1)),
           );
         }
       }
@@ -135,7 +149,7 @@ class PriorityTaskQueue<T, R> {
   enqueue(
     fn: (input: T) => Promise<Result<R, Error>>,
     input: T,
-    priority: Priority = 'normal'
+    priority: Priority = 'normal',
   ): string {
     const task: PriorityTask<T, R> = {
       id: `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -231,7 +245,7 @@ class JobScheduler {
     match(
       result,
       () => console.log(`Job ${job.name} completed successfully`),
-      (error) => console.error(`Job ${job.name} failed:`, error)
+      (error) => console.error(`Job ${job.name} failed:`, error),
     );
 
     // Schedule next run
@@ -308,14 +322,11 @@ const runExample = async () => {
   const tasks = Array.from({ length: 10 }, (_, i) => i + 1);
   const results = await Promise.all(
     tasks.map((n) =>
-      pool.submit(
-        async (x) => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-          return x * 2;
-        },
-        n
-      )
-    )
+      pool.submit(async (x) => {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        return x * 2;
+      }, n),
+    ),
   );
 
   console.log('Worker pool results:', results);
@@ -328,17 +339,17 @@ const runExample = async () => {
   priorityQueue.enqueue(
     async (input) => Ok(`Processed: ${input}`),
     'low-priority-task',
-    'low'
+    'low',
   );
   priorityQueue.enqueue(
     async (input) => Ok(`Processed: ${input}`),
     'critical-task',
-    'critical'
+    'critical',
   );
   priorityQueue.enqueue(
     async (input) => Ok(`Processed: ${input}`),
     'normal-task',
-    'normal'
+    'normal',
   );
 
   console.log('Queue length:', priorityQueue.length);
