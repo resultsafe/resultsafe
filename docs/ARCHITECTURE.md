@@ -12,6 +12,7 @@
 This document describes the documentation architecture for the ResultSafe monorepo.
 
 **Key Principles:**
+
 1. **Separation of Concerns:** Source files separate from generated artifacts
 2. **Single Source of Truth:** Each piece of documentation has one source location
 3. **Multi-Platform Output:** Generate for web, AI/RAG, PDF, etc.
@@ -56,7 +57,7 @@ docs/
 │   └── api/              # API reference (auto-generated)
 │       └── core-fp-result/
 │
-├── translations/         # Translations
+├── i18n/                 # Internationalization (translations)
 │   ├── en/              # English (default)
 │   │   └── (mirrors source/)
 │   │
@@ -183,6 +184,7 @@ tools/artifacts/
 **Deployment:** GitHub Pages
 
 **Configuration:**
+
 - `docusaurus.config.ts` - Main config
 - `sidebars.ts` - Navigation
 - Multi-language: EN/RU
@@ -194,6 +196,7 @@ tools/artifacts/
 
 **Format:** Markdown files optimized for import  
 **Features:**
+
 - Citation index
 - Q&A exports
 - Semantic search ready
@@ -205,6 +208,7 @@ tools/artifacts/
 
 **Format:** Context files for AI assistance  
 **Features:**
+
 - API reference
 - Code examples
 - Usage patterns

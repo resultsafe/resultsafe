@@ -10,6 +10,7 @@
 ## 🎯 Goal
 
 Create unified documentation that:
+
 - Serves as source for multiple platforms
 - Supports multi-language (EN/RU)
 - Generates artifacts for RAG systems (NotebookLM, Cursor)
@@ -25,6 +26,7 @@ Create unified documentation that:
 **Date:** 2026-03-27
 
 **Completed:**
+
 - [x] Initialize Docusaurus
 - [x] Configure multi-language support
 - [x] Create basic documentation structure
@@ -39,6 +41,7 @@ Create unified documentation that:
 **Date:** 2026-03-27
 
 **Tasks:**
+
 - [x] Separate source from generated files
 - [x] Move Docusaurus to `artifacts/platforms/web/`
 - [x] Create structure for AI/RAG systems
@@ -53,6 +56,7 @@ Create unified documentation that:
 **Status:** Not Started
 
 **Tasks:**
+
 - [ ] Configure i18n pipeline
 - [ ] Create English translations
 - [ ] Create Russian translations
@@ -66,6 +70,7 @@ Create unified documentation that:
 **Status:** Not Started
 
 **Tasks:**
+
 - [ ] Generate NotebookLM sources
 - [ ] Create Cursor context files
 - [ ] Generate embeddings metadata
@@ -79,6 +84,7 @@ Create unified documentation that:
 **Status:** Not Started
 
 **Tasks:**
+
 - [ ] Auto-generate API docs from Typedoc
 - [ ] Extract examples from packages/
 - [ ] CI/CD pipeline for artifacts
@@ -91,7 +97,7 @@ Create unified documentation that:
 ```
 docs/
 ├── source/           # Markdown source
-├── translations/     # Translations
+├── i18n/             # Translations (EN/RU)
 └── config/           # Configuration
 
 artifacts/
@@ -108,13 +114,13 @@ artifacts/
 
 ## 📊 Progress
 
-| Phase | Status | Start | End |
-|-------|--------|-------|-----|
-| Phase 1 | ✅ Complete | 2026-03-27 | 2026-03-27 |
-| Phase 2 | 🔄 In Progress | 2026-03-27 | - |
-| Phase 3 | ⏳ Pending | - | - |
-| Phase 4 | ⏳ Pending | - | - |
-| Phase 5 | ⏳ Pending | - | - |
+| Phase   | Status         | Start      | End        |
+| ------- | -------------- | ---------- | ---------- |
+| Phase 1 | ✅ Complete    | 2026-03-27 | 2026-03-27 |
+| Phase 2 | 🔄 In Progress | 2026-03-27 | -          |
+| Phase 3 | ⏳ Pending     | -          | -          |
+| Phase 4 | ⏳ Pending     | -          | -          |
+| Phase 5 | ⏳ Pending     | -          | -          |
 
 ---
 
