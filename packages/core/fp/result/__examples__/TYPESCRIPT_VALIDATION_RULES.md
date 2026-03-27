@@ -681,6 +681,16 @@ pnpm run build:all
 
 ---
 
+## 📚 Related Documents
+
+| Document                                       | Description                                  |
+| ---------------------------------------------- | -------------------------------------------- |
+| [ARTIFACTS_RULES.md](./ARTIFACTS_RULES.md)     | Rules for generating documentation artifacts |
+| [AI_JSDOC_STANDARD.md](./AI_JSDOC_STANDARD.md) | JSDoc annotation standard                    |
+| [VALIDATION_GUIDE.md](./VALIDATION_GUIDE.md)   | Full validation pipeline                     |
+
+---
+
 **Last Updated:** 2026-03-27  
 **Version:** 1.1.0  
 **Maintainer:** Denis Savasteev  
