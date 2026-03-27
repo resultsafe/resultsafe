@@ -22,10 +22,7 @@ const sidebars: SidebarsConfig = {
         type: 'doc',
         id: 'guides/index',
       },
-      items: [
-        'guides/index',
-        'guides/basic-usage',
-      ],
+      items: ['guides/index', 'guides/basic-usage'],
     },
     {
       type: 'category',
@@ -34,12 +31,10 @@ const sidebars: SidebarsConfig = {
         type: 'doc',
         id: 'patterns/index',
       },
-      items: [
-        'patterns/index',
-      ],
+      items: ['patterns/index'],
     },
   ],
-  
+
   apiSidebar: [
     {
       type: 'category',
