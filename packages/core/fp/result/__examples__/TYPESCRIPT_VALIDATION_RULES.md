@@ -472,7 +472,7 @@ const tertiary = (): Result<string, FetchError> => Ok('Success!'); // ✅
 ## Validation Commands
 
 ```bash
-# Full validation
+# Full validation (AI JSDoc + ESLint + TypeScript)
 pnpm run validate:examples
 
 # TypeScript only
@@ -483,7 +483,25 @@ pnpm run lint:examples
 
 # AI JSDoc JSON only
 pnpm run validate:ai-json
+
+# Before build (automatic - runs in prebuild:all)
+pnpm run build:all
+# Automatically runs: validate:examples
+
+# Before publish (automatic - runs in prepublishOnly)
+pnpm publish --dry-run
+# Automatically runs: validate:examples
 ```
+
+### Automatic Validation Pipeline
+
+| Command                   | Runs Before | Checks                                               |
+| ------------------------- | ----------- | ---------------------------------------------------- |
+| `pnpm run build:all`      | Build       | `validate:examples` (AI JSDoc + ESLint + TypeScript) |
+| `pnpm publish`            | Publish     | `validate:examples` + `test` + `verify:release`      |
+| `pnpm run verify:release` | Release     | `test` + build artifacts                             |
+
+**Note:** `test:examples` is **NOT** used because example files are demonstrations, not tests. They contain runnable code, not `describe()`/`it()` blocks.
 
 ---
 
