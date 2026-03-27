@@ -1,6 +1,6 @@
 {
   "name": "@resultsafe/core-fp-result",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Functional Result type for TypeScript with explicit error handling (Rust-style). Zero dependencies, tree-shakable, AI-friendly.",
   "author": {
     "name": "Denis Savasteev",
