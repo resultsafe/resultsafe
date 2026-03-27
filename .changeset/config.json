@@ -7,23 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [
-    "@resultsafe/core-fp-codec-zod",
-    "@resultsafe/core-fp-codec",
-    "@resultsafe/core-fp-context",
-    "@resultsafe/core-fp-do",
-    "@resultsafe/core-fp-effect",
-    "@resultsafe/core-fp-either",
-    "@resultsafe/core-fp-flow",
-    "@resultsafe/core-fp-layer",
-    "@resultsafe/core-fp-option",
-    "@resultsafe/core-fp-option-shared",
-    "@resultsafe/core-fp-pipe",
-    "@resultsafe/core-fp-result-shared",
-    "@resultsafe/core-fp-shared",
-    "@resultsafe/core-fp-task",
-    "@resultsafe/core-fp-task-result",
-    "@resultsafe/core-fp-union",
-    "@resultsafe/core-fp-void"
-  ]
+  "ignore": []
 }
